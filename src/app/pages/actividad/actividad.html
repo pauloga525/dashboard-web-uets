@@ -1,0 +1,134 @@
+<div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800">
+
+<div class="flex items-center justify-between mb-6">
+
+<h1 class="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+
+Historial de Actividad
+
+<span class="text-xs bg-slate-200 dark:bg-slate-700 px-2 py-[2px] rounded-full">
+{{actividades.length}}
+</span>
+
+</h1>
+
+</div>
+
+
+<div class="space-y-8">
+
+@for (grupo of getActividadesAgrupadas(); track grupo.titulo) {
+
+<div>
+
+<p class="text-[12px] font-bold uppercase text-slate-400 mb-3">
+{{grupo.titulo}}
+</p>
+
+@for (a of grupo.items; track $index; let last = $last) {
+
+<div
+class="flex gap-3 mb-4 opacity-0 animate-[fadeIn_.4s_ease_forwards]">
+
+<!-- COLUMNA TIMELINE -->
+<div class="relative flex flex-col items-center">
+<div
+    class="size-10 rounded-full flex items-center justify-center relative z-10 hover:scale-110 transition"
+    [ngClass]="{
+    'bg-blue-500/10 text-blue-500': a.tipo === 'usuario',
+    'bg-orange-500/10 text-orange-500': a.tipo === 'evento',
+    'bg-green-500/10 text-green-500': a.tipo === 'reporte',
+    'bg-purple-500/10 text-purple-500': a.tipo === 'especialidad'
+    }">
+    
+@if(isNuevaActividad(a)){
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+}
+
+
+@if(a.tipo === 'usuario'){
+
+<svg class="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="8" r="4"/>
+<path d="M20 21c0-3-4-5-8-5s-8 2-8 5"/>
+</svg>
+
+}
+
+@if(a.tipo === 'evento'){
+
+<svg class="w-5 h-5 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="3" y="5" width="18" height="16" rx="2"/>
+<path d="M16 3v4M8 3v4M3 11h18"/>
+</svg>
+
+}
+
+@if(a.tipo === 'reporte'){
+
+<svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M20 6L9 17l-5-5"/>
+</svg>
+
+}
+
+@if(a.tipo === 'especialidad'){
+
+<svg class="w-5 h-5 text-purple-500"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     viewBox="0 0 24 24">
+
+<rect x="6" y="4" width="12" height="16" rx="2"></rect>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M9 3h6v3H9z"/>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M9 10l1.5 1.5L13 9"/>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M9 14l1.5 1.5L13 13"/>
+
+</svg>
+
+}
+
+</div>
+
+<!-- LINEA TIMELINE -->
+@if(!last){
+<div class="w-px flex-1 bg-slate-200 dark:bg-slate-800 mt-1"></div>
+}
+
+</div>
+
+<!-- CONTENIDO -->
+<div class="flex flex-col">
+
+<p class="text-[14px] font-semibold text-slate-800 dark:text-slate-100">
+{{a.titulo}}
+</p>
+
+<p class="text-[12px] text-slate-500">
+{{a.descripcion}}
+</p>
+
+<p class="text-[10px] text-slate-400 mt-1">
+{{activityService.getTiempoRelativo(a.fecha)}}
+</p>
+
+</div>
+
+</div>
+
+}
+
+</div>
+
+}
+
+</div>
+
+</div>

@@ -1,0 +1,348 @@
+<aside
+  [class.w-64]="!collapsed"
+  [class.w-20]="collapsed"
+  class="transition-all duration-300 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark flex flex-col sticky top-0 h-screen overflow-y-auto shrink-0">
+<div
+  class="p-6 flex items-center"
+  [class.justify-between]="!collapsed"
+  [class.justify-center]="collapsed"
+>
+
+  <!-- LOGO + TITULO -->
+  <div class="flex items-center gap-3 overflow-hidden">
+
+    <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
+
+      <!-- icono graduacion -->
+      <svg class="w-5 h-5"
+           fill="currentColor"
+           viewBox="0 0 24 24">
+        <path d="M12 3L1 9l11 6 11-6-11-6z"/>
+        <path d="M5 12v5c0 1.5 3 3 7 3s7-1.5 7-3v-5"/>
+      </svg>
+
+    </div>
+
+    <!-- TEXTO -->
+    @if(!collapsed){
+  <div class="flex flex-col whitespace-nowrap">
+
+    <h1 class="font-bold text-slate-900 dark:text-white leading-tight">
+      UETS
+    </h1>
+
+    <p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">
+      Administración
+    </p>
+
+  </div>
+}
+
+  </div>
+
+  <!-- BOTON COLAPSAR -->
+  <button
+  (click)="toggleSidebar()"
+  class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+  [class.ml-auto]="!collapsed"
+  [class.ml-2]="collapsed">
+
+    <svg
+  class="w-4 h-4 transition-transform text-slate-700 dark:text-slate-200"
+  [class.rotate-180]="collapsed"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  viewBox="0 0 24 24">
+
+  <path
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M15 19l-7-7 7-7"/>
+</svg>
+
+  </button>
+
+</div>
+<nav class="flex-1 px-4 space-y-6">
+<!-- Group: GENERAL -->
+<div>
+@if(!collapsed){
+<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+  General
+</p>
+}
+<div class="space-y-1">
+<a routerLink="/"
+   routerLinkActive="sidebar-item-active [&>svg]:text-white"
+   [routerLinkActiveOptions]="{ exact: true }"
+   class="sidebar-item group">
+
+  <svg class="sidebar-icon"
+       fill="none"
+       stroke="currentColor"
+       stroke-width="1.8"
+       viewBox="0 0 24 24">
+
+    <path stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3 13h8V3H3v10zM13 21h8V11h-8v10zM3 21h8v-6H3v6zM13 3v6h8V3h-8z"/>
+
+  </svg>
+
+  @if(!collapsed){
+      <div class="flex flex-col whitespace-nowrap">
+      <h1>Panel Principal</h1>
+      </div>
+      }
+
+</a>
+<a routerLink="/analisis"
+   routerLinkActive="sidebar-item-active [&>svg]:text-white"
+   class="sidebar-item group">
+
+<svg class="sidebar-icon"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     viewBox="0 0 24 24">
+
+<path stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M4 20V10m6 10V4m6 16v-6"/>
+
+</svg>
+
+@if(!collapsed){
+      <div class="flex flex-col whitespace-nowrap">
+      <h1>Análisis</h1>
+      </div>
+      }
+
+</a>
+</div>
+</div>
+<!-- Group: ACADÉMICO -->
+<div>
+@if(!collapsed){
+<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+  Académico
+</p>
+}
+<div class="space-y-1">
+<a routerLink="/cursos"
+   routerLinkActive="sidebar-item-active [&>svg]:text-white"
+   class="sidebar-item group">
+
+<svg class="sidebar-icon"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     viewBox="0 0 24 24">
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M3 6c3-1 6-1 9 1v12c-3-2-6-2-9-1V6z"/>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M21 6c-3-1-6-1-9 1v12c3-2 6-2 9-1V6z"/>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M12 4v6"/>
+
+</svg>
+
+@if(!collapsed){
+      <div class="flex flex-col whitespace-nowrap">
+      <h1>Cursos</h1>
+      </div>
+}
+
+</a>
+<a routerLink="/especialidades"
+   routerLinkActive="sidebar-item-active [&>svg]:text-white"
+   class="sidebar-item group">
+
+<svg class="sidebar-icon"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     viewBox="0 0 24 24">
+
+<rect x="6" y="4" width="12" height="16" rx="2"></rect>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M9 3h6v3H9z"/>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M9 10l1.5 1.5L13 9"/>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M9 14l1.5 1.5L13 13"/>
+
+</svg>
+
+@if(!collapsed){
+      <div class="flex flex-col whitespace-nowrap">
+      <h1>Especialidades</h1>
+      </div>
+      }
+
+</a>
+</div>
+</div>
+<!-- Group: CONTENIDO -->
+<div>
+@if(!collapsed){
+<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+  Contenido
+</p>
+}
+<div class="space-y-1">
+<a routerLink="/recursos"
+   routerLinkActive="sidebar-item-active [&>svg]:text-white"
+   class="sidebar-item group">
+
+<svg class="sidebar-icon"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     viewBox="0 0 24 24">
+
+<path stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+
+<path stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M14 2v6h6"/>
+
+</svg>
+
+@if(!collapsed){
+      <div class="flex flex-col whitespace-nowrap">
+      <h1>Recursos</h1>
+      </div>
+      }
+
+</a>
+</div>
+</div>
+<!-- Group: COMUNIDAD -->
+<div>
+@if(!collapsed){
+<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+  Comunidad
+</p>
+}
+<div class="space-y-1">
+<a routerLink="/estudiantes"
+   routerLinkActive="sidebar-item-active [&>svg]:text-white"
+   class="sidebar-item group">
+
+<svg class="sidebar-icon"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     viewBox="0 0 24 24">
+
+<circle cx="9" cy="8" r="3"></circle>
+<circle cx="16" cy="10" r="2.5"></circle>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M3 20c1.5-3 4-5 6-5s4.5 2 6 5"/>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M14 20c1-2 2.5-3.5 4.5-4"/>
+
+</svg>
+
+@if(!collapsed){
+      <div class="flex flex-col whitespace-nowrap">
+      <h1>Estudiantes</h1>
+      </div>
+      }
+
+</a>
+<a routerLink="/eventos"
+   routerLinkActive="sidebar-item-active [&>svg]:text-white"
+   class="sidebar-item group">
+
+<svg class="sidebar-icon"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     viewBox="0 0 24 24">
+
+<rect x="3" y="5" width="18" height="16" rx="2"></rect>
+
+<path stroke-linecap="round" stroke-linejoin="round"
+      d="M8 3v4M16 3v4M3 10h18"/>
+
+<text x="12" y="17"
+      text-anchor="middle"
+      font-size="6"
+      fill="currentColor"
+      stroke="none"
+      font-weight="600">
+JAN
+</text>
+
+</svg>
+
+@if(!collapsed){
+      <div class="flex flex-col whitespace-nowrap">
+      <h1>Eventos</h1>
+      </div>
+}
+
+</a>
+</div>
+</div>
+<!-- Group: ADMINISTRACIÓN -->
+<div>
+@if(!collapsed){
+<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+  Administración
+</p>
+}
+<div class="space-y-1">
+<a routerLink="/configuracion"
+   routerLinkActive="sidebar-item-active [&>svg]:text-white"
+   class="sidebar-item group">
+
+<svg class="sidebar-icon"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8"
+     viewBox="0 0 24 24">
+
+<circle cx="12" cy="12" r="3"></circle>
+
+<path stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M19.4 15a1.7 1.7 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-.4-1.1 1.7 1.7 0 0 0-1-.6 1.7 1.7 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H2.9a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.1-.4 1.7 1.7 0 0 0 .6-1 1.7 1.7 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.13 3.5l.06.06A1.7 1.7 0 0 0 9 4.6c.38 0 .74-.14 1-.4.27-.26.4-.62.4-1V3a2 2 0 1 1 4 0v.09c0 .38.14.74.4 1 .26.27.62.4 1 .4a1.7 1.7 0 0 0 1.82-.33l.06-.06A2 2 0 1 1 20.5 7.13l-.06.06A1.7 1.7 0 0 0 19.4 9c0 .38.14.74.4 1 .26.27.62.4 1 .4h.09a2 2 0 1 1 0 4h-.09c-.38 0-.74.14-1 .4-.27.26-.4.62-.4 1z"/>
+
+</svg>
+
+@if(!collapsed){
+      <div class="flex flex-col whitespace-nowrap">
+      <h1>Configuración</h1>
+      </div>
+}
+
+</a>
+</div>
+</div>
+</nav>
+<div class="p-4 mt-auto border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 px-2">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
+<img class="size-full object-cover" data-alt="Profile avatar of current admin" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKoE97qExPyXTegY03NYNRmGMAz1-2kLyoQZDSBMB2ETvLj-kbr6W_7CiSiZtuBqivzKhoel1QczxJ7fRptqjSDlVdRgrY1YCCdGnQwO8Dx_4ZDXYuTkBOW-tr7C9X9-Jk6KcKmTJwlnDtp9oBJQj4xFdhBkq0ZrctsXwgKQCJZkW9JrEfZJsdXvItWX8VurNPFAo_avNJ5Dd_Uyuhjxds_01ohxX5Y70QkzFzZrUOpFj7JU7R_qdblfKNevXbbv1CaNaK72z6a1s"/>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-xs font-semibold truncate">Alex Rivera</span>
+<span class="text-[10px] text-slate-500 truncate">Admin</span>
+</div>
+</div>
+</div>
+</aside>

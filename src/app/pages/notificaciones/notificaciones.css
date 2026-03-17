@@ -1,0 +1,62 @@
+.fadeIn{
+animation: fadeInAnim 220ms ease-out;
+}
+
+.fadeOut{
+animation: fadeOutAnim 220ms ease;
+}
+
+@keyframes fadeInAnim{
+from{
+opacity:0;
+transform:translateY(-10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes fadeOutAnim{
+from{
+opacity:1;
+transform:translateX(0);
+}
+to{
+opacity:0;
+transform:translateX(40px);
+}
+
+}
+.lista-notificaciones{
+display:flex;
+flex-direction:column;
+gap:12px;
+
+transition: all 0.25s ease;
+}
+.notificacion-item{
+transition: transform .2s ease, opacity .2s ease;
+}
+button svg{
+transition:transform .15s ease;
+}
+
+button:hover svg{
+transform:scale(1.15);
+}
+
+.lista-notificaciones{
+animation: fadeTab .25s ease;
+}
+
+@keyframes fadeTab{
+from{
+opacity:0;
+transform:translateY(8px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
