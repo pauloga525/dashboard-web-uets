@@ -22,8 +22,8 @@ export const routes: Routes = [
     {
       path: 'especialidades/:id',
       component: EspecialidadEditor,
-      data: { animation: 'EspecialidadEditor', breadcrumb: 'Editor de especialidad' }
-    },
+      data: { animation: 'EspecialidadEditor' }
+  },
 
 
   { path: 'recursos', component: Recursos, data: { animation: 'Recursos', breadcrumb: 'Recursos' } },
@@ -39,5 +39,5 @@ export const routes: Routes = [
   },
   { path: 'actividad', component: Actividad, data: { animation: 'Actividad', breadcrumb: 'Actividad reciente' } },
 
-
+    
 ];

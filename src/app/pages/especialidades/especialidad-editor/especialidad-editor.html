@@ -1,36 +1,121 @@
-<div class="max-w-7xl mx-auto w-full px-6 py-10" *ngIf="especialidad">
+@if (especialidad) {
+
+<div class="max-w-7xl mx-auto w-full px-6 py-10">
 
 <div class="grid grid-cols-12 gap-8">
 
-<!-- FORMULARIO -->
+<!-- CONTENIDO PRINCIPAL -->
 <div class="col-span-12 lg:col-span-8">
 
-<h1 class="text-3xl font-black mb-2">
-{{especialidad.titulo}}
-</h1>
+<!-- HEADER -->
+<div class="mb-8">
+  
+  <h1 class="text-3xl font-black tracking-tight mb-2">
+    {{especialidad.titulo}}
+  </h1>
 
-<p class="text-slate-500 mb-6">
-Editar información de la especialidad
-</p>
+  <p class="text-slate-500 dark:text-slate-400">
+    Configure los detalles de la especialidad.
+  </p>
+</div>
 
-<div class="space-y-6">
+<!-- TABS -->
+<div class="mb-8 border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
+  <div class="flex gap-8 min-w-max">
+    <button class="border-b-2 border-primary text-primary font-bold text-sm pb-4">General</button>
+    <button class="text-slate-500 text-sm pb-4">Imagen</button>
+    <button class="text-slate-500 text-sm pb-4">Malla Curricular</button>
+    <button class="text-slate-500 text-sm pb-4">Coordinador</button>
+    <button class="text-slate-500 text-sm pb-4">Publicación</button>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="space-y-8">
+
+<!-- INFO GENERAL -->
+<div>
+<h3 class="text-xl font-bold mb-6">Información General</h3>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
 <!-- NOMBRE -->
 <div>
 <label class="text-sm font-semibold">Nombre</label>
 <input
 [(ngModel)]="especialidad.titulo"
-class="w-full h-12 px-4 rounded-lg border"
+class="w-full h-12 px-4 rounded-lg border bg-white dark:bg-slate-900"
 />
 </div>
 
-<!-- DESCRIPCIÓN -->
+<!-- CODIGO -->
 <div>
+<label class="text-sm font-semibold">Código</label>
+<input
+[(ngModel)]="especialidad.codigo"
+class="w-full h-12 px-4 rounded-lg border bg-white dark:bg-slate-900"
+/>
+</div>
+
+<!-- DESCRIPCION -->
+<div class="md:col-span-2">
 <label class="text-sm font-semibold">Descripción</label>
 <textarea
 [(ngModel)]="especialidad.descripcion"
-class="w-full p-4 rounded-lg border">
+rows="3"
+class="w-full p-4 rounded-lg border bg-white dark:bg-slate-900">
 </textarea>
+</div>
+
+<!-- DURACION -->
+<div>
+<label class="text-sm font-semibold">Duración</label>
+<select
+[(ngModel)]="especialidad.duracion"
+class="w-full h-12 px-4 rounded-lg border bg-white dark:bg-slate-900">
+<option value="6">6 meses</option>
+<option value="12">12 meses</option>
+<option value="18">18 meses</option>
+</select>
+</div>
+
+<!-- NIVEL -->
+<div>
+<label class="text-sm font-semibold">Nivel</label>
+
+<div class="flex gap-2 mt-2">
+
+<button
+(type="button")
+(click)="especialidad.nivel = 'basico'"
+[class]="especialidad.nivel === 'basico'
+? 'flex-1 h-12 border border-primary bg-primary/10 text-primary rounded-lg'
+: 'flex-1 h-12 border rounded-lg'">
+Básico
+</button>
+
+<button
+(type="button")
+(click)="especialidad.nivel = 'intermedio'"
+[class]="especialidad.nivel === 'intermedio'
+? 'flex-1 h-12 border border-primary bg-primary/10 text-primary rounded-lg'
+: 'flex-1 h-12 border rounded-lg'">
+Intermedio
+</button>
+
+<button
+(type="button")
+(click)="especialidad.nivel = 'avanzado'"
+[class]="especialidad.nivel === 'avanzado'
+? 'flex-1 h-12 border border-primary bg-primary/10 text-primary rounded-lg'
+: 'flex-1 h-12 border rounded-lg'">
+Avanzado
+</button>
+
+</div>
+</div>
+
+</div>
 </div>
 
 </div>
@@ -40,14 +125,26 @@ class="w-full p-4 rounded-lg border">
 <!-- SIDEBAR -->
 <div class="col-span-12 lg:col-span-4">
 
+<div class="sticky top-24 space-y-6">
+
+<!-- ESTADO -->
 <div class="bg-white dark:bg-slate-900 border rounded-xl p-6">
 
-<h4 class="font-bold mb-4">Acciones</h4>
+<h4 class="font-bold text-lg mb-4">Estado</h4>
+
+<div class="flex items-center justify-between mb-6">
+  <div class="flex items-center gap-2">
+    <div class="w-3 h-3 rounded-full bg-amber-500 animate-pulse"></div>
+    <span class="text-sm">Borrador</span>
+  </div>
+</div>
+
+<div class="space-y-3">
 
 <button
 (click)="guardar()"
-class="w-full bg-primary text-white h-12 rounded-lg mb-3">
-Guardar
+class="w-full bg-primary text-white h-12 rounded-lg">
+Guardar Cambios
 </button>
 
 <button
@@ -60,6 +157,29 @@ Eliminar
 
 </div>
 
+<!-- PREVIEW -->
+<div class="bg-primary/5 border rounded-xl p-6">
+
+<h4 class="text-sm text-primary font-bold mb-4">Vista Previa</h4>
+
+<div class="aspect-video bg-slate-200 rounded-lg mb-4"></div>
+
+<h5 class="font-bold">
+{{especialidad.titulo}}
+</h5>
+
+<p class="text-xs text-slate-500 mt-1">
+{{especialidad.duracion}} meses • {{especialidad.nivel}}
+</p>
+
 </div>
 
 </div>
+
+</div>
+
+</div>
+
+</div>
+
+}

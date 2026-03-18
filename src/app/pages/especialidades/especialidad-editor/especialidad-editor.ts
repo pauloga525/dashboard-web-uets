@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-especialidad-editor',
   standalone: true,
   templateUrl: './especialidad-editor.html',
   styleUrl: './especialidad-editor.css',
-  imports: [FormsModule]
+  imports: [FormsModule, CommonModule]
 })
+
+
 export class EspecialidadEditor implements OnInit {
 
   especialidad:any;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private location: Location) {}
 
   ngOnInit(){
 
@@ -30,6 +34,11 @@ export class EspecialidadEditor implements OnInit {
     }
 
   }
+
+  volver(){
+    this.location.back();
+  }
+
 
   guardar(){
 
