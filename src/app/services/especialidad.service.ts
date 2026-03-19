@@ -10,16 +10,15 @@ import { Especialidad } from '../models';
 
 /** Datos iniciales usados cuando no hay nada en localStorage. */
 const ESPECIALIDADES_INICIALES: Especialidad[] = [
-  { id: 1, icono: 'ciencias',      titulo: 'Ciencias',                                    descripcion: 'Física, Química, Biología y Matemáticas',          coordinador: 'Dr. Juan Pérez',        color: 'purple'  },
-  { id: 2, icono: 'informatica',   titulo: 'Informática',                                 descripcion: 'Sistemas y Tecnología de la Información (TIC)',     coordinador: 'Ing. Mateo Pesantez',   color: 'blue'    },
-  { id: 3, icono: 'mecatronica',   titulo: 'Mecatrónica',                                 descripcion: 'Mecánica, Electrónica e Informática',               coordinador: 'Ing. Rodney Siguenza',  color: 'emerald' },
-  { id: 4, icono: 'mecanizado',    titulo: 'Mecanizado y Construcciones Metálicas',       descripcion: 'Manufactura y CNC',                                 coordinador: 'Ing. Oswaldo Zumba',    color: 'orange'  },
-  { id: 5, icono: 'automotriz',    titulo: 'Electromecánica Automotriz',                  descripcion: 'Sistemas Eléctricos y Mecánicos de Vehículos',      coordinador: 'Ing. Rene Urgilés',     color: 'red'     },
-  { id: 6, icono: 'electricidad',  titulo: 'Instalaciones, Equipos y Máquinas Eléctricas', descripcion: 'Generación y Distribución de Energía Eléctrica', coordinador: 'Dr. Juan Pérez',        color: 'yellow'  },
+  { id: 1, icono: 'ciencias',     titulo: 'Ciencias',                                     descripcion: 'Física, Química, Biología y Matemáticas',          coordinador: 'Dr. Juan Pérez',       color: 'purple'  },
+  { id: 2, icono: 'informatica',  titulo: 'Informática',                                  descripcion: 'Sistemas y Tecnología de la Información (TIC)',     coordinador: 'Ing. Mateo Pesantez',  color: 'blue'    },
+  { id: 3, icono: 'mecatronica',  titulo: 'Mecatrónica',                                  descripcion: 'Mecánica, Electrónica e Informática',               coordinador: 'Ing. Rodney Siguenza', color: 'emerald' },
+  { id: 4, icono: 'mecanizado',   titulo: 'Mecanizado y Construcciones Metálicas',        descripcion: 'Manufactura y CNC',                                 coordinador: 'Ing. Oswaldo Zumba',   color: 'orange'  },
+  { id: 5, icono: 'automotriz',   titulo: 'Electromecánica Automotriz',                   descripcion: 'Sistemas Eléctricos y Mecánicos de Vehículos',      coordinador: 'Ing. Rene Urgilés',    color: 'red'     },
+  { id: 6, icono: 'electricidad', titulo: 'Instalaciones, Equipos y Máquinas Eléctricas', descripcion: 'Generación y Distribución de Energía Eléctrica',   coordinador: 'Dr. Juan Pérez',       color: 'yellow'  },
 ];
 
-const STORAGE_KEY = 'especialidades';
-
+const STORAGE_KEY        = 'especialidades';
 const COLORES_DISPONIBLES = ['purple','blue','emerald','orange','red','yellow','cyan','pink','teal'];
 
 @Injectable({ providedIn: 'root' })
@@ -51,9 +50,10 @@ export class EspecialidadService {
     return this.subject.value;
   }
 
-  /** Busca una especialidad por id. Retorna `undefined` si no existe. */
+  /** Busca una especialidad por id. Retorna copia para evitar mutaciones. */
   getById(id: number | string): Especialidad | undefined {
-    return this.subject.value.find(e => e.id == id);
+    const found = this.subject.value.find(e => e.id == id);
+    return found ? JSON.parse(JSON.stringify(found)) : undefined;
   }
 
   // ─── Mutaciones ─────────────────────────────────────────────────────────────

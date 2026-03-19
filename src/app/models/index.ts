@@ -17,6 +17,7 @@ export interface Especialidad {
   codigo?: string;
   duracion?: string;
   nivel?: string;
+  tituloAObtener?: string;
 }
 
 // ─── Actividades ──────────────────────────────────────────────────────────────

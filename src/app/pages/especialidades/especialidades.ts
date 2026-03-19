@@ -53,9 +53,9 @@ export class Especialidades implements OnInit {
 
   /** Iconos disponibles para seleccionar al crear/editar. */
   readonly iconosDisponibles = [
-    'ciencias','mecatronica','atom','microscope','computer','chip',
-    'terminal','robot','gear','wrench','factory','hammer',
-    'car','engine','bolt','plug','battery','users','book','clipboard',
+    'ciencias', 'mecatronica', 'atom', 'microscope', 'computer', 'chip',
+    'terminal', 'robot', 'gear', 'wrench', 'factory', 'hammer',
+    'car', 'engine', 'bolt', 'plug', 'battery', 'users', 'book', 'clipboard',
   ];
 
   constructor(
@@ -66,7 +66,6 @@ export class Especialidades implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Suscripción reactiva: la lista se actualiza automáticamente
     this.especialidadService.especialidades$.subscribe(lista => {
       this.especialidades = lista;
     });
@@ -74,7 +73,6 @@ export class Especialidades implements OnInit {
 
   // ─── Navegación ────────────────────────────────────────────────────────────
 
-  /** Navega al editor de la especialidad pasando el nombre por state. */
   irEspecialidad(esp: Especialidad): void {
     this.router.navigate(['/especialidades', esp.id], {
       state: { nombre: esp.titulo }
@@ -120,16 +118,16 @@ export class Especialidades implements OnInit {
     if (!titulo || !descripcion || !coordinador || !this.iconoSeleccionado) return;
 
     if (this.especialidadEditando !== null) {
-      // Edición: detectar cambios y registrar actividad por cada campo modificado
       const anterior = this.especialidades[this.especialidadEditando];
       const cambios: Array<[boolean, string, string]> = [
-        [anterior.titulo      !== titulo,           'Nombre de especialidad actualizado', `Se cambió el nombre de "${anterior.titulo}" a "${titulo}".`],
-        [anterior.descripcion !== descripcion,       'Descripción actualizada',            `Se actualizó la descripción de "${anterior.titulo}".`],
-        [anterior.coordinador !== coordinador,       'Coordinador actualizado',            `Se actualizó el coordinador de "${anterior.titulo}".`],
-        [anterior.icono       !== this.iconoSeleccionado, 'Icono actualizado',             `Se actualizó el icono de "${anterior.titulo}".`],
+        [anterior.titulo      !== titulo,                'Nombre actualizado',      `De "${anterior.titulo}" a "${titulo}".`],
+        [anterior.descripcion !== descripcion,           'Descripción actualizada', `Descripción de "${anterior.titulo}" actualizada.`],
+        [anterior.coordinador !== coordinador,           'Coordinador actualizado', `Coordinador de "${anterior.titulo}" actualizado.`],
+        [anterior.icono       !== this.iconoSeleccionado,'Icono actualizado',       `Icono de "${anterior.titulo}" actualizado.`],
       ];
-      cambios.filter(([changed]) => changed)
-             .forEach(([, t, d]) => this.activityService.agregarActividad('especialidad', t, d));
+      cambios
+        .filter(([changed]) => changed)
+        .forEach(([, t, d]) => this.activityService.agregarActividad('especialidad', t, d));
 
       this.especialidadService.actualizar({
         ...anterior,
@@ -137,7 +135,7 @@ export class Especialidades implements OnInit {
         titulo, descripcion, coordinador,
       });
     } else {
-      // Creación
+      // Creación con estructura plana
       this.especialidadService.agregar({
         icono: this.iconoSeleccionado,
         titulo, descripcion, coordinador,

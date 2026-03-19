@@ -21,7 +21,7 @@ import { Especialidad, Tab } from '../../../models';
 })
 export class EspecialidadEditor implements OnInit {
 
-  /** Especialidad actualmente en edición. */
+  /** Especialidad actualmente en edición (copia de trabajo). */
   especialidad: Especialidad | undefined;
 
   /** Nombre mostrado en el breadcrumb (pasado por navigation state). */
@@ -30,13 +30,19 @@ export class EspecialidadEditor implements OnInit {
   /** Tab activa en el editor. */
   tabActiva = 'general';
 
+  /** Estado de guardado: false = Borrador, true = Listo. */
+  guardado = false;
+
+  /** Controla la visibilidad del modal de confirmación de eliminación. */
+  confirmarEliminar = false;
+
   /** Definición de las tabs de navegación del editor. */
   readonly tabs: Tab[] = [
-    { id: 'general',      label: 'General'         },
-    { id: 'imagen',       label: 'Imagen'           },
-    { id: 'malla',        label: 'Malla Curricular' },
-    { id: 'coordinador',  label: 'Coordinador'      },
-    { id: 'publicacion',  label: 'Publicación'      },
+    { id: 'general',     label: 'General'         },
+    { id: 'imagen',      label: 'Imagen'           },
+    { id: 'malla',       label: 'Malla Curricular' },
+    { id: 'coordinador', label: 'Coordinador'      },
+    { id: 'publicacion', label: 'Publicación'      },
   ];
 
   constructor(
@@ -48,17 +54,18 @@ export class EspecialidadEditor implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Tomar el nombre desde navigation state para el breadcrumb
     const nombre = history.state?.nombre;
     if (nombre) this.breadcrumb = nombre;
 
     const id = this.route.snapshot.paramMap.get('id');
-    this.especialidad = this.especialidadService.getById(id ?? '');
+    const original = this.especialidadService.getById(id ?? '');
+    // Deep clone via JSON para desacoplar completamente del objeto en el servicio
+    if (original) this.especialidad = JSON.parse(JSON.stringify(original));
   }
 
   // ─── Acciones ───────────────────────────────────────────────────────────────
 
-  /** Persiste los cambios de la especialidad actual. */
+  /** Persiste los cambios y marca el estado como "Listo". */
   guardar(): void {
     if (!this.especialidad) return;
     this.especialidadService.actualizar(this.especialidad);
@@ -67,10 +74,21 @@ export class EspecialidadEditor implements OnInit {
       'Especialidad actualizada',
       `Se guardaron los cambios de "${this.especialidad.titulo}".`
     );
+    this.guardado = true;
   }
 
-  /** Elimina la especialidad y regresa a la lista. */
-  eliminar(): void {
+  /** Abre el modal de confirmación de eliminación. */
+  pedirEliminar(): void {
+    this.confirmarEliminar = true;
+  }
+
+  /** Cancela la eliminación y cierra el modal. */
+  cancelarEliminar(): void {
+    this.confirmarEliminar = false;
+  }
+
+  /** Confirma la eliminación, registra actividad y navega a la lista. */
+  confirmarEliminarEspecialidad(): void {
     if (!this.especialidad) return;
     this.activityService.agregarActividad(
       'especialidad',
@@ -79,6 +97,11 @@ export class EspecialidadEditor implements OnInit {
     );
     this.especialidadService.eliminar(this.especialidad.id);
     this.router.navigate(['/especialidades']);
+  }
+
+  /** Marca el estado como borrador al detectar cualquier cambio en el form. */
+  onCambio(): void {
+    this.guardado = false;
   }
 
   /** Regresa a la página anterior. */
