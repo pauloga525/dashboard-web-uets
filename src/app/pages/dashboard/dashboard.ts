@@ -1,8 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * @file dashboard.ts
+ * @description Panel principal del sistema.
+ * Muestra estadísticas generales y actividad reciente.
+ * @see ActivityService, EspecialidadService
+ */
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { interval, Subscription } from 'rxjs';
 import { ActivityService } from '../../services/activity';
-import { interval } from 'rxjs';
-import { CommonModule} from '@angular/common';
+import { EspecialidadService } from '../../services/especialidad.service';
+import { Actividad, GrupoActividad } from '../../models';
+
+/** Sección del sitio web público gestionada desde el dashboard. */
+interface SeccionHome {
+  nombre: string;
+  estado: 'activo' | 'revision' | 'inactivo';
+  detalle: string;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -11,126 +26,65 @@ import { CommonModule} from '@angular/common';
   imports: [RouterModule, CommonModule],
   styleUrl: './dashboard.css'
 })
-export class Dashboard implements OnInit{
+export class Dashboard implements OnInit, OnDestroy {
 
+  /** Estadísticas generales mostradas en las tarjetas superiores. */
   stats = {
-    estudiantes: 1240,
+    estudiantes:       1240,
     estudiantesCambio: 12,
-
-    especialidades: 42,
-
-    eventos: 15,
-
-    usuarios: 856,
-    usuariosCambio: 5
+    especialidades:    0,
+    eventos:           15,
+    usuarios:          856,
+    usuariosCambio:    5,
   };
 
-  
+  actividades: Actividad[] = [];
 
-  actividades:any[] = [];
-
-    constructor(public activityService: ActivityService){}
-
-    ngOnInit(){
-
-// actualizar número de especialidades
-const data = localStorage.getItem('especialidades');
-
-if(data){
-const especialidades = JSON.parse(data);
-this.stats.especialidades = especialidades.length;
-}
-
-// cargar actividades recientes
-this.actividades =
-this.activityService.getActividadesRecientes();
-
-// refrescar tiempo relativo cada minuto
-interval(60000).subscribe(()=>{
-this.actividades = [...this.actividades];
-});
-
-}
-  
-
-  seccionesHome = [
-    {
-    nombre: 'Slider Principal',
-    estado: 'activo',
-    detalle: '4 slides'
-    },
-    {
-    nombre: 'Próximos Cursos',
-    estado: 'activo',
-    detalle: 'Auto-update'
-    },
-    {
-    nombre: 'Testimonios',
-    estado: 'revision',
-    detalle: 'Pendiente de revisión'
-    }
+  /** Secciones del sitio público con su estado de publicación. */
+  seccionesHome: SeccionHome[] = [
+    { nombre: 'Slider Principal',  estado: 'activo',   detalle: '4 slides' },
+    { nombre: 'Próximos Cursos',   estado: 'activo',   detalle: 'Auto-update' },
+    { nombre: 'Testimonios',       estado: 'revision', detalle: 'Pendiente de revisión' },
   ];
 
-  getActividadesAgrupadas(){
+  private subs = new Subscription();
 
-    const grupos:any = {};
+  constructor(
+    public activityService: ActivityService,
+    private especialidadService: EspecialidadService
+  ) {}
 
-    this.actividades.forEach(a => {
-
-    const fecha = new Date(a.fecha);
-    const hoy = new Date();
-
-    const diff = Math.floor(
-    (hoy.getTime() - fecha.getTime()) / 86400000
+  ngOnInit(): void {
+    // Sincroniza el contador de especialidades con el servicio reactivo
+    this.subs.add(
+      this.especialidadService.especialidades$.subscribe(lista => {
+        this.stats.especialidades = lista.length;
+      })
     );
 
-    let grupo = '';
-    let orden = 0;
+    this.actividades = this.activityService.getActividadesRecientes();
 
-    if(diff === 0){
-      grupo = 'Hoy';
-      orden = 0;
-    }
-    else if(diff === 1){
-      grupo = 'Ayer';
-      orden = 1;
-    }
-    else{
-      grupo = `Hace ${diff} días`;
-      orden = diff;
-    }
-
-    if(!grupos[grupo]){
-      grupos[grupo] = {
-      orden: orden,
-      items: []
-      };
-    }
-
-    grupos[grupo].items.push(a);
-
-  });
-
-    return Object.entries(grupos)
-      .sort((a:any,b:any)=> a[1].orden - b[1].orden)
-      .map(([titulo,data]:any)=>({
-      titulo,
-      items:data.items
-    }));
-
+    // Refresca los timestamps relativos cada minuto
+    this.subs.add(
+      interval(60000).subscribe(() => {
+        this.actividades = [...this.actividades];
+      })
+    );
   }
 
-  isNuevaActividad(a:any){
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 
-const ahora = new Date().getTime();
-const fecha = new Date(a.fecha).getTime();
+  // ─── Delegados al servicio ──────────────────────────────────────────────────
 
-const minutos = (ahora - fecha) / 60000;
+  /** Agrupa las actividades por fecha (Hoy, Ayer, Hace N días). */
+  getActividadesAgrupadas(): GrupoActividad[] {
+    return this.activityService.getActividadesAgrupadas();
+  }
 
-return minutos <= 5;
-
+  /** Indica si una actividad fue registrada hace menos de 5 minutos. */
+  isNuevaActividad(a: Actividad): boolean {
+    return this.activityService.isNuevaActividad(a);
+  }
 }
-
-}
-
-  

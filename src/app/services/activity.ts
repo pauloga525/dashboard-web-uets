@@ -1,154 +1,124 @@
-import { Injectable } from '@angular/core';
+/**
+ * @file activity.ts
+ * @description Servicio para registrar y consultar el historial de actividad del sistema.
+ * Persiste los datos en localStorage y expone métodos de consulta y agrupación.
+ */
 
-@Injectable({
-  providedIn: 'root'
-})
+import { Injectable } from '@angular/core';
+import { Actividad, GrupoActividad, TipoActividad } from '../models';
+
+const STORAGE_KEY = 'actividades';
+
+@Injectable({ providedIn: 'root' })
 export class ActivityService {
 
-private actividades:any[] = [];
+  private actividades: Actividad[] = [];
 
-constructor(){
+  constructor() {
+    this.actividades = this.cargar();
+    this.ordenar();
+  }
 
-const guardadas = localStorage.getItem('actividades');
+  // ─── Persistencia ───────────────────────────────────────────────────────────
 
-if(guardadas){
+  /** Carga actividades desde localStorage, restituyendo objetos Date. */
+  private cargar(): Actividad[] {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw).map((a: Actividad) => ({
+      ...a,
+      fecha: new Date(a.fecha),
+    }));
+  }
 
-this.actividades = JSON.parse(guardadas).map((a:any)=>({
-...a,
-fecha: new Date(a.fecha)
-}));
+  /** Persiste el array actual en localStorage. */
+  private guardar(): void {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.actividades));
+  }
 
-}else{
+  /** Ordena las actividades de más reciente a más antigua. */
+  private ordenar(): void {
+    this.actividades.sort(
+      (a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+    );
+  }
 
-this.actividades = [];
+  // ─── Consultas ──────────────────────────────────────────────────────────────
 
-this.guardar();
+  /** Retorna todas las actividades ordenadas. */
+  getActividades(): Actividad[] {
+    return this.actividades;
+  }
 
-}
+  /** Retorna las 5 actividades más recientes. */
+  getActividadesRecientes(): Actividad[] {
+    this.ordenar();
+    return this.actividades.slice(0, 5);
+  }
 
-this.ordenar();
+  /**
+   * Agrupa las actividades por proximidad de fecha.
+   * @returns Array de grupos con etiqueta (Hoy, Ayer, Hace N días) e items.
+   */
+  getActividadesAgrupadas(): GrupoActividad[] {
+    const grupos: Record<string, { orden: number; items: Actividad[] }> = {};
+    const hoy = new Date();
 
-}
+    for (const a of this.actividades) {
+      const diff = Math.floor(
+        (hoy.getTime() - new Date(a.fecha).getTime()) / 86400000
+      );
 
-guardar(){
-localStorage.setItem('actividades',JSON.stringify(this.actividades));
-}
+      const titulo = diff === 0 ? 'Hoy' : diff === 1 ? 'Ayer' : `Hace ${diff} días`;
+      const orden  = diff;
 
-ordenar(){
+      if (!grupos[titulo]) {
+        grupos[titulo] = { orden, items: [] };
+      }
+      grupos[titulo].items.push(a);
+    }
 
-this.actividades.sort((a,b)=>
-new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
-);
+    return Object.entries(grupos)
+      .sort(([, a], [, b]) => a.orden - b.orden)
+      .map(([titulo, { items }]) => ({ titulo, items }));
+  }
 
-}
+  /**
+   * Indica si una actividad fue registrada hace menos de 5 minutos.
+   * Útil para mostrar badges de "nuevo".
+   */
+  isNuevaActividad(a: Actividad): boolean {
+    const minutos = (Date.now() - new Date(a.fecha).getTime()) / 60000;
+    return minutos <= 5;
+  }
 
-getActividades(){
-return this.actividades;
-}
+  // ─── Mutaciones ─────────────────────────────────────────────────────────────
 
-getActividadesRecientes(){
+  /**
+   * Registra una nueva actividad al inicio del historial.
+   * @param tipo    Categoría de la actividad.
+   * @param titulo  Título corto descriptivo.
+   * @param descripcion Detalle de lo ocurrido.
+   */
+  agregarActividad(tipo: TipoActividad, titulo: string, descripcion: string): void {
+    this.actividades.unshift({ tipo, titulo, descripcion, fecha: new Date() });
+    this.guardar();
+  }
 
-this.ordenar();
-return this.actividades.slice(0,5);
+  // ─── Utilidades ─────────────────────────────────────────────────────────────
 
-}
+  /**
+   * Convierte una fecha en texto relativo legible.
+   * @example "Hace 5 min", "Hace 2 h", "Hace 3 días"
+   */
+  getTiempoRelativo(fecha: Date): string {
+    const diff = Date.now() - new Date(fecha).getTime();
+    const min  = Math.floor(diff / 60000);
+    const h    = Math.floor(diff / 3600000);
+    const d    = Math.floor(diff / 86400000);
 
-agregarActividad(tipo:string,titulo:string,descripcion:string){
-
-const nueva = {
-
-tipo:tipo,
-titulo:titulo,
-descripcion:descripcion,
-fecha:new Date()
-
-};
-
-this.actividades.unshift(nueva);
-
-this.guardar();
-
-}
-
-getTiempoRelativo(fecha:Date){
-
-const ahora = new Date().getTime();
-const tiempo = ahora - new Date(fecha).getTime();
-
-const minutos = Math.floor(tiempo/60000);
-const horas = Math.floor(tiempo/3600000);
-const dias = Math.floor(tiempo/86400000);
-
-if(minutos<60){
-return `Hace ${minutos} min`;
-}
-
-if(horas<24){
-return `Hace ${horas} h`;
-}
-
-return `Hace ${dias} día${dias>1?'s':''}`;
-
-}
-
-getActividadesAgrupadas(){
-
-const grupos:any = {};
-
-this.actividades.forEach(a => {
-
-const fecha = new Date(a.fecha);
-const hoy = new Date();
-
-const diff = Math.floor(
-(hoy.getTime() - fecha.getTime()) / 86400000
-);
-
-let grupo = '';
-let orden = 0;
-
-if(diff === 0){
-grupo = 'Hoy';
-orden = 0;
-}
-else if(diff === 1){
-grupo = 'Ayer';
-orden = 1;
-}
-else{
-grupo = `Hace ${diff} días`;
-orden = diff;
-}
-
-if(!grupos[grupo]){
-grupos[grupo] = {
-orden: orden,
-items: []
-};
-}
-
-grupos[grupo].items.push(a);
-
-});
-
-return Object.entries(grupos)
-.sort((a:any,b:any)=> a[1].orden - b[1].orden)
-.map(([titulo,data]:any)=>({
-titulo,
-items:data.items
-}));
-
-}
-
-isNuevaActividad(a:any){
-
-const ahora = new Date().getTime();
-const fecha = new Date(a.fecha).getTime();
-
-const minutos = (ahora - fecha) / 60000;
-
-return minutos <= 5;
-
-}
-
+    if (min < 60)  return `Hace ${min} min`;
+    if (h   < 24)  return `Hace ${h} h`;
+    return `Hace ${d} día${d > 1 ? 's' : ''}`;
+  }
 }
