@@ -404,6 +404,16 @@ confirmarEliminar = false
 indexEliminar: number | null = null
 especialidadEliminar: Especialidad | null = null
 
+
+irEspecialidad(esp: any){
+  this.router.navigate(
+    ['/especialidades', esp.id],
+    {
+      state: { nombre: esp.titulo }
+    }
+  );
+}
+
 }
 
 

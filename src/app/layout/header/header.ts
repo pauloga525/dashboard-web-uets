@@ -168,10 +168,25 @@ export class Header implements OnInit {
 
         url += '/' + route.snapshot.url.map(segment => segment.path).join('/');
 
-        if(route.snapshot.data['breadcrumb']){
+        let label = route.snapshot.data['breadcrumb'];
+
+        // Ruta dinámica especialidades/:id
+        const navigation = history.state;
+
+        if(route.snapshot.routeConfig?.path === 'especialidades/:id'){
+          // Insertar paso intermedio "Especialidades" si no está ya
+          if(!breadcrumbs.find(b => b.url === '/especialidades')){
+            breadcrumbs.push({ label: 'Especialidades', url: '/especialidades' });
+          }
+          if(navigation?.nombre){
+            label = navigation.nombre;
+          }
+        }
+
+        if(label){
           breadcrumbs.push({
-            label: route.snapshot.data['breadcrumb'],
-             url: url
+            label: label,
+            url: url
           });
         }
 

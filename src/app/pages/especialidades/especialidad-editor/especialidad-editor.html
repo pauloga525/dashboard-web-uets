@@ -22,16 +22,24 @@
 <!-- TABS -->
 <div class="mb-8 border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
   <div class="flex gap-8 min-w-max">
-    <button class="border-b-2 border-primary text-primary font-bold text-sm pb-4">General</button>
-    <button class="text-slate-500 text-sm pb-4">Imagen</button>
-    <button class="text-slate-500 text-sm pb-4">Malla Curricular</button>
-    <button class="text-slate-500 text-sm pb-4">Coordinador</button>
-    <button class="text-slate-500 text-sm pb-4">Publicación</button>
+    @for (tab of tabs; track tab.id) {
+      <button
+        type="button"
+        (click)="tabActiva = tab.id"
+        [class]="tabActiva === tab.id
+          ? 'border-b-2 border-primary text-primary font-bold text-sm pb-4'
+          : 'text-slate-500 text-sm pb-4 hover:text-slate-700 dark:hover:text-slate-300'">
+        {{ tab.label }}
+      </button>
+    }
   </div>
 </div>
 
 <!-- FORM -->
 <div class="space-y-8">
+
+<!-- GENERAL -->
+@if (tabActiva === 'general') {
 
 <!-- INFO GENERAL -->
 <div>
@@ -70,53 +78,55 @@ class="w-full p-4 rounded-lg border bg-white dark:bg-slate-900">
 <!-- DURACION -->
 <div>
 <label class="text-sm font-semibold">Duración</label>
-<select
-[(ngModel)]="especialidad.duracion"
-class="w-full h-12 px-4 rounded-lg border bg-white dark:bg-slate-900">
-<option value="6">6 meses</option>
-<option value="12">12 meses</option>
-<option value="18">18 meses</option>
-</select>
+<div class="w-full h-12 px-4 rounded-lg border bg-slate-50 dark:bg-slate-800 flex items-center text-sm text-slate-600 dark:text-slate-300">
+  3 años
+</div>
 </div>
 
 <!-- NIVEL -->
 <div>
 <label class="text-sm font-semibold">Nivel</label>
-
-<div class="flex gap-2 mt-2">
-
-<button
-(type="button")
-(click)="especialidad.nivel = 'basico'"
-[class]="especialidad.nivel === 'basico'
-? 'flex-1 h-12 border border-primary bg-primary/10 text-primary rounded-lg'
-: 'flex-1 h-12 border rounded-lg'">
-Básico
-</button>
-
-<button
-(type="button")
-(click)="especialidad.nivel = 'intermedio'"
-[class]="especialidad.nivel === 'intermedio'
-? 'flex-1 h-12 border border-primary bg-primary/10 text-primary rounded-lg'
-: 'flex-1 h-12 border rounded-lg'">
-Intermedio
-</button>
-
-<button
-(type="button")
-(click)="especialidad.nivel = 'avanzado'"
-[class]="especialidad.nivel === 'avanzado'
-? 'flex-1 h-12 border border-primary bg-primary/10 text-primary rounded-lg'
-: 'flex-1 h-12 border rounded-lg'">
-Avanzado
-</button>
-
+<div class="w-full h-12 px-4 rounded-lg border bg-slate-50 dark:bg-slate-800 flex items-center text-sm text-slate-600 dark:text-slate-300">
+  Bachillerato
 </div>
 </div>
 
 </div>
 </div>
+
+}
+
+<!-- IMAGEN -->
+@if (tabActiva === 'imagen') {
+<div>
+  <h3 class="text-xl font-bold mb-6">Imagen</h3>
+  <p class="text-slate-500 text-sm">Sube o configura la imagen de la especialidad.</p>
+</div>
+}
+
+<!-- MALLA CURRICULAR -->
+@if (tabActiva === 'malla') {
+<div>
+  <h3 class="text-xl font-bold mb-6">Malla Curricular</h3>
+  <p class="text-slate-500 text-sm">Define las materias y estructura académica.</p>
+</div>
+}
+
+<!-- COORDINADOR -->
+@if (tabActiva === 'coordinador') {
+<div>
+  <h3 class="text-xl font-bold mb-6">Coordinador</h3>
+  <p class="text-slate-500 text-sm">Asigna el coordinador responsable de esta especialidad.</p>
+</div>
+}
+
+<!-- PUBLICACION -->
+@if (tabActiva === 'publicacion') {
+<div>
+  <h3 class="text-xl font-bold mb-6">Publicación</h3>
+  <p class="text-slate-500 text-sm">Controla la visibilidad y estado de publicación.</p>
+</div>
+}
 
 </div>
 

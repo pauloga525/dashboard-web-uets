@@ -21,6 +21,12 @@ export class EspecialidadEditor implements OnInit {
 
   ngOnInit(){
 
+    const navigation = history.state;
+
+    if(navigation?.nombre){
+      this.breadcrumb = navigation.nombre;
+    }
+
     const id = this.route.snapshot.paramMap.get('id');
 
     const data = localStorage.getItem('especialidades');
@@ -75,5 +81,16 @@ eliminar(){
   }
 
 }
+
+breadcrumb = '';
+tabActiva = 'general';
+
+tabs = [
+  { id: 'general', label: 'General' },
+  { id: 'imagen', label: 'Imagen' },
+  { id: 'malla', label: 'Malla Curricular' },
+  { id: 'coordinador', label: 'Coordinador' },
+  { id: 'publicacion', label: 'Publicación' },
+];
 
 }
