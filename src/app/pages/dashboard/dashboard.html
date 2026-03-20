@@ -1,309 +1,565 @@
 <div class="p-8 space-y-8 max-w-7xl mx-auto w-full">
-<!-- KPI Cards -->
+
+<!-- KPI CARDS -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-<div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col gap-1 transition-all hover:border-primary/30">
-<div class="flex items-center justify-between mb-2">
-<span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Estudiantes</span>
-  <svg class="w-6 h-6 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-  
-    <!-- persona 1 -->
-    <circle cx="9" cy="8" r="3"></circle>
-    <path d="M4 20c0-3 3-5 5-5"></path>
+  <div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col gap-1 transition-all hover:border-primary/30">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Estudiantes</span>
+      <svg class="w-6 h-6 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M4 20c0-3 3-5 5-5"/><circle cx="17" cy="10" r="3"/><path d="M12 20c0-3 3-5 5-5"/></svg>
+    </div>
+    <div class="flex items-baseline gap-2">
+      <span class="text-3xl font-bold text-primary">{{stats.estudiantes}}</span>
+      <span class="text-[10px] font-bold text-green-500">+{{stats.estudiantesCambio}}%</span>
+    </div>
+  </div>
+  <div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col gap-1 transition-all hover:border-primary/30">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Especialidades</span>
+      <svg class="w-6 h-6 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M22 10L12 5 2 10l10 5 10-5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+    </div>
+    <div class="flex items-baseline gap-2"><span class="text-3xl font-bold text-primary">{{stats.especialidades}}</span></div>
+  </div>
+  <div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col gap-1 transition-all hover:border-primary/30">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Eventos Activos</span>
+      <svg class="w-6 h-6 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 3v4M8 3v4M3 11h18"/></svg>
+    </div>
+    <div class="flex items-baseline gap-2">
+      <span class="text-3xl font-bold text-primary">{{stats.eventos}}</span>
+      <span class="text-[10px] font-bold text-primary/60">Publicados</span>
+    </div>
+  </div>
+  <div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col gap-1 transition-all hover:border-primary/30">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Usuarios</span>
+      <svg class="w-6 h-6 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 20c0-3 3-5 6-5s6 2 6 5"/></svg>
+    </div>
+    <div class="flex items-baseline gap-2">
+      <span class="text-3xl font-bold text-primary">{{stats.usuarios}}</span>
+      <span class="text-[10px] font-bold text-green-500">+{{stats.usuariosCambio}}%</span>
+    </div>
+  </div>
+</div>
 
-    <!-- persona 2 -->
-    <circle cx="17" cy="10" r="3"></circle>
-    <path d="M12 20c0-3 3-5 5-5"></path>
-
-  </svg>
-</div>
-<div class="flex items-baseline gap-2">
-<span class="text-3xl font-bold text-primary">
-  {{stats.estudiantes}}
-</span>
-
-<span class="text-[10px] font-bold text-green-500">
-  +{{stats.estudiantesCambio}}%
-</span>
-</div>
-</div>
-<div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col gap-1 transition-all hover:border-primary/30">
-<div class="flex items-center justify-between mb-2">
-<span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Especialidades</span>
-  <svg class="w-6 h-6 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-    <path stroke-linecap="round" stroke-linejoin="round"
-    d="M22 10L12 5 2 10l10 5 10-5z"/>
-    <path stroke-linecap="round" stroke-linejoin="round"
-    d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>
-  </svg>
-</div>
-<div class="flex items-baseline gap-2">
-<span class="text-3xl font-bold text-primary">
-  {{stats.especialidades}}
-</span>
-</div>
-</div>
-<div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col gap-1 transition-all hover:border-primary/30">
-<div class="flex items-center justify-between mb-2">
-<span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Eventos Activos</span>
-  <svg class="w-6 h-6 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-    <rect x="3" y="5" width="18" height="16" rx="2"/>
-    <path stroke-linecap="round" stroke-linejoin="round" d="M16 3v4M8 3v4M3 11h18"/>
-  </svg>
-</div>
-<div class="flex items-baseline gap-2">
-<span class="text-3xl font-bold text-primary">
-  {{stats.eventos}}
-</span>
-<span class="text-[10px] font-bold text-primary/60">En curso</span>
-</div>
-</div>
-<div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col gap-1 transition-all hover:border-primary/30">
-<div class="flex items-center justify-between mb-2">
-<span class="text-slate-500 text-xs font-semibold uppercase tracking-wider">Usuarios</span>
-  <svg class="w-6 h-6 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-    <circle cx="12" cy="8" r="4"/>
-    <path stroke-linecap="round" stroke-linejoin="round"
-    d="M6 20c0-3 3-5 6-5s6 2 6 5"/>
-  </svg>
-</div>
-<div class="flex items-baseline gap-2">
-<span class="text-3xl font-bold text-primary">
-  {{stats.usuarios}}
-</span>
-
-<span class="text-[10px] font-bold text-green-500">
-  +{{stats.usuariosCambio}}%
-</span>
-</div>
-</div>
-</div>
-<!-- Main Analytics Area -->
+<!-- EDITOR HOME + ACTIVIDAD -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-<!-- Analytics Chart -->
-<div class="lg:col-span-2 bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col">
-<div class="flex items-center justify-between mb-8">
-<div>
-<h3 class="font-bold text-lg text-slate-800 dark:text-slate-100">Institutional Growth Trends</h3>
-<p class="text-slate-500 text-sm">Monthly activity metrics and engagement</p>
-</div>
-<div class="flex gap-2">
-<button class="text-xs font-medium px-3 py-1.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">6 Months</button>
-<button class="text-xs font-medium px-3 py-1.5 rounded text-slate-400">Year</button>
-</div>
-</div>
-<div class="flex-1 min-h-[300px] relative">
-<!-- Abstract Line Chart Visualization -->
-<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 800 300">
-<defs>
-<lineargradient id="gradient-area" x1="0%" x2="0%" y1="0%" y2="100%">
-<stop offset="0%" stop-color="#1b1be4" stop-opacity="0.1"></stop>
-<stop offset="100%" stop-color="#1b1be4" stop-opacity="0"></stop>
-</lineargradient>
-</defs>
-<!-- Grid lines -->
-<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="800" y1="50" y2="50"></line>
-<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="800" y1="125" y2="125"></line>
-<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="800" y1="200" y2="200"></line>
-<line stroke="#f1f5f9" stroke-width="1" x1="0" x2="800" y1="275" y2="275"></line>
-<!-- Area -->
-<path d="M0,275 L0,220 C100,200 150,250 200,180 C300,100 350,150 400,120 C500,80 550,100 600,60 C700,20 750,40 800,10 L800,275 Z" fill="url(#gradient-area)"></path>
-<!-- Line -->
-<path d="M0,220 C100,200 150,250 200,180 C300,100 350,150 400,120 C500,80 550,100 600,60 C700,20 750,40 800,10" fill="none" stroke="#1b1be4" stroke-linecap="round" stroke-width="3"></path>
-<!-- Dots -->
-<circle cx="200" cy="180" fill="white" r="4" stroke="#1b1be4" stroke-width="2"></circle>
-<circle cx="400" cy="120" fill="white" r="4" stroke="#1b1be4" stroke-width="2"></circle>
-<circle cx="600" cy="60" fill="white" r="4" stroke="#1b1be4" stroke-width="2"></circle>
-</svg>
-<div class="flex justify-between mt-4 px-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-<span>Enero</span>
-<span>Febrero</span>
-<span>Marzo</span>
-<span>Abril</span>
-<span>Mayo</span>
-<span>Junio</span>
-</div>
-</div>
-</div>
 
+  <!-- EDITOR HOME (2/3) -->
+  <div class="lg:col-span-2 space-y-0">
 
-<!-- ACTIVIDAD RECIENTE -->
+    <!-- HEADER -->
+    <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-t-xl px-6 py-4 flex items-center justify-between">
+      <div>
+        <h2 class="font-bold text-sm text-slate-800 dark:text-slate-100">Editor de Página Principal</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Administra el contenido del home del sitio público</p>
+      </div>
+      <button type="button" (click)="guardarHome()"
+        [class]="guardadoHome
+          ? 'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-green-500 text-white transition'
+          : 'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition'">
+        @if (guardadoHome) {
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Guardado
+        } @else {
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Guardar cambios
+        }
+      </button>
+    </div>
 
-<div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col">
+    <!-- NAV TABS — 7 pestañas, sin scroll horizontal -->
+    <div class="bg-slate-50 dark:bg-slate-800/50 border-x border-slate-200 dark:border-slate-800">
+      <div class="grid grid-cols-7">
+        @for (s of secciones; track s.id) {
+          <button type="button" (click)="seccionActiva = s.id"
+            [class]="seccionActiva === s.id
+              ? 'py-2.5 text-[11px] font-bold border-b-2 border-primary text-primary text-center leading-tight px-1'
+              : 'py-2.5 text-[11px] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 text-center leading-tight px-1'">
+            {{s.label}}
+          </button>
+        }
+      </div>
+    </div>
 
-<div class="flex items-center justify-between mb-6">
+    <!-- PANEL EDICIÓN -->
+    <div class="bg-white dark:bg-background-dark border border-t-0 border-slate-200 dark:border-slate-800 rounded-b-xl p-6">
 
-<h3 class="font-bold text-[12px] uppercase tracking-wider text-slate-500 flex items-center gap-2">
-  Actividad Reciente
+      <!-- ══ TAB: HERO ══ -->
+      @if (seccionActiva === 'hero') {
+      <div class="space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+        <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Hero Principal</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">URL imagen de fondo</label>
+            <input [(ngModel)]="home.hero.imagenFondo" (ngModelChange)="onCambioHome()" placeholder="https://..." class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Etiqueta superior</label>
+            <input [(ngModel)]="home.hero.etiqueta" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Texto destacado</label>
+            <input [(ngModel)]="home.hero.textoDestacado" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Título principal</label>
+            <input [(ngModel)]="home.hero.titulo" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Descripción</label>
+            <textarea [(ngModel)]="home.hero.descripcion" (ngModelChange)="onCambioHome()" rows="3" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Botones</label>
+            <button type="button" (click)="agregarBotonHero()" class="text-xs text-primary hover:underline flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar
+            </button>
+          </div>
+          <div class="space-y-2">
+            @for (btn of home.hero.botones; track trackById($index, btn)) {
+            <div class="flex items-center gap-2">
+              <select [(ngModel)]="btn.estilo" (ngModelChange)="onCambioHome()" class="text-xs border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 focus:outline-none shrink-0">
+                <option value="primary">Primario</option><option value="outline">Outline</option>
+              </select>
+              <input [(ngModel)]="btn.label" (ngModelChange)="onCambioHome()" placeholder="Texto" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <input [(ngModel)]="btn.url" (ngModelChange)="onCambioHome()" placeholder="URL" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <button type="button" (click)="eliminarBotonHero(btn.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      }
 
-  <span class="text-[10px] bg-slate-200 dark:bg-slate-700 px-2 py-[2px] rounded-full">
-    {{actividades.length}}
-  </span>
+      <!-- ══ TAB: ESTADÍSTICAS ══ -->
+      @if (seccionActiva === 'estadisticas') {
+      <div class="space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Estadísticas Institucionales</h3>
+          <button type="button" (click)="agregarEstadistica()" class="text-xs text-primary hover:underline flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar
+          </button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          @for (stat of home.estadisticas; track trackById($index, stat)) {
+          <div class="flex items-center gap-3 border border-slate-200 dark:border-slate-700 rounded-xl p-3">
+            <div class="flex-1 space-y-2">
+              <input [(ngModel)]="stat.valor" (ngModelChange)="onCambioHome()" placeholder="Valor (ej: 1200+)" class="w-full px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 font-bold" />
+              <input [(ngModel)]="stat.etiqueta" (ngModelChange)="onCambioHome()" placeholder="Etiqueta" class="w-full px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+            <button type="button" (click)="eliminarEstadistica(stat.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+      }
 
-</h3>
+      <!-- ══ TAB: CONTENIDO (¿Por qué? + Niveles) ══ -->
+      @if (seccionActiva === 'contenido') {
+      <div class="space-y-6 animate-[fadeIn_.2s_ease_forwards]">
 
-<a
-routerLink="/actividad"
-class="text-primary text-[10px] font-bold uppercase hover:underline">
-Ver Todo
-</a>
+        <!-- Por qué elegirnos -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">¿Por qué elegirnos?</h3>
+            <button type="button" (click)="agregarPorQue()" class="text-xs text-primary hover:underline flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar ítem
+            </button>
+          </div>
+          <div class="space-y-3">
+            @for (item of home.porQue; track trackById($index, item)) {
+            <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-3">
+              <div class="flex items-center gap-3">
+                <input [(ngModel)]="item.icono" (ngModelChange)="onCambioHome()" placeholder="Ícono" class="w-28 px-3 py-1.5 text-xs border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                <input [(ngModel)]="item.titulo" (ngModelChange)="onCambioHome()" placeholder="Título" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 font-semibold" />
+                <button type="button" (click)="eliminarPorQue(item.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                </button>
+              </div>
+              <textarea [(ngModel)]="item.descripcion" (ngModelChange)="onCambioHome()" rows="2" placeholder="Descripción" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+            </div>
+            }
+          </div>
+        </div>
 
-</div>
+        <hr class="border-slate-100 dark:border-slate-800" />
 
-<div class="space-y-6">
+        <!-- Niveles académicos -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Niveles Académicos</h3>
+            <button type="button" (click)="agregarNivel()" class="text-xs text-primary hover:underline flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar nivel
+            </button>
+          </div>
+          <div class="space-y-3">
+            @for (nv of home.niveles; track trackById($index, nv)) {
+            <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-3">
+              <div class="flex items-center justify-between gap-3">
+                <input [(ngModel)]="nv.nombre" (ngModelChange)="onCambioHome()" placeholder="Nombre del nivel" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 font-semibold" />
+                <button type="button" (click)="eliminarNivel(nv.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                </button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <input [(ngModel)]="nv.imagen" (ngModelChange)="onCambioHome()" placeholder="URL imagen" class="px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                <input [(ngModel)]="nv.enlace" (ngModelChange)="onCambioHome()" placeholder="Enlace" class="px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              </div>
+              <textarea [(ngModel)]="nv.descripcion" (ngModelChange)="onCambioHome()" rows="2" placeholder="Descripción" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+            </div>
+            }
+          </div>
+        </div>
 
-@for (grupo of getActividadesAgrupadas(); track grupo.titulo) {
+      </div>
+      }
 
-<div>
+      <!-- ══ TAB: EVENTOS & LOGOS ══ -->
+      @if (seccionActiva === 'eventosLogos') {
+      <div class="space-y-6 animate-[fadeIn_.2s_ease_forwards]">
 
-<p class="text-[10px] font-bold uppercase text-slate-400 mb-3">
-{{grupo.titulo}}
-</p>
+        <!-- Eventos home config -->
+        <div class="space-y-3">
+          <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Sección Eventos en el Home</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Los eventos se obtienen del módulo de Eventos. Aquí configuras los textos de la sección.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Título de la sección</label>
+              <input [(ngModel)]="home.eventos.tituloSeccion" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Texto botón "ver más"</label>
+              <input [(ngModel)]="home.eventos.labelBotonVerMas" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">URL botón "ver más"</label>
+              <input [(ngModel)]="home.eventos.urlBotonVerMas" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-800 rounded-xl p-4 flex items-center gap-3">
+            <svg class="w-5 h-5 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Para gestionar los eventos, ve al módulo <a routerLink="/eventos" class="text-primary font-semibold hover:underline">Eventos</a>.</p>
+          </div>
+        </div>
 
-@for (a of grupo.items; track $index; let last = $last) {
+        <hr class="border-slate-100 dark:border-slate-800" />
 
-<div
-class="flex gap-3 mb-4 opacity-0 animate-[fadeIn_.4s_ease_forwards]">
+        <!-- Logos comunidad -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Comunidad / Logos</h3>
+            <button type="button" (click)="agregarLogo()" class="text-xs text-primary hover:underline flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar logo
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            @for (logo of home.logos; track trackById($index, logo)) {
+            <div class="flex items-center gap-3 border border-slate-200 dark:border-slate-700 rounded-xl p-3">
+              @if (logo.url) {
+                <img [src]="logo.url" [alt]="logo.nombre" class="w-12 h-12 object-contain rounded-lg border border-slate-100 dark:border-slate-700 shrink-0" />
+              } @else {
+                <div class="w-12 h-12 rounded-lg border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-300 shrink-0">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+              }
+              <div class="flex-1 space-y-1.5">
+                <input [(ngModel)]="logo.nombre" (ngModelChange)="onCambioHome()" placeholder="Nombre" class="w-full px-2 py-1 text-xs border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                <input [(ngModel)]="logo.url" (ngModelChange)="onCambioHome()" placeholder="URL imagen" class="w-full px-2 py-1 text-xs border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              </div>
+              <button type="button" (click)="eliminarLogo(logo.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>
+            }
+            @if (!home.logos.length) {
+              <p class="col-span-2 text-sm text-slate-400 dark:text-slate-500 italic py-4 text-center">Sin logos — agrega uno arriba.</p>
+            }
+          </div>
+        </div>
 
-<!-- COLUMNA TIMELINE -->
-<div class="relative flex flex-col items-center">
+      </div>
+      }
 
-  <div
-    class="size-10 rounded-full flex items-center justify-center relative z-10 hover:scale-110 transition"
-    [ngClass]="{
-    'bg-blue-500/10 text-blue-500': a.tipo === 'usuario',
-    'bg-orange-500/10 text-orange-500': a.tipo === 'evento',
-    'bg-green-500/10 text-green-500': a.tipo === 'reporte',
-    'bg-purple-500/10 text-purple-500': a.tipo === 'especialidad'
-    }">
+      <!-- ══ TAB: INSTITUCIONAL (Modelo educativo + Comunicación) ══ -->
+      @if (seccionActiva === 'institucional') {
+      <div class="space-y-6 animate-[fadeIn_.2s_ease_forwards]">
 
-@if(isNuevaActividad(a)){
-<div class="absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-}
+        <!-- Modelo educativo -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Modelo Educativo</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Título</label>
+              <input [(ngModel)]="home.institucional.titulo" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Subtítulo</label>
+              <input [(ngModel)]="home.institucional.subtitulo" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">URL imagen</label>
+              <input [(ngModel)]="home.institucional.imagen" (ngModelChange)="onCambioHome()" placeholder="https://..." class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Descripción</label>
+              <textarea [(ngModel)]="home.institucional.descripcion" (ngModelChange)="onCambioHome()" rows="3" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Características</label>
+              <button type="button" (click)="agregarCaracteristica()" class="text-xs text-primary hover:underline flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar
+              </button>
+            </div>
+            <div class="space-y-2">
+              @for (c of home.institucional.caracteristicas; track trackById($index, c)) {
+              <div class="flex items-center gap-2">
+                <input [(ngModel)]="c.texto" (ngModelChange)="onCambioHome()" placeholder="Característica" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                <button type="button" (click)="eliminarCaracteristica(c.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
 
+        <hr class="border-slate-100 dark:border-slate-800" />
 
-@if(a.tipo === 'usuario'){
+        <!-- Comunicación / Portales -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Comunicación / Portales</h3>
+            <button type="button" (click)="agregarComunicacion()" class="text-xs text-primary hover:underline flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar enlace
+            </button>
+          </div>
+          <div class="space-y-2">
+            @for (e of home.comunicacion; track trackById($index, e)) {
+            <div class="flex items-center gap-2">
+              <input [(ngModel)]="e.nombre" (ngModelChange)="onCambioHome()" placeholder="Nombre" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <input [(ngModel)]="e.url" (ngModelChange)="onCambioHome()" placeholder="URL" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <button type="button" (click)="eliminarComunicacion(e.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>
+            }
+            @if (!home.comunicacion.length) {
+              <p class="text-sm text-slate-400 dark:text-slate-500 italic py-4 text-center">Sin enlaces — agrega uno arriba.</p>
+            }
+          </div>
+        </div>
 
-<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<circle cx="12" cy="8" r="4"/>
-<path d="M20 21c0-3-4-5-8-5s-8 2-8 5"/>
-</svg>
+      </div>
+      }
 
-}
+      <!-- ══ TAB: ADMISIONES (Admisiones + Enlaces de interés) ══ -->
+      @if (seccionActiva === 'admisiones') {
+      <div class="space-y-6 animate-[fadeIn_.2s_ease_forwards]">
 
-@if(a.tipo === 'evento'){
+        <!-- Admisiones -->
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Admisiones</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Título</label>
+              <input [(ngModel)]="home.admisiones.titulo" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Descripción</label>
+              <textarea [(ngModel)]="home.admisiones.descripcion" (ngModelChange)="onCambioHome()" rows="3" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Texto del botón</label>
+              <input [(ngModel)]="home.admisiones.labelBoton" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">URL del botón</label>
+              <input [(ngModel)]="home.admisiones.urlBoton" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Enlaces rápidos</label>
+              <button type="button" (click)="agregarEnlaceAdmision()" class="text-xs text-primary hover:underline flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar
+              </button>
+            </div>
+            <div class="space-y-2">
+              @for (e of home.admisiones.enlaces; track trackById($index, e)) {
+              <div class="flex items-center gap-2">
+                <input [(ngModel)]="e.nombre" (ngModelChange)="onCambioHome()" placeholder="Nombre" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                <input [(ngModel)]="e.url" (ngModelChange)="onCambioHome()" placeholder="URL" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                <button type="button" (click)="eliminarEnlaceAdmision(e.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
 
-<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<rect x="3" y="5" width="18" height="16" rx="2"/>
-<path d="M16 3v4M8 3v4M3 11h18"/>
-</svg>
+        <hr class="border-slate-100 dark:border-slate-800" />
 
-}
+        <!-- Enlaces de interés -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Enlaces de Interés</h3>
+            <button type="button" (click)="agregarEnlaceInteres()" class="text-xs text-primary hover:underline flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar
+            </button>
+          </div>
+          <div class="space-y-2">
+            @for (e of home.enlacesInteres; track trackById($index, e)) {
+            <div class="flex items-center gap-2">
+              <input [(ngModel)]="e.nombre" (ngModelChange)="onCambioHome()" placeholder="Nombre" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <input [(ngModel)]="e.url" (ngModelChange)="onCambioHome()" placeholder="URL" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <button type="button" (click)="eliminarEnlaceInteres(e.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>
+            }
+            @if (!home.enlacesInteres.length) {
+              <p class="text-sm text-slate-400 dark:text-slate-500 italic py-4 text-center">Sin enlaces — agrega uno arriba.</p>
+            }
+          </div>
+        </div>
 
-@if(a.tipo === 'reporte'){
+      </div>
+      }
 
-<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M20 6L9 17l-5-5"/>
-</svg>
+      <!-- ══ TAB: FOOTER ══ -->
+      @if (seccionActiva === 'footer') {
+      <div class="space-y-5 animate-[fadeIn_.2s_ease_forwards]">
+        <h3 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Footer</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nombre de la institución</label>
+            <input [(ngModel)]="home.footer.nombreInstitucion" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Descripción</label>
+            <textarea [(ngModel)]="home.footer.descripcion" (ngModelChange)="onCambioHome()" rows="2" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Dirección</label>
+            <input [(ngModel)]="home.footer.direccion" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Teléfono</label>
+            <input [(ngModel)]="home.footer.telefono" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Email</label>
+            <input [(ngModel)]="home.footer.email" (ngModelChange)="onCambioHome()" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+          </div>
+        </div>
+        <!-- Columnas -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Columnas de navegación</label>
+            <button type="button" (click)="agregarColumnaFooter()" class="text-xs text-primary hover:underline flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar columna
+            </button>
+          </div>
+          <div class="space-y-4">
+            @for (col of home.footer.columnas; track $index) {
+            <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-3">
+              <div class="flex items-center gap-2">
+                <input [(ngModel)]="col.titulo" (ngModelChange)="onCambioHome()" placeholder="Título de columna" class="flex-1 px-3 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 font-semibold" />
+                <button type="button" (click)="eliminarColumnaFooter($index)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                </button>
+              </div>
+              <div class="space-y-2 pl-2">
+                @for (e of col.enlaces; track trackById($index, e)) {
+                <div class="flex items-center gap-2">
+                  <input [(ngModel)]="e.nombre" (ngModelChange)="onCambioHome()" placeholder="Nombre" class="flex-1 px-2 py-1 text-xs border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                  <input [(ngModel)]="e.url" (ngModelChange)="onCambioHome()" placeholder="URL" class="flex-1 px-2 py-1 text-xs border border-slate-200 dark:border-slate-700 rounded-lg bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+                  <button type="button" (click)="eliminarEnlaceFooter(col, e.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </div>
+                }
+                <button type="button" (click)="agregarEnlaceFooter(col)" class="text-xs text-slate-400 hover:text-primary flex items-center gap-1 mt-1">
+                  <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar enlace
+                </button>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      }
 
-}
-@if(a.tipo === 'especialidad'){
+    </div><!-- /PANEL EDICIÓN -->
+  </div><!-- /lg:col-span-2 -->
 
-<svg class="w-5 h-5"
-     fill="none"
-     stroke="currentColor"
-     stroke-width="1.8"
-     viewBox="0 0 24 24">
+  <!-- ACTIVIDAD RECIENTE (1/3) -->
+  <div class="lg:col-span-1">
+    <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-xl p-6 h-full">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold text-sm text-slate-800 dark:text-slate-100">Actividad Reciente</h2>
+        <a routerLink="/actividad" class="text-xs text-primary hover:underline">Ver todo</a>
+      </div>
+      <div class="space-y-6">
+        @for (grupo of getActividadesAgrupadas(); track grupo.titulo) {
+        <div>
+          <p class="text-[11px] font-bold uppercase text-slate-400 dark:text-slate-500 mb-3">{{grupo.titulo}}</p>
+          @for (a of grupo.items; track $index; let last = $last) {
+          <div class="flex gap-3 mb-4 opacity-0 animate-[fadeIn_.4s_ease_forwards]">
+            <div class="relative flex flex-col items-center">
+              <div class="size-8 rounded-full flex items-center justify-center relative z-10"
+                [ngClass]="{
+                  'bg-blue-500/10 text-blue-500':    a.tipo === 'usuario',
+                  'bg-orange-500/10 text-orange-500': a.tipo === 'evento',
+                  'bg-green-500/10 text-green-500':   a.tipo === 'reporte',
+                  'bg-purple-500/10 text-purple-500': a.tipo === 'especialidad',
+                  'bg-slate-100 dark:bg-slate-800 text-slate-400': a.tipo === 'sistema' || a.tipo === 'curso' || a.tipo === 'estudiante'
+                }">
+                @if (isNuevaActividad(a)) {
+                  <div class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                }
+                @if (a.tipo === 'usuario') {
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21c0-3-4-5-8-5s-8 2-8 5"/></svg>
+                }
+                @if (a.tipo === 'evento') {
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
+                }
+                @if (a.tipo === 'reporte') {
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                }
+                @if (a.tipo === 'especialidad') {
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 3h6v3H9z"/><path d="M9 10l1.5 1.5L13 9"/><path d="M9 14l1.5 1.5L13 13"/></svg>
+                }
+                @if (a.tipo === 'sistema' || a.tipo === 'curso' || a.tipo === 'estudiante') {
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                }
+              </div>
+              @if (!last) {
+                <div class="w-px flex-1 bg-slate-100 dark:bg-slate-800 mt-1"></div>
+              }
+            </div>
+            <div class="flex flex-col pb-1">
+              <p class="text-xs font-semibold text-slate-800 dark:text-slate-100 leading-snug">{{a.titulo}}</p>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">{{a.descripcion}}</p>
+              <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">{{activityService.getTiempoRelativo(a.fecha)}}</p>
+            </div>
+          </div>
+          }
+        </div>
+        }
+        @if (!getActividadesAgrupadas().length) {
+          <p class="text-sm text-slate-400 dark:text-slate-500 italic text-center py-8">Sin actividad reciente.</p>
+        }
+      </div>
+    </div>
+  </div><!-- /lg:col-span-1 -->
 
-<rect x="6" y="4" width="12" height="16" rx="2"></rect>
-
-<path stroke-linecap="round" stroke-linejoin="round"
-      d="M9 3h6v3H9z"/>
-
-<path stroke-linecap="round" stroke-linejoin="round"
-      d="M9 10l1.5 1.5L13 9"/>
-
-<path stroke-linecap="round" stroke-linejoin="round"
-      d="M9 14l1.5 1.5L13 13"/>
-
-</svg>
-
-}
-
-</div>
-
-<!-- LINEA TIMELINE -->
-@if(!last){
-<div class="w-px flex-1 bg-slate-200 dark:bg-slate-800 mt-1"></div>
-}
-
-</div>
-
-<!-- CONTENIDO -->
-<div class="flex flex-col">
-
-<p class="text-xs font-semibold text-slate-800 dark:text-slate-100">
-{{a.titulo}}
-</p>
-
-<p class="text-[10px] text-slate-500">
-{{a.descripcion}}
-</p>
-
-<p class="text-[10px] text-slate-400 mt-1">
-{{activityService.getTiempoRelativo(a.fecha)}}
-</p>
-
-</div>
-
-</div>
-
-}
-
-</div>
-
-}
-
-</div>
-
-</div>
-
-
-<!-- Bottom Section: Secciones Home Status -->
-<div class="bg-white dark:bg-background-dark p-6 rounded-lg border border-slate-200 dark:border-slate-800">
-<div class="flex items-center justify-between mb-6">
-<h3 class="font-bold text-sm uppercase tracking-wider text-slate-500">Estatus Secciones Home</h3>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<div class="flex items-center gap-4">
-<div class="size-2 rounded-full bg-green-500"></div>
-<div class="flex-1">
-<p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Slider Principal</p>
-<p class="text-[10px] text-slate-500">Activo • 4 slides</p>
-</div>
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-lg">edit</span>
-</button>
-</div>
-<div class="flex items-center gap-4">
-<div class="size-2 rounded-full bg-green-500"></div>
-<div class="flex-1">
-<p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Próximos Cursos</p>
-<p class="text-[10px] text-slate-500">Activo • Auto-update</p>
-</div>
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-lg">edit</span>
-</button>
-</div>
-<div class="flex items-center gap-4">
-<div class="size-2 rounded-full bg-amber-500"></div>
-<div class="flex-1">
-<p class="text-xs font-semibold text-slate-800 dark:text-slate-100">Testimonios</p>
-<p class="text-[10px] text-slate-500">Pendiente de Revisión</p>
-</div>
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-lg">edit</span>
-</button>
-</div>
-</div>
-</div>
-</div>
+</div><!-- /grid -->
+</div><!-- /outer wrapper -->

@@ -249,3 +249,123 @@ export interface Evento {
   destacado: boolean;
   fechaCreacion: string;
 }
+
+// ─── Home Config ──────────────────────────────────────────────────────────────
+
+/** Botón de acción genérico para el home. */
+export interface HomeBoton {
+  id: number;
+  label: string;
+  url: string;
+  estilo: 'primary' | 'outline';
+}
+
+/** Hero principal del home. */
+export interface HomeHero {
+  imagenFondo: string;
+  etiqueta: string;
+  titulo: string;
+  textoDestacado: string;
+  descripcion: string;
+  botones: HomeBoton[];
+}
+
+/** Estadística institucional individual. */
+export interface HomeEstadistica {
+  id: number;
+  valor: string;
+  etiqueta: string;
+}
+
+/** Ítem de "¿Por qué elegirnos?". */
+export interface HomePorQueItem {
+  id: number;
+  icono: string;
+  titulo: string;
+  descripcion: string;
+}
+
+/** Nivel académico del home. */
+export interface HomeNivel {
+  id: number;
+  imagen: string;
+  nombre: string;
+  descripcion: string;
+  enlace: string;
+}
+
+/** Configuración de la sección Eventos en el home. */
+export interface HomeEventos {
+  tituloSeccion: string;
+  labelBotonVerMas: string;
+  urlBotonVerMas: string;
+}
+
+/** Logo de comunidad/aliado. */
+export interface HomeLogo {
+  id: number;
+  url: string;
+  nombre: string;
+}
+
+/** Característica del modelo educativo. */
+export interface HomeCaracteristica {
+  id: number;
+  texto: string;
+}
+
+/** Sección institucional / modelo educativo. */
+export interface HomeInstitucional {
+  titulo: string;
+  subtitulo: string;
+  descripcion: string;
+  imagen: string;
+  caracteristicas: HomeCaracteristica[];
+}
+
+/** Enlace de comunicación o interés. */
+export interface HomeEnlace {
+  id: number;
+  nombre: string;
+  url: string;
+}
+
+/** Sección de admisiones del home. */
+export interface HomeAdmisiones {
+  titulo: string;
+  descripcion: string;
+  labelBoton: string;
+  urlBoton: string;
+  enlaces: HomeEnlace[];
+}
+
+/** Columna del footer. */
+export interface HomeFooterColumna {
+  titulo: string;
+  enlaces: HomeEnlace[];
+}
+
+/** Footer del sitio. */
+export interface HomeFooter {
+  nombreInstitucion: string;
+  descripcion: string;
+  direccion: string;
+  telefono: string;
+  email: string;
+  columnas: HomeFooterColumna[];
+}
+
+/** Configuración completa del home. */
+export interface HomeConfig {
+  hero:          HomeHero;
+  estadisticas:  HomeEstadistica[];
+  porQue:        HomePorQueItem[];
+  niveles:       HomeNivel[];
+  eventos:       HomeEventos;
+  logos:         HomeLogo[];
+  institucional: HomeInstitucional;
+  comunicacion:  HomeEnlace[];
+  admisiones:    HomeAdmisiones;
+  enlacesInteres:HomeEnlace[];
+  footer:        HomeFooter;
+}
