@@ -119,6 +119,15 @@ export class Header implements OnInit, OnDestroy {
         if (nombre) label = nombre;
       }
 
+      // Ruta dinámica: insertar "Eventos" como paso intermedio
+      if (route.snapshot.routeConfig?.path === 'eventos/:id') {
+        if (!crumbs.find(b => b.url === '/eventos')) {
+          crumbs.push({ label: 'Eventos', url: '/eventos' });
+        }
+        const titulo = history.state?.titulo;
+        if (titulo) label = titulo;
+      }
+
       if (label) crumbs.push({ label, url });
     }
 

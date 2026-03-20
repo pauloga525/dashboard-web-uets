@@ -6,18 +6,126 @@
 
 // ─── Especialidades ───────────────────────────────────────────────────────────
 
-/** Representa una especialidad académica del instituto. */
-export interface Especialidad {
+/** Materia dentro de un año de la malla curricular. */
+export interface Materia {
   id: number;
-  icono: string;
+  nombre: string;
+  horas?: number;
+}
+
+/** Año académico con sus materias. */
+export interface AnioMalla {
+  id: number;
+  label: string;   // "Primer Año", "Segundo Año", etc.
+  materias: Materia[];
+}
+
+/** Tarjeta de salida profesional. */
+export interface SalidaProfesional {
+  id: number;
+  icono: string;   // nombre de icono SVG
   titulo: string;
   descripcion: string;
-  coordinador: string;
+}
+
+/** Imagen de galería de instalaciones. */
+export interface ImagenInstalacion {
+  id: number;
+  url: string;
+  titulo: string;
+}
+
+/** Botón de acción en la sección de admisiones. */
+export interface BotonAdmision {
+  id: number;
+  label: string;
+  url: string;
+  estilo: 'primary' | 'outline';
+}
+
+/** Testimonio de un estudiante o egresado. */
+export interface Testimonio {
+  id: number;
+  texto: string;
+  autor: string;
+  cargo?: string;
+}
+
+/** Perfil completo del coordinador de la especialidad. */
+export interface PerfilCoordinador {
+  nombre: string;
+  cargo: string;
+  foto: string;
+  email: string;
+  telefono: string;
+}
+
+/** Sección de admisiones. */
+export interface SeccionAdmisiones {
+  texto: string;
+  fechaImportante: string;
+  labelFecha: string;
+  botones: BotonAdmision[];
+}
+
+/** Sección de perfil del estudiante. */
+export interface PerfilEstudiante {
+  descripcion: string;
+  habilidades: string[];
+}
+
+/** Control de publicación. */
+export interface Publicacion {
+  publicado: boolean;
+  fechaPublicacion: string;
+  visibleEnWeb: boolean;
+}
+
+/** Representa una especialidad académica del instituto (modelo completo). */
+export interface Especialidad {
+  // ── Identificación ──────────────────────────────────────────────────────────
+  id: number;
+  icono: string;
   color: string;
   codigo?: string;
+
+  // ── General / Hero ──────────────────────────────────────────────────────────
+  titulo: string;
+  subtitulo?: string;
+  descripcion: string;
+  tituloAObtener?: string;
   duracion?: string;
   nivel?: string;
-  tituloAObtener?: string;
+
+  // ── Imagen ──────────────────────────────────────────────────────────────────
+  imagenHero?: string;
+  imagenSecundaria?: string;
+  videoUrl?: string;
+
+  // ── Malla Curricular ────────────────────────────────────────────────────────
+  malla?: AnioMalla[];
+
+  // ── Coordinador ─────────────────────────────────────────────────────────────
+  coordinador: string;                    // nombre plano (usado en lista)
+  perfilCoordinador?: PerfilCoordinador;  // perfil completo
+
+  // ── Perfil del Estudiante ───────────────────────────────────────────────────
+  perfilEstudiante?: PerfilEstudiante;
+
+  // ── Futuro Profesional ──────────────────────────────────────────────────────
+  salidasProfesionales?: SalidaProfesional[];
+
+  // ── Instalaciones ───────────────────────────────────────────────────────────
+  instalaciones?: ImagenInstalacion[];
+
+  // ── Admisiones ──────────────────────────────────────────────────────────────
+  admisiones?: SeccionAdmisiones;
+
+  // ── Testimonios ─────────────────────────────────────────────────────────────
+  testimonios?: Testimonio[];
+
+  // ── Publicación ─────────────────────────────────────────────────────────────
+  publicacion?: Publicacion;
 }
 
 // ─── Actividades ──────────────────────────────────────────────────────────────
@@ -31,7 +139,6 @@ export type TipoActividad =
   | 'usuario'
   | 'sistema'
   | 'reporte';
-
 
 /** Representa una entrada en el historial de actividad. */
 export interface Actividad {
@@ -73,4 +180,72 @@ export interface BreadcrumbItem {
 export interface Tab {
   id: string;
   label: string;
+}
+
+// ─── Eventos ──────────────────────────────────────────────────────────────────
+
+/** Ítem de la agenda/cronograma de un evento. */
+export interface AgendaItem {
+  id: number;
+  hora: string;
+  titulo: string;
+  descripcion?: string;
+}
+
+/** Categoría de evento. */
+export interface CategoriaEvento {
+  id: number;
+  nombre: string;
+  color: string; // tailwind color key: blue, green, red, etc.
+}
+
+/** Formulario de registro de asistencia (estructura del campo). */
+export interface RegistroAsistencia {
+  habilitado: boolean;
+  labelBoton: string;
+  url?: string; // link externo o vacío si es formulario interno
+}
+
+/** Configuración del hero de la página pública de eventos. */
+export interface HeroEventos {
+  etiqueta: string;
+  titulo: string;
+  subtitulo: string;
+  imagenFondo: string;
+}
+
+/** Evento institucional completo. */
+export interface Evento {
+  // ── Identificación ──────────────────────────────────────────────────────────
+  id: number;
+  slug: string;
+
+  // ── Contenido principal ─────────────────────────────────────────────────────
+  titulo: string;
+  descripcionCorta: string;
+  descripcionCompleta: string;
+  categoria: string;       // nombre de la categoría
+  categoriaColor: string;  // color tailwind de la categoría
+
+  // ── Fecha y lugar ───────────────────────────────────────────────────────────
+  fecha: string;           // ISO date string YYYY-MM-DD
+  horaInicio: string;      // HH:mm
+  horaFin: string;         // HH:mm
+  ubicacion: string;
+  direccion?: string;
+
+  // ── Imágenes ────────────────────────────────────────────────────────────────
+  imagenPrincipal: string;
+  galeria?: string[];      // URLs adicionales
+
+  // ── Agenda ──────────────────────────────────────────────────────────────────
+  agenda?: AgendaItem[];
+
+  // ── Registro ────────────────────────────────────────────────────────────────
+  registro?: RegistroAsistencia;
+
+  // ── Publicación ─────────────────────────────────────────────────────────────
+  publicado: boolean;
+  destacado: boolean;
+  fechaCreacion: string;
 }

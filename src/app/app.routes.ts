@@ -14,6 +14,7 @@ import { EspecialidadEditor } from './pages/especialidades/especialidad-editor/e
 import { Recursos }          from './pages/recursos/recursos';
 import { Estudiantes }       from './pages/estudiantes/estudiantes';
 import { Eventos }           from './pages/eventos/eventos';
+import { EventoEditor }      from './pages/eventos/evento-editor/evento-editor';
 import { Configuracion }     from './pages/configuracion/configuracion';
 import { Actividad }         from './pages/actividad/actividad';
 
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'recursos',       component: Recursos,         data: { animation: 'Recursos',           breadcrumb: 'Recursos'           } },
   { path: 'estudiantes',    component: Estudiantes,      data: { animation: 'Estudiantes',        breadcrumb: 'Estudiantes'        } },
   { path: 'eventos',        component: Eventos,          data: { animation: 'Eventos',            breadcrumb: 'Eventos'            } },
+  { path: 'eventos/:id',   component: EventoEditor,     data: { animation: 'EventoEditor'                                             } },
   { path: 'configuracion',  component: Configuracion,    data: { animation: 'Configuracion',      breadcrumb: 'Configuración'      } },
   { path: 'actividad',      component: Actividad,        data: { animation: 'Actividad',          breadcrumb: 'Actividad reciente' } },
   {

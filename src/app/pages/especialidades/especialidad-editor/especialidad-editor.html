@@ -1,156 +1,582 @@
 @if (especialidad) {
-
 <div class="max-w-7xl mx-auto w-full px-6 py-10">
-
 <div class="grid grid-cols-12 gap-8">
 
-<!-- CONTENIDO PRINCIPAL -->
+<!-- ═══════════════════════════════════════════════════ CONTENIDO PRINCIPAL -->
 <div class="col-span-12 lg:col-span-8">
 
-  <!-- HEADER -->
   <div class="mb-8">
-    <h1 class="text-3xl font-black tracking-tight mb-2 text-slate-900 dark:text-white">
-      {{especialidad.titulo}}
-    </h1>
-    <p class="text-slate-500 dark:text-slate-400">
-      Configure los detalles de la especialidad.
-    </p>
+    <h1 class="text-3xl font-black tracking-tight mb-1 text-slate-900 dark:text-white">{{especialidad.titulo}}</h1>
+    <p class="text-slate-500 dark:text-slate-400 text-sm">Configure todo el contenido de la especialidad para la página pública.</p>
   </div>
 
   <!-- TABS -->
   <div class="mb-8 border-b border-slate-200 dark:border-slate-700 overflow-x-auto">
-    <div class="flex gap-8 min-w-max">
+    <div class="flex gap-6 min-w-max">
       @for (tab of tabs; track tab.id) {
-        <button
-          type="button"
-          (click)="tabActiva = tab.id"
+        <button type="button" (click)="tabActiva = tab.id"
           [class]="tabActiva === tab.id
-            ? 'border-b-2 border-primary text-primary font-bold text-sm pb-4'
-            : 'text-slate-500 dark:text-slate-400 text-sm pb-4 hover:text-slate-700 dark:hover:text-slate-300'">
+            ? 'border-b-2 border-primary text-primary font-bold text-sm pb-3 whitespace-nowrap'
+            : 'text-slate-500 dark:text-slate-400 text-sm pb-3 hover:text-slate-700 dark:hover:text-slate-300 whitespace-nowrap'">
           {{ tab.label }}
         </button>
       }
     </div>
   </div>
 
-  <!-- FORM -->
-  <div class="space-y-8">
+  <div>
 
-    <!-- GENERAL -->
+    <!-- ══════════════════════════════════════════════════════ TAB: GENERAL -->
     @if (tabActiva === 'general') {
-    <div class="tab-content">
-      <h3 class="text-xl font-bold mb-6 text-slate-900 dark:text-white">Información General</h3>
+    <div class="tab-content space-y-8">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        <!-- NOMBRE -->
+      <!-- INFORMACIÓN GENERAL -->
+      <section class="space-y-5">
         <div>
-          <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Nombre</label>
-          <input
-            [(ngModel)]="especialidad.titulo"
-            (ngModelChange)="onCambio()"
-            class="w-full h-12 px-4 mt-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500"
-          />
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Información General · Hero</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Alimenta directamente el hero de la página pública.</p>
         </div>
-
-        <!-- CODIGO -->
-        <div>
-          <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Código</label>
-          <input
-            [(ngModel)]="especialidad.codigo"
-            (ngModelChange)="onCambio()"
-            class="w-full h-12 px-4 mt-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500"
-          />
-        </div>
-
-        <!-- DESCRIPCION -->
-        <div class="md:col-span-2">
-          <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Descripción</label>
-          <textarea
-            [(ngModel)]="especialidad.descripcion"
-            (ngModelChange)="onCambio()"
-            rows="3"
-            class="w-full p-4 mt-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500">
-          </textarea>
-        </div>
-
-        <!-- TITULO A OBTENER -->
-        <div class="md:col-span-2">
-          <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Título a obtener</label>
-          <input
-            [(ngModel)]="especialidad.tituloAObtener"
-            (ngModelChange)="onCambio()"
-            placeholder="Ej: Bachiller en Mecatrónica"
-            class="w-full h-12 px-4 mt-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500"
-          />
-        </div>
-
-        <!-- DURACION -->
-        <div>
-          <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Duración</label>
-          <div class="w-full h-12 px-4 mt-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex items-center text-sm text-slate-600 dark:text-slate-300">
-            3 años
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label class="label">Nombre de la especialidad</label>
+            <input [(ngModel)]="especialidad.titulo" (ngModelChange)="onCambio()" class="input" />
+          </div>
+          <div>
+            <label class="label">Código</label>
+            <input [(ngModel)]="especialidad.codigo" (ngModelChange)="onCambio()" placeholder="Ej: ESP-MEC-01" class="input" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="label">Subtítulo / Frase destacada</label>
+            <input [(ngModel)]="especialidad.subtitulo" (ngModelChange)="onCambio()" placeholder="Ej: Tecnología que transforma el futuro" class="input" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="label">Descripción principal</label>
+            <textarea [(ngModel)]="especialidad.descripcion" (ngModelChange)="onCambio()" rows="4" class="input resize-none"></textarea>
+          </div>
+          <div class="md:col-span-2">
+            <label class="label">Título a obtener</label>
+            <input [(ngModel)]="especialidad.tituloAObtener" (ngModelChange)="onCambio()" placeholder="Ej: Bachiller en Mecatrónica" class="input" />
+          </div>
+          <div>
+            <label class="label">Duración</label>
+            <div class="input bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-default select-none">3 años</div>
+          </div>
+          <div>
+            <label class="label">Nivel</label>
+            <div class="input bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-default select-none">Bachillerato</div>
           </div>
         </div>
+      </section>
 
-        <!-- NIVEL -->
+      <hr class="border-slate-100 dark:border-slate-800" />
+
+      <!-- PERFIL DEL ESTUDIANTE -->
+      <section class="space-y-5">
         <div>
-          <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Nivel</label>
-          <div class="w-full h-12 px-4 mt-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex items-center text-sm text-slate-600 dark:text-slate-300">
-            Bachillerato
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Perfil del Estudiante</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Descripción y competencias del egresado.</p>
+        </div>
+        <div>
+          <label class="label">Descripción del perfil</label>
+          <textarea [(ngModel)]="especialidad.perfilEstudiante!.descripcion" (ngModelChange)="onCambio()"
+            rows="3" placeholder="Describe las características del estudiante que egresa..." class="input resize-none"></textarea>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <label class="label mb-0">Habilidades y competencias</label>
+            <button type="button" (click)="agregarHabilidad()" class="btn-primary text-xs">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              Agregar
+            </button>
+          </div>
+          @if (!especialidad.perfilEstudiante!.habilidades.length) {
+            <p class="text-sm text-slate-400 dark:text-slate-500 italic">Sin habilidades definidas.</p>
+          }
+          <div class="space-y-2">
+            @for (h of especialidad.perfilEstudiante!.habilidades; track trackByIndex($index)) {
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+              <input [ngModel]="h" (ngModelChange)="especialidad!.perfilEstudiante!.habilidades[$index] = $event; onCambio()"
+                placeholder="Ej: Programación de PLCs"
+                class="flex-1 text-sm bg-transparent border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/30" />
+              <button type="button" (click)="eliminarHabilidad($index)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            }
           </div>
         </div>
+      </section>
 
+      <hr class="border-slate-100 dark:border-slate-800" />
+
+      <!-- FUTURO PROFESIONAL -->
+      <section class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Futuro Profesional</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Tarjetas de salidas y oportunidades laborales.</p>
+          </div>
+          <button type="button" (click)="agregarSalida()" class="btn-primary text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar tarjeta
+          </button>
+        </div>
+        @if (!especialidad.salidasProfesionales?.length) {
+          <div class="rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 py-10 text-center text-slate-400 dark:text-slate-500 text-sm">
+            Sin salidas definidas.
+          </div>
+        }
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          @for (salida of especialidad.salidasProfesionales; track salida.id) {
+          <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <select [(ngModel)]="salida.icono" (ngModelChange)="onCambio()"
+                class="text-xs border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/30">
+                @for (ic of iconosSalida; track ic) { <option [value]="ic">{{ic}}</option> }
+              </select>
+              <button type="button" (click)="eliminarSalida(salida.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+                </svg>
+              </button>
+            </div>
+            <input [(ngModel)]="salida.titulo" (ngModelChange)="onCambio()" placeholder="Título de la salida" class="input text-sm" />
+            <textarea [(ngModel)]="salida.descripcion" (ngModelChange)="onCambio()" rows="2" placeholder="Descripción breve..." class="input text-sm resize-none"></textarea>
+          </div>
+          }
+        </div>
+      </section>
+
+      <hr class="border-slate-100 dark:border-slate-800" />
+
+      <!-- TESTIMONIOS -->
+      <section class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Testimonios</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Opiniones de estudiantes o egresados.</p>
+          </div>
+          <button type="button" (click)="agregarTestimonio()" class="btn-primary text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar
+          </button>
+        </div>
+        @if (!especialidad.testimonios?.length) {
+          <div class="rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 py-10 text-center text-slate-400 dark:text-slate-500 text-sm">
+            Sin testimonios definidos.
+          </div>
+        }
+        <div class="space-y-4">
+          @for (t of especialidad.testimonios; track t.id) {
+          <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-3">
+            <div class="flex items-start justify-between gap-3">
+              <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+              </svg>
+              <textarea [(ngModel)]="t.texto" (ngModelChange)="onCambio()" rows="3" placeholder="Texto del testimonio..." class="flex-1 input text-sm resize-none"></textarea>
+              <button type="button" (click)="eliminarTestimonio(t.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+                </svg>
+              </button>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <input [(ngModel)]="t.autor" (ngModelChange)="onCambio()" placeholder="Nombre del autor" class="input text-sm" />
+              <input [(ngModel)]="t.cargo" (ngModelChange)="onCambio()" placeholder="Cargo o año (opcional)" class="input text-sm" />
+            </div>
+          </div>
+          }
+        </div>
+      </section>
+
+    </div>
+    }
+
+    <!-- ══════════════════════════════════════════════════════ TAB: IMÁGENES -->
+    @if (tabActiva === 'imagenes') {
+    <div class="tab-content space-y-8">
+
+      <!-- IMAGEN PRINCIPAL (HERO) -->
+      <section class="space-y-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Imagen principal · Hero</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Fondo del hero en la página pública.</p>
+        </div>
+        <input [(ngModel)]="especialidad.imagenHero" (ngModelChange)="onCambio()" placeholder="https://..." class="input" />
+        @if (especialidad.imagenHero) {
+          <div class="relative rounded-xl overflow-hidden aspect-video bg-slate-100 dark:bg-slate-800">
+            <img [src]="especialidad.imagenHero" alt="Hero" class="w-full h-full object-cover" />
+            <button type="button" (click)="especialidad.imagenHero = ''; onCambio()"
+              class="absolute top-2 right-2 bg-red-600 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-red-700 transition">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+        } @else {
+          <div class="rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 aspect-video flex flex-col items-center justify-center gap-2 text-slate-400 dark:text-slate-500">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span class="text-sm">Sin imagen — ingresa una URL arriba</span>
+          </div>
+        }
+      </section>
+
+      <hr class="border-slate-100 dark:border-slate-800" />
+
+      <!-- IMAGEN SECUNDARIA -->
+      <section class="space-y-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Imagen secundaria</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Imagen de apoyo opcional (sección de contenido).</p>
+        </div>
+        <input [(ngModel)]="especialidad.imagenSecundaria" (ngModelChange)="onCambio()" placeholder="https://..." class="input" />
+        @if (especialidad.imagenSecundaria) {
+          <div class="relative rounded-xl overflow-hidden h-48 bg-slate-100 dark:bg-slate-800">
+            <img [src]="especialidad.imagenSecundaria" alt="Secundaria" class="w-full h-full object-cover" />
+            <button type="button" (click)="especialidad.imagenSecundaria = ''; onCambio()"
+              class="absolute top-2 right-2 bg-red-600 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-red-700 transition">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+        }
+      </section>
+
+      <hr class="border-slate-100 dark:border-slate-800" />
+
+      <!-- VIDEO DE PRESENTACIÓN -->
+      <section class="space-y-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Video de presentación</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">URL de YouTube o Vimeo (embed).</p>
+        </div>
+        <input [(ngModel)]="especialidad.videoUrl" (ngModelChange)="onCambio()" placeholder="https://www.youtube.com/embed/..." class="input" />
+        @if (especialidad.videoUrl) {
+          <div class="relative rounded-xl overflow-hidden aspect-video bg-slate-100 dark:bg-slate-800">
+            <iframe [src]="especialidad.videoUrl | safeUrl" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+          </div>
+        } @else {
+          <div class="rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 aspect-video flex flex-col items-center justify-center gap-2 text-slate-400 dark:text-slate-500">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            <span class="text-sm">Sin video — ingresa una URL de embed arriba</span>
+          </div>
+        }
+      </section>
+
+      <hr class="border-slate-100 dark:border-slate-800" />
+
+      <!-- GALERÍA DE INSTALACIONES -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Instalaciones</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Galería de imágenes de las instalaciones.</p>
+          </div>
+          <button type="button" (click)="agregarInstalacion()" class="btn-primary text-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar imagen
+          </button>
+        </div>
+        @if (!especialidad.instalaciones?.length) {
+          <div class="rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 py-10 text-center text-slate-400 dark:text-slate-500 text-sm">
+            Sin imágenes — agrega una para comenzar.
+          </div>
+        }
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          @for (img of especialidad.instalaciones; track img.id) {
+          <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+            @if (img.url) {
+              <div class="relative aspect-video bg-slate-100 dark:bg-slate-800">
+                <img [src]="img.url" [alt]="img.titulo" class="w-full h-full object-cover" />
+              </div>
+            } @else {
+              <div class="aspect-video bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-300 dark:text-slate-600">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+            }
+            <div class="p-3 space-y-2">
+              <input [(ngModel)]="img.url" (ngModelChange)="onCambio()" placeholder="URL de la imagen" class="input text-sm" />
+              <div class="flex items-center gap-2">
+                <input [(ngModel)]="img.titulo" (ngModelChange)="onCambio()" placeholder="Título" class="input text-sm flex-1" />
+                <button type="button" (click)="eliminarInstalacion(img.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </section>
+
+    </div>
+    }
+
+    <!-- ══════════════════════════════════════════════════ TAB: MALLA CURRICULAR -->
+    @if (tabActiva === 'malla') {
+    <div class="tab-content space-y-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Malla Curricular</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Estructura jerárquica por años y materias.</p>
+        </div>
+        <button type="button" (click)="agregarAnio()" class="btn-primary text-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Agregar año
+        </button>
+      </div>
+      @if (!especialidad.malla?.length) {
+        <div class="rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 py-12 text-center text-slate-400 dark:text-slate-500 text-sm">
+          Sin años definidos — haz clic en "Agregar año" para comenzar.
+        </div>
+      }
+      @for (anio of especialidad.malla; track anio.id) {
+      <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+        <div class="flex items-center gap-3 px-4 py-3 bg-slate-50 dark:bg-slate-800">
+          <input [(ngModel)]="anio.label" (ngModelChange)="onCambio()"
+            class="flex-1 bg-transparent font-semibold text-sm text-slate-800 dark:text-white border-none outline-none" />
+          <button type="button" (click)="agregarMateria(anio)" class="text-xs text-primary hover:underline flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Materia
+          </button>
+          <button type="button" (click)="eliminarAnio(anio.id)" class="text-slate-400 hover:text-red-500 transition">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+            </svg>
+          </button>
+        </div>
+        <div class="divide-y divide-slate-100 dark:divide-slate-800">
+          @if (!anio.materias.length) {
+            <p class="px-4 py-3 text-xs text-slate-400 dark:text-slate-500 italic">Sin materias — agrega una arriba.</p>
+          }
+          @for (materia of anio.materias; track materia.id) {
+          <div class="flex items-center gap-3 px-4 py-2.5">
+            <svg class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+            <input [(ngModel)]="materia.nombre" (ngModelChange)="onCambio()" placeholder="Nombre de la materia"
+              class="flex-1 text-sm bg-transparent text-slate-800 dark:text-white border-none outline-none placeholder-slate-300 dark:placeholder-slate-600" />
+            <input [(ngModel)]="materia.horas" (ngModelChange)="onCambio()" type="number" min="0" placeholder="h/sem"
+              class="w-16 text-xs text-center bg-transparent border border-slate-200 dark:border-slate-700 rounded-md px-2 py-1 text-slate-600 dark:text-slate-400" />
+            <button type="button" (click)="eliminarMateria(anio, materia.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+      }
+    </div>
+    }
+
+    <!-- ══════════════════════════════════════════════════ TAB: COORDINADOR -->
+    @if (tabActiva === 'coordinador') {
+    <div class="tab-content space-y-6">
+      <div>
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">Coordinador</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Perfil del coordinador responsable de la especialidad.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label class="label">Nombre completo</label>
+          <input [(ngModel)]="especialidad.perfilCoordinador!.nombre" (ngModelChange)="onCambio()" class="input" />
+        </div>
+        <div>
+          <label class="label">Cargo</label>
+          <input [(ngModel)]="especialidad.perfilCoordinador!.cargo" (ngModelChange)="onCambio()" placeholder="Ej: Coordinador de Especialidad" class="input" />
+        </div>
+        <div>
+          <label class="label">Correo electrónico</label>
+          <input [(ngModel)]="especialidad.perfilCoordinador!.email" (ngModelChange)="onCambio()" type="email" placeholder="correo@institucion.edu" class="input" />
+        </div>
+        <div>
+          <label class="label">Teléfono</label>
+          <input [(ngModel)]="especialidad.perfilCoordinador!.telefono" (ngModelChange)="onCambio()" placeholder="+593 99 000 0000" class="input" />
+        </div>
+        <div class="md:col-span-2">
+          <label class="label">URL de foto</label>
+          <input [(ngModel)]="especialidad.perfilCoordinador!.foto" (ngModelChange)="onCambio()" placeholder="https://..." class="input" />
+          @if (especialidad.perfilCoordinador!.foto) {
+            <div class="mt-3 flex items-center gap-4">
+              <img [src]="especialidad.perfilCoordinador!.foto" alt="Foto coordinador"
+                class="w-20 h-20 rounded-full object-cover border-2 border-slate-200 dark:border-slate-700" />
+              <div>
+                <p class="font-semibold text-sm text-slate-800 dark:text-white">{{especialidad.perfilCoordinador!.nombre || '—'}}</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{{especialidad.perfilCoordinador!.cargo || '—'}}</p>
+              </div>
+            </div>
+          }
+        </div>
       </div>
     </div>
     }
 
-    <!-- IMAGEN -->
-    @if (tabActiva === 'imagen') {
-    <div class="tab-content">
-      <h3 class="text-xl font-bold mb-6 text-slate-900 dark:text-white">Imagen</h3>
-      <p class="text-slate-500 dark:text-slate-400 text-sm">Sube o configura la imagen de la especialidad.</p>
+    <!-- ══════════════════════════════════════════════════ TAB: ADMISIONES -->
+    @if (tabActiva === 'admisiones') {
+    <div class="tab-content space-y-6">
+      <div>
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">Admisiones</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Bloque lateral de la página pública con texto, fecha y botones de acción.</p>
+      </div>
+      <div>
+        <label class="label">Texto informativo</label>
+        <textarea [(ngModel)]="especialidad.admisiones!.texto" (ngModelChange)="onCambio()"
+          rows="3" placeholder="Información sobre el proceso de admisión..." class="input resize-none"></textarea>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label class="label">Etiqueta de fecha</label>
+          <input [(ngModel)]="especialidad.admisiones!.labelFecha" (ngModelChange)="onCambio()" placeholder="Ej: Fecha de examen de ingreso" class="input" />
+        </div>
+        <div>
+          <label class="label">Fecha importante</label>
+          <input [(ngModel)]="especialidad.admisiones!.fechaImportante" (ngModelChange)="onCambio()" type="date" class="input" />
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <label class="label mb-0">Botones de acción</label>
+          <button type="button" (click)="agregarBoton()" class="btn-primary text-xs">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Agregar botón
+          </button>
+        </div>
+        @if (!especialidad.admisiones!.botones.length) {
+          <p class="text-sm text-slate-400 dark:text-slate-500 italic">Sin botones definidos.</p>
+        }
+        <div class="space-y-3">
+          @for (btn of especialidad.admisiones!.botones; track btn.id) {
+          <div class="flex items-center gap-3 border border-slate-200 dark:border-slate-700 rounded-xl p-3">
+            <select [(ngModel)]="btn.estilo" (ngModelChange)="onCambio()"
+              class="text-xs border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1.5 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-primary/30 shrink-0">
+              <option value="primary">Primario</option>
+              <option value="outline">Outline</option>
+            </select>
+            <input [(ngModel)]="btn.label" (ngModelChange)="onCambio()" placeholder="Texto del botón" class="input text-sm flex-1" />
+            <input [(ngModel)]="btn.url" (ngModelChange)="onCambio()" placeholder="URL" class="input text-sm flex-1" />
+            <button type="button" (click)="eliminarBoton(btn.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          }
+        </div>
+      </div>
     </div>
     }
 
-    <!-- MALLA CURRICULAR -->
-    @if (tabActiva === 'malla') {
-    <div class="tab-content">
-      <h3 class="text-xl font-bold mb-6 text-slate-900 dark:text-white">Malla Curricular</h3>
-      <p class="text-slate-500 dark:text-slate-400 text-sm">Define las materias y estructura académica.</p>
+    <!-- ══════════════════════════════════════════════════ TAB: TESTIMONIOS -->
+    @if (tabActiva === 'testimonios') {
+    <div class="tab-content space-y-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Testimonios</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Opiniones de estudiantes o egresados.</p>
+        </div>
+        <button type="button" (click)="agregarTestimonio()" class="btn-primary text-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Agregar
+        </button>
+      </div>
+      @if (!especialidad.testimonios?.length) {
+        <div class="rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 py-12 text-center text-slate-400 dark:text-slate-500 text-sm">
+          Sin testimonios definidos.
+        </div>
+      }
+      <div class="space-y-4">
+        @for (t of especialidad.testimonios; track t.id) {
+        <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-3">
+          <div class="flex items-start justify-between gap-3">
+            <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <textarea [(ngModel)]="t.texto" (ngModelChange)="onCambio()" rows="3" placeholder="Texto del testimonio..." class="flex-1 input text-sm resize-none"></textarea>
+            <button type="button" (click)="eliminarTestimonio(t.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+              </svg>
+            </button>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <input [(ngModel)]="t.autor" (ngModelChange)="onCambio()" placeholder="Nombre del autor" class="input text-sm" />
+            <input [(ngModel)]="t.cargo" (ngModelChange)="onCambio()" placeholder="Cargo o año (opcional)" class="input text-sm" />
+          </div>
+        </div>
+        }
+      </div>
     </div>
     }
-
-    <!-- COORDINADOR -->
-    @if (tabActiva === 'coordinador') {
-    <div class="tab-content">
-      <h3 class="text-xl font-bold mb-6 text-slate-900 dark:text-white">Coordinador</h3>
-      <p class="text-slate-500 dark:text-slate-400 text-sm">Asigna el coordinador responsable de esta especialidad.</p>
-    </div>
-    }
-
-    <!-- PUBLICACION -->
+    <!-- ══════════════════════════════════════════════════ TAB: PUBLICACIÓN -->
     @if (tabActiva === 'publicacion') {
-    <div class="tab-content">
-      <h3 class="text-xl font-bold mb-6 text-slate-900 dark:text-white">Publicación</h3>
-      <p class="text-slate-500 dark:text-slate-400 text-sm">Controla la visibilidad y estado de publicación.</p>
+    <div class="tab-content space-y-6">
+      <div>
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">Publicación</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Control de visibilidad en la página pública.</p>
+      </div>
+      <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5 space-y-4">
+        <label class="flex items-center gap-3 cursor-pointer">
+          <div class="relative">
+            <input type="checkbox" [(ngModel)]="especialidad.publicacion!.publicado" (ngModelChange)="onCambio()" class="sr-only peer" />
+            <div class="w-10 h-6 bg-slate-200 dark:bg-slate-700 rounded-full peer-checked:bg-primary transition-colors"></div>
+            <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-4"></div>
+          </div>
+          <span class="text-sm text-slate-700 dark:text-slate-300">
+            @if (especialidad.publicacion!.publicado) { Publicado } @else { Borrador }
+          </span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <div class="relative">
+            <input type="checkbox" [(ngModel)]="especialidad.publicacion!.visibleEnWeb" (ngModelChange)="onCambio()" class="sr-only peer" />
+            <div class="w-10 h-6 bg-slate-200 dark:bg-slate-700 rounded-full peer-checked:bg-primary transition-colors"></div>
+            <div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-4"></div>
+          </div>
+          <span class="text-sm text-slate-700 dark:text-slate-300">Visible en la página pública</span>
+        </label>
+      </div>
+      <div>
+        <label class="label">Fecha de publicación</label>
+        <input [(ngModel)]="especialidad.publicacion!.fechaPublicacion" (ngModelChange)="onCambio()" type="date" class="input max-w-xs" />
+      </div>
+      <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-5">
+        <p class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4">Resumen de contenido</p>
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-lg px-3 py-2">
+            <span class="text-slate-500 dark:text-slate-400">Años en malla</span>
+            <span class="font-semibold text-slate-800 dark:text-white">{{especialidad.malla?.length ?? 0}}</span>
+          </div>
+          <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-lg px-3 py-2">
+            <span class="text-slate-500 dark:text-slate-400">Habilidades</span>
+            <span class="font-semibold text-slate-800 dark:text-white">{{especialidad.perfilEstudiante?.habilidades?.length ?? 0}}</span>
+          </div>
+          <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-lg px-3 py-2">
+            <span class="text-slate-500 dark:text-slate-400">Salidas prof.</span>
+            <span class="font-semibold text-slate-800 dark:text-white">{{especialidad.salidasProfesionales?.length ?? 0}}</span>
+          </div>
+          <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-lg px-3 py-2">
+            <span class="text-slate-500 dark:text-slate-400">Instalaciones</span>
+            <span class="font-semibold text-slate-800 dark:text-white">{{especialidad.instalaciones?.length ?? 0}}</span>
+          </div>
+          <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-lg px-3 py-2">
+            <span class="text-slate-500 dark:text-slate-400">Testimonios</span>
+            <span class="font-semibold text-slate-800 dark:text-white">{{especialidad.testimonios?.length ?? 0}}</span>
+          </div>
+          <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-lg px-3 py-2">
+            <span class="text-slate-500 dark:text-slate-400">Botones admisión</span>
+            <span class="font-semibold text-slate-800 dark:text-white">{{especialidad.admisiones?.botones?.length ?? 0}}</span>
+          </div>
+        </div>
+      </div>
     </div>
     }
 
-  </div>
+  </div><!-- /form content -->
+</div><!-- /col principal -->
 
-</div>
-
-<!-- SIDEBAR -->
+<!-- ═══════════════════════════════════════════════════════════════ SIDEBAR -->
 <div class="col-span-12 lg:col-span-4">
+  <div class="sticky top-24 space-y-5">
 
-  <div class="sticky top-24 space-y-6">
-
-    <!-- ESTADO -->
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4">
-
       <h4 class="font-bold text-sm mb-3 text-slate-900 dark:text-white">Estado</h4>
-
       <div class="flex items-center gap-2 mb-4">
         @if (guardado) {
           <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
@@ -160,73 +586,93 @@
           <span class="text-sm text-slate-600 dark:text-slate-300">Borrador</span>
         }
       </div>
-
       <div class="space-y-2">
-        <button
-          (click)="guardar()"
+        <button (click)="guardar()"
           class="w-full bg-primary text-white h-10 rounded-lg hover:bg-primary/90 transition text-sm font-medium flex items-center justify-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-            <polyline points="17 21 17 13 7 13 7 21"/>
-            <polyline points="7 3 7 8 15 8"/>
+            <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
           </svg>
           Guardar Cambios
         </button>
-
-        <button
-          (click)="pedirEliminar()"
+        <button (click)="pedirEliminar()"
           class="w-full border border-slate-200 dark:border-slate-700 h-10 rounded-lg text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition text-sm font-medium flex items-center justify-center gap-2">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="3 6 5 6 21 6"/>
-            <path d="M19 6l-1 14H6L5 6"/>
-            <path d="M10 11v6"/><path d="M14 11v6"/>
-            <path d="M9 6V4h6v2"/>
+            <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>
+            <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
           </svg>
           Eliminar
         </button>
       </div>
-
     </div>
 
-    <!-- PREVIEW -->
-    <div class="bg-primary/5 dark:bg-primary/10 border border-slate-200 dark:border-slate-700 rounded-xl p-6">
-
-      <h4 class="text-sm text-primary font-bold mb-4">Vista Previa</h4>
-
-      <div class="aspect-video bg-slate-200 dark:bg-slate-700 rounded-lg mb-4"></div>
-
-      <h5 class="font-bold text-slate-900 dark:text-white">
-        {{especialidad.titulo}}
-      </h5>
-
-      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-        {{especialidad.tituloAObtener || 'Sin título definido'}}
-      </p>
-
+    <!-- VISTA PREVIA -->
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+      <div class="relative aspect-video bg-slate-200 dark:bg-slate-800">
+        @if (especialidad.imagenHero) {
+          <img [src]="especialidad.imagenHero" alt="Hero" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        }
+        <div class="absolute bottom-0 left-0 p-3">
+          <p class="text-white font-bold text-sm leading-tight drop-shadow">{{especialidad.titulo}}</p>
+          @if (especialidad.subtitulo) {
+            <p class="text-white/70 text-xs mt-0.5">{{especialidad.subtitulo}}</p>
+          }
+        </div>
+      </div>
+      <div class="p-4 space-y-3">
+        @if (especialidad.tituloAObtener) {
+          <div class="flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-primary shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+            <span class="text-xs text-slate-600 dark:text-slate-400">{{especialidad.tituloAObtener}}</span>
+          </div>
+        }
+        @if (especialidad.perfilCoordinador?.nombre) {
+          <div class="flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span class="text-xs text-slate-500 dark:text-slate-400">{{especialidad.perfilCoordinador!.nombre}}</span>
+          </div>
+        }
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          @if (especialidad.malla?.length) {
+            <span class="px-2 py-0.5 text-xs rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">{{especialidad.malla!.length}} años</span>
+          }
+          @if (especialidad.salidasProfesionales?.length) {
+            <span class="px-2 py-0.5 text-xs rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">{{especialidad.salidasProfesionales!.length}} salidas</span>
+          }
+          @if (especialidad.instalaciones?.length) {
+            <span class="px-2 py-0.5 text-xs rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300">{{especialidad.instalaciones!.length}} fotos</span>
+          }
+          @if (especialidad.testimonios?.length) {
+            <span class="px-2 py-0.5 text-xs rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300">{{especialidad.testimonios!.length}} testimonios</span>
+          }
+          @if (especialidad.publicacion?.publicado) {
+            <span class="px-2 py-0.5 text-xs rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300">Publicado</span>
+          }
+        </div>
+      </div>
     </div>
 
   </div>
-
 </div>
 
-</div>
-
-</div>
-
+</div><!-- /grid -->
+</div><!-- /max-w -->
 }
 
 <!-- MODAL CONFIRMAR ELIMINACIÓN -->
 @if (confirmarEliminar) {
 <div class="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-sm">
   <div class="bg-white dark:bg-slate-900 rounded-xl shadow-2xl w-80 p-6 space-y-4">
-
     <div class="flex items-center gap-3">
       <div class="size-10 flex items-center justify-center rounded-full bg-red-100 dark:bg-red-900/40">
         <svg class="w-5 h-5 text-red-600 dark:text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="3 6 5 6 21 6"/>
-          <path d="M19 6l-1 14H6L5 6"/>
-          <path d="M10 11v6"/><path d="M14 11v6"/>
-          <path d="M9 6V4h6v2"/>
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>
+          <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
         </svg>
       </div>
       <div>
@@ -234,20 +680,16 @@
         <p class="text-xs text-slate-500 dark:text-slate-400">Esta acción no se puede deshacer</p>
       </div>
     </div>
-
     <div class="flex justify-end gap-3 pt-2">
-      <button
-        (click)="cancelarEliminar()"
+      <button (click)="cancelarEliminar()"
         class="px-4 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
         Cancelar
       </button>
-      <button
-        (click)="confirmarEliminarEspecialidad()"
+      <button (click)="confirmarEliminarEspecialidad()"
         class="px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700 transition">
         Eliminar
       </button>
     </div>
-
   </div>
 </div>
 }
