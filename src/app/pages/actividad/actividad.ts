@@ -2,6 +2,7 @@
  * @file actividad.ts
  * @description Página de historial de actividad del sistema.
  * Muestra todas las acciones registradas agrupadas por fecha.
+ * Permite eliminar entradas individuales y purga automáticamente las de +30 días.
  */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -19,19 +20,21 @@ import { Actividad as ActividadModel, GrupoActividad } from '../../models';
 })
 export class Actividad implements OnInit, OnDestroy {
 
-  actividades: ActividadModel[] = [];
+  total = 0;
+  purgados = 0;
+  confirmandoEliminar: ActividadModel | null = null;
   private subs = new Subscription();
 
   constructor(public activityService: ActivityService) {}
 
   ngOnInit(): void {
-    this.actividades = this.activityService.getActividadesRecientes();
+    // Purga automática de actividades con más de 30 días
+    this.purgados = this.activityService.limpiarAntiguos();
+    this.refrescarTotal();
 
-    // Refresca los timestamps relativos cada minuto
+    // Refresca timestamps relativos cada minuto
     this.subs.add(
-      interval(60000).subscribe(() => {
-        this.actividades = [...this.actividades];
-      })
+      interval(60000).subscribe(() => this.refrescarTotal())
     );
   }
 
@@ -39,15 +42,31 @@ export class Actividad implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  // ─── Delegados al servicio ──────────────────────────────────────────────────
+  refrescarTotal(): void {
+    this.total = this.activityService.getTotalActividades();
+  }
 
-  /** Agrupa las actividades por fecha (Hoy, Ayer, Hace N días). */
   getActividadesAgrupadas(): GrupoActividad[] {
     return this.activityService.getActividadesAgrupadas();
   }
 
-  /** Indica si una actividad fue registrada hace menos de 5 minutos. */
   isNuevaActividad(a: ActividadModel): boolean {
     return this.activityService.isNuevaActividad(a);
+  }
+
+  // ─── Eliminar con confirmación hover ───────────────────────────────────────
+
+  iniciarEliminar(a: ActividadModel): void {
+    this.confirmandoEliminar = a;
+  }
+
+  cancelarEliminar(): void {
+    this.confirmandoEliminar = null;
+  }
+
+  confirmarEliminar(a: ActividadModel): void {
+    this.activityService.eliminarActividad(a);
+    this.confirmandoEliminar = null;
+    this.refrescarTotal();
   }
 }

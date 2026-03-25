@@ -50,10 +50,15 @@ export class ActivityService {
     return this.actividades;
   }
 
-  /** Retorna las 5 actividades más recientes. */
-  getActividadesRecientes(): Actividad[] {
+  /** Retorna el total de actividades. */
+  getTotalActividades(): number {
+    return this.actividades.length;
+  }
+
+  /** Retorna las N actividades más recientes (por defecto 6). */
+  getActividadesRecientes(n = 6): Actividad[] {
     this.ordenar();
-    return this.actividades.slice(0, 5);
+    return this.actividades.slice(0, n);
   }
 
   /**
@@ -96,13 +101,36 @@ export class ActivityService {
 
   /**
    * Registra una nueva actividad al inicio del historial.
-   * @param tipo    Categoría de la actividad.
-   * @param titulo  Título corto descriptivo.
-   * @param descripcion Detalle de lo ocurrido.
    */
   agregarActividad(tipo: TipoActividad, titulo: string, descripcion: string): void {
     this.actividades.unshift({ tipo, titulo, descripcion, fecha: new Date() });
     this.guardar();
+  }
+
+  /**
+   * Elimina una actividad por referencia de objeto.
+   */
+  eliminarActividad(a: Actividad): void {
+    const idx = this.actividades.indexOf(a);
+    if (idx !== -1) {
+      this.actividades.splice(idx, 1);
+      this.guardar();
+    }
+  }
+
+  /**
+   * Elimina automáticamente las actividades con más de 30 días de antigüedad.
+   * @returns Número de registros eliminados.
+   */
+  limpiarAntiguos(): number {
+    const limite = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const antes  = this.actividades.length;
+    this.actividades = this.actividades.filter(
+      a => new Date(a.fecha).getTime() >= limite
+    );
+    const eliminados = antes - this.actividades.length;
+    if (eliminados > 0) this.guardar();
+    return eliminados;
   }
 
   // ─── Utilidades ─────────────────────────────────────────────────────────────

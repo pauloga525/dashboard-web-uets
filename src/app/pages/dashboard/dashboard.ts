@@ -83,9 +83,21 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   // ─── Actividad ─────────────────────────────────────────────────────────────
+
+  /** Retorna grupos con máximo 6 actividades en total para el widget del dashboard. */
   getActividadesAgrupadas(): GrupoActividad[] {
-    return this.activityService.getActividadesAgrupadas();
+    const grupos = this.activityService.getActividadesAgrupadas();
+    let restantes = 6;
+    const resultado: GrupoActividad[] = [];
+    for (const g of grupos) {
+      if (restantes <= 0) break;
+      const items = g.items.slice(0, restantes);
+      resultado.push({ titulo: g.titulo, items });
+      restantes -= items.length;
+    }
+    return resultado;
   }
+
   isNuevaActividad(a: Actividad): boolean {
     return this.activityService.isNuevaActividad(a);
   }
