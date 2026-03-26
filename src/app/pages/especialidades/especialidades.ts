@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 import { EspecialidadService } from '../../services/especialidad.service';
 import { ActivityService } from '../../services/activity';
 import { IconService } from '../../services/icon.service';
-import { Especialidad } from '../../models';
+import { BachilleratoService } from '../../services/bachillerato.service';
+import { Especialidad, BachilleratoConfig } from '../../models';
 
 /** Mapa de color → clases Tailwind para badges e iconos. */
 const BADGE_COLOR: Record<string, string> = {
@@ -35,6 +36,13 @@ export class Especialidades implements OnInit {
 
   especialidades: Especialidad[] = [];
   badgeColor = BADGE_COLOR;
+
+  // ─── Editor de página Bachillerato ─────────────────────────────────────────
+  paginaConfig!: BachilleratoConfig;
+  guardadoPagina   = false;
+  editorAbierto    = false;
+  tabPagina: 'hero' | 'cta' = 'hero';
+  private guardadoTimer: ReturnType<typeof setTimeout> | null = null;
 
   // ─── Estado del modal ──────────────────────────────────────────────────────
   modalAbierto          = false;
@@ -62,13 +70,26 @@ export class Especialidades implements OnInit {
     public  iconService: IconService,
     private especialidadService: EspecialidadService,
     private activityService: ActivityService,
+    private bachilleratoService: BachilleratoService,
     public  router: Router
   ) {}
 
   ngOnInit(): void {
+    this.paginaConfig = this.bachilleratoService.getCopia();
     this.especialidadService.especialidades$.subscribe(lista => {
       this.especialidades = lista;
     });
+  }
+
+  // ─── Editor página pública ─────────────────────────────────────────────────
+
+  onCambioPagina(): void { this.guardadoPagina = false; }
+
+  guardarPagina(): void {
+    this.bachilleratoService.guardar(this.paginaConfig);
+    this.guardadoPagina = true;
+    if (this.guardadoTimer) clearTimeout(this.guardadoTimer);
+    this.guardadoTimer = setTimeout(() => this.guardadoPagina = false, 3000);
   }
 
   // ─── Navegación ────────────────────────────────────────────────────────────
@@ -164,7 +185,6 @@ export class Especialidades implements OnInit {
     this.especialidadService.eliminar(this.especialidadEliminar.id);
     this.especialidadEliminar = null;
     this.confirmarEliminar    = false;
-    this.menuAbierto          = null;
   }
 
   cancelarEliminar(): void {
@@ -174,16 +194,8 @@ export class Especialidades implements OnInit {
 
   // ─── Menú contextual ───────────────────────────────────────────────────────
 
-  toggleMenu(index: number): void {
-    this.menuAbierto = this.menuAbierto === index ? null : index;
-  }
-
-  @HostListener('document:click')
-  cerrarMenuFuera(): void { this.menuAbierto = null; }
-
   @HostListener('document:keydown.escape')
   cerrarConEscape(): void {
-    this.menuAbierto       = null;
     this.confirmarEliminar = false;
   }
 }

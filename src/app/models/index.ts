@@ -369,3 +369,17 @@ export interface HomeConfig {
   enlacesInteres:HomeEnlace[];
   footer:        HomeFooter;
 }
+
+// ─── Bachillerato Config ──────────────────────────────────────────────────────
+
+/** Configuración de la página pública de Bachillerato. */
+export interface BachilleratoConfig {
+  // Hero
+  heroImagenFondo: string;
+  heroTitulo:      string;
+  heroDescripcion: string;
+  // CTA
+  ctaTitulo:       string;
+  ctaDescripcion:  string;
+  ctaUrlDescarga:  string;  // URL del botón "Descargar Malla Curricular"
+}
