@@ -7,7 +7,8 @@ import { Routes } from '@angular/router';
 
 import { Login }             from './pages/login/login';
 import { Dashboard }         from './pages/dashboard/dashboard';
-import { Analisis }          from './pages/analisis/analisis';
+import { HeaderEditor }      from './pages/header-editor/header-editor';
+import { FooterEditor }      from './pages/footer-editor/footer-editor';
 import { Preparatoria }      from './pages/preparatoria/preparatoria';
 import { BasicaElemental }   from './pages/basica-elemental/basica-elemental';
 import { BasicaMedia }       from './pages/basica-media/basica-media';
@@ -26,7 +27,8 @@ export const routes: Routes = [
   { path: 'login', component: Login },
 
   { path: '',                   canActivate: [authGuard], component: Dashboard,       data: { animation: 'Dashboard',        breadcrumb: 'Panel Principal'    } },
-  { path: 'analisis',           canActivate: [authGuard], component: Analisis,        data: { animation: 'Analisis',         breadcrumb: 'Análisis'           } },
+  { path: 'header',             canActivate: [authGuard], component: HeaderEditor,    data: { animation: 'HeaderEditor',     breadcrumb: 'Header del sitio'   } },
+  { path: 'footer',             canActivate: [authGuard], component: FooterEditor,    data: { animation: 'FooterEditor',     breadcrumb: 'Footer del sitio'   } },
   { path: 'preparatoria',       canActivate: [authGuard], component: Preparatoria,    data: { animation: 'Preparatoria',     breadcrumb: 'Preparatoria'       } },
   { path: 'basica-elemental',   canActivate: [authGuard], component: BasicaElemental, data: { animation: 'BasicaElemental',  breadcrumb: 'Básica Elemental'   } },
   { path: 'basica-media',       canActivate: [authGuard], component: BasicaMedia,     data: { animation: 'BasicaMedia',      breadcrumb: 'Básica Media'       } },

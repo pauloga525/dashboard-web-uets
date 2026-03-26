@@ -17,16 +17,27 @@ export class Sidebar implements OnInit, OnDestroy {
   profile!: UserProfile;
   private sub = new Subscription();
 
+  // Tooltip flotante
+  tooltipText    = '';
+  tooltipY       = 0;
+  tooltipVisible = false;
+
   constructor(public userService: UserService) {}
 
   ngOnInit(): void {
-    // Suscripción reactiva: se actualiza cada vez que se guarda el perfil
-    this.sub.add(
-      this.userService.profile$.subscribe(p => this.profile = p)
-    );
+    this.sub.add(this.userService.profile$.subscribe(p => this.profile = p));
   }
-
   ngOnDestroy(): void { this.sub.unsubscribe(); }
 
-  toggleSidebar() { this.collapsed = !this.collapsed; }
+  toggleSidebar(): void { this.collapsed = !this.collapsed; this.tooltipVisible = false; }
+
+  showTooltip(event: MouseEvent, label: string): void {
+    if (!this.collapsed) return;
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    this.tooltipText    = label;
+    this.tooltipY       = rect.top + rect.height / 2;
+    this.tooltipVisible = true;
+  }
+
+  hideTooltip(): void { this.tooltipVisible = false; }
 }
