@@ -1,1 +1,359 @@
-<p>configuracion works!</p>
+<div class="p-8 max-w-5xl mx-auto w-full space-y-6">
+
+  <!-- PAGE HEADER -->
+  <div>
+    <h1 class="text-xl font-bold text-slate-800 dark:text-white">Configuración</h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Administra tu perfil, cuenta y preferencias del sistema.</p>
+  </div>
+
+  <!-- LAYOUT: sidebar tabs + content -->
+  <div class="flex flex-col md:flex-row gap-6">
+
+    <!-- TABS SIDEBAR -->
+    <nav class="md:w-52 shrink-0">
+      <ul class="space-y-1">
+        @for (t of tabs; track t.id) {
+        <li>
+          <button type="button" (click)="tabActiva = t.id"
+            [class]="tabActiva === t.id
+              ? 'w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold bg-primary/10 text-primary border border-primary/20 text-left'
+              : 'w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition text-left'">
+
+            <!-- Ícono por tab -->
+            @if (t.icon === 'user') {
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21c0-3-4-5-8-5s-8 2-8 5"/></svg>
+            }
+            @if (t.icon === 'at') {
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>
+            }
+            @if (t.icon === 'lock') {
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            }
+            @if (t.icon === 'palette') {
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+            }
+            {{t.label}}
+          </button>
+        </li>
+        }
+
+        <!-- Separador + Cerrar sesión -->
+        <li class="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" (click)="authService.logout()"
+            class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition text-left">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 16l4-4m0 0l-4-4m4 4H7"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+            Cerrar sesión
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- CONTENT PANEL -->
+    <div class="flex-1 min-w-0">
+
+      <!-- ══ TAB: PERFIL ══ -->
+      @if (tabActiva === 'perfil') {
+      <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-6 animate-[fadeIn_.2s_ease_forwards]">
+        <h2 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Información de perfil</h2>
+
+        <!-- Avatar -->
+        <div class="flex items-center gap-5">
+          <div class="relative shrink-0">
+            <app-avatar [avatarId]="avatarSeleccionado" size="xl"></app-avatar>
+          </div>
+          <div class="flex-1 space-y-2">
+            <p class="text-sm font-semibold text-slate-800 dark:text-white">Avatar</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Elige un avatar de la galería.</p>
+            <button type="button" (click)="selectorAvatarAbierto = !selectorAvatarAbierto"
+              class="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              {{selectorAvatarAbierto ? 'Cerrar galería' : 'Cambiar avatar'}}
+            </button>
+          </div>
+        </div>
+
+        <!-- Galería de avatares -->
+        @if (selectorAvatarAbierto) {
+        <div class="border border-slate-200 dark:border-slate-700 rounded-2xl p-4 space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+
+          <!-- Profesionales -->
+          <div>
+            <p class="text-[10px] font-bold uppercase text-slate-400 dark:text-slate-500 tracking-wider mb-2">Profesionales</p>
+            <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
+              @for (av of avatares.slice(0,4); track av.id) {
+              <button type="button" (click)="seleccionarAvatar(av)" [title]="av.label"
+                [class]="'flex flex-col items-center gap-1 p-1 rounded-xl transition ' + (avatarSeleccionado === av.id ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-slate-50 dark:hover:bg-slate-800')">
+                <app-avatar [avatarId]="av.id" size="md"></app-avatar>
+                <span class="text-[9px] text-slate-500 dark:text-slate-400 truncate w-full text-center">{{av.label}}</span>
+              </button>
+              }
+            </div>
+          </div>
+
+          <!-- Cool -->
+          <div>
+            <p class="text-[10px] font-bold uppercase text-slate-400 dark:text-slate-500 tracking-wider mb-2">Con estilo</p>
+            <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
+              @for (av of avatares.slice(4,8); track av.id) {
+              <button type="button" (click)="seleccionarAvatar(av)" [title]="av.label"
+                [class]="'flex flex-col items-center gap-1 p-1 rounded-xl transition ' + (avatarSeleccionado === av.id ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-slate-50 dark:hover:bg-slate-800')">
+                <app-avatar [avatarId]="av.id" size="md"></app-avatar>
+                <span class="text-[9px] text-slate-500 dark:text-slate-400 truncate w-full text-center">{{av.label}}</span>
+              </button>
+              }
+            </div>
+          </div>
+
+          <!-- Divertidos -->
+          <div>
+            <p class="text-[10px] font-bold uppercase text-slate-400 dark:text-slate-500 tracking-wider mb-2">Divertidos</p>
+            <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
+              @for (av of avatares.slice(8,12); track av.id) {
+              <button type="button" (click)="seleccionarAvatar(av)" [title]="av.label"
+                [class]="'flex flex-col items-center gap-1 p-1 rounded-xl transition ' + (avatarSeleccionado === av.id ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-slate-50 dark:hover:bg-slate-800')">
+                <app-avatar [avatarId]="av.id" size="md"></app-avatar>
+                <span class="text-[9px] text-slate-500 dark:text-slate-400 truncate w-full text-center">{{av.label}}</span>
+              </button>
+              }
+            </div>
+          </div>
+
+          <!-- Graciosos -->
+          <div>
+            <p class="text-[10px] font-bold uppercase text-slate-400 dark:text-slate-500 tracking-wider mb-2">Graciosos 😄</p>
+            <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
+              @for (av of avatares.slice(12,16); track av.id) {
+              <button type="button" (click)="seleccionarAvatar(av)" [title]="av.label"
+                [class]="'flex flex-col items-center gap-1 p-1 rounded-xl transition ' + (avatarSeleccionado === av.id ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-slate-50 dark:hover:bg-slate-800')">
+                <app-avatar [avatarId]="av.id" size="md"></app-avatar>
+                <span class="text-[9px] text-slate-500 dark:text-slate-400 truncate w-full text-center">{{av.label}}</span>
+              </button>
+              }
+            </div>
+          </div>
+
+        </div>
+        }
+
+        <hr class="border-slate-100 dark:border-slate-800" />
+
+        <!-- Nombre y apellido -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Nombre</label>
+            <input [(ngModel)]="perfil.nombre" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Apellido</label>
+            <input [(ngModel)]="perfil.apellido" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Cargo / Rol</label>
+            <input [(ngModel)]="perfil.cargo" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
+          </div>
+        </div>
+
+        <!-- Guardar -->
+        <div class="flex justify-end pt-2">
+          <button type="button" (click)="guardarPerfil()"
+            [class]="guardadoPerfil
+              ? 'flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold bg-green-500 text-white transition'
+              : 'flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-md shadow-primary/20'">
+            @if (guardadoPerfil) {
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Guardado
+            } @else {
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Guardar cambios
+            }
+          </button>
+        </div>
+      </div>
+      }
+
+      <!-- ══ TAB: CUENTA ══ -->
+      @if (tabActiva === 'cuenta') {
+      <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-6 animate-[fadeIn_.2s_ease_forwards]">
+        <h2 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Información de cuenta</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 -mt-3">El nombre de usuario y correo se usan para iniciar sesión y aparecen en el panel.</p>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Nombre de usuario</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm select-none">@</span>
+              <input [(ngModel)]="perfil.username" class="w-full pl-7 pr-4 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
+            </div>
+            <p class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">Este es el usuario que se usa para iniciar sesión.</p>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Correo electrónico</label>
+            <input [(ngModel)]="perfil.email" type="email" class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
+          </div>
+        </div>
+
+        <!-- Info box -->
+        <div class="flex items-start gap-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-xl px-4 py-3">
+          <svg class="w-4 h-4 text-blue-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p class="text-xs text-blue-700 dark:text-blue-300">Los cambios en el nombre de usuario se aplicarán en el próximo inicio de sesión.</p>
+        </div>
+
+        <div class="flex justify-end pt-2">
+          <button type="button" (click)="guardarCuenta()"
+            [class]="guardadoCuenta
+              ? 'flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold bg-green-500 text-white transition'
+              : 'flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-md shadow-primary/20'">
+            @if (guardadoCuenta) {
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Guardado
+            } @else {
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Guardar cambios
+            }
+          </button>
+        </div>
+      </div>
+      }
+
+      <!-- ══ TAB: SEGURIDAD ══ -->
+      @if (tabActiva === 'seguridad') {
+      <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-6 animate-[fadeIn_.2s_ease_forwards]">
+        <h2 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Cambiar contraseña</h2>
+
+        <div class="space-y-4 max-w-md">
+          <!-- Contraseña actual -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Contraseña actual</label>
+            <div class="relative">
+              <input [type]="mostrarPassActual ? 'text' : 'password'" [(ngModel)]="passActual"
+                class="w-full px-3 pr-10 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
+              <button type="button" (click)="mostrarPassActual = !mostrarPassActual"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  @if (mostrarPassActual) { <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/> }
+                  @else { <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/> }
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Nueva contraseña -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Nueva contraseña</label>
+            <div class="relative">
+              <input [type]="mostrarPassNueva ? 'text' : 'password'" [(ngModel)]="passNueva"
+                class="w-full px-3 pr-10 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
+              <button type="button" (click)="mostrarPassNueva = !mostrarPassNueva"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  @if (mostrarPassNueva) { <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/> }
+                  @else { <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/> }
+                </svg>
+              </button>
+            </div>
+            <!-- Indicador de fortaleza -->
+            @if (passNueva) {
+            <div class="mt-2 space-y-1">
+              <div class="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full rounded-full transition-all duration-300" [class]="passwordStrengthColor + ' ' + passwordStrengthWidth"></div>
+              </div>
+              <p class="text-[11px]" [ngClass]="{'text-red-500': passwordStrength === 'weak', 'text-yellow-500': passwordStrength === 'medium', 'text-green-500': passwordStrength === 'strong'}">
+                Fortaleza: {{passwordStrengthLabel}}
+              </p>
+            </div>
+            }
+          </div>
+
+          <!-- Confirmar nueva -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">Confirmar nueva contraseña</label>
+            <div class="relative">
+              <input [type]="mostrarPassConfirmar ? 'text' : 'password'" [(ngModel)]="passConfirmar"
+                class="w-full px-3 pr-10 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-transparent text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
+              <button type="button" (click)="mostrarPassConfirmar = !mostrarPassConfirmar"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  @if (mostrarPassConfirmar) { <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/> }
+                  @else { <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/> }
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Error -->
+          @if (errorPassword) {
+          <div class="flex items-center gap-2 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-xl px-4 py-3">
+            <svg class="w-4 h-4 text-red-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p class="text-xs text-red-600 dark:text-red-400">{{errorPassword}}</p>
+          </div>
+          }
+
+          <div class="flex justify-end pt-2">
+            <button type="button" (click)="guardarPassword()"
+              [disabled]="!passActual || !passNueva || !passConfirmar"
+              [class]="guardadoPassword
+                ? 'flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold bg-green-500 text-white transition'
+                : 'flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-md shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed'">
+              @if (guardadoPassword) {
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Contraseña actualizada
+              } @else {
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Actualizar contraseña
+              }
+            </button>
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- ══ TAB: APARIENCIA ══ -->
+      @if (tabActiva === 'apariencia') {
+      <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 space-y-6 animate-[fadeIn_.2s_ease_forwards]">
+        <h2 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Apariencia</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 -mt-3">Personaliza la apariencia del panel administrativo.</p>
+
+        <!-- Tema -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-3">Tema del panel</label>
+          <div class="grid grid-cols-2 gap-3 max-w-sm">
+            <!-- Claro -->
+            <button type="button" (click)="themeService.set(false)"
+              [class]="!themeService.isDark
+                ? 'flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-primary transition'
+                : 'flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-primary/50 transition'">
+              <div class="w-full h-12 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center">
+                <svg class="w-5 h-5 text-yellow-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M17.66 17.66l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M17.66 6.34l1.42-1.42"/></svg>
+              </div>
+              <span class="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                Claro
+                @if (!themeService.isDark) {
+                  <svg class="w-3.5 h-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                }
+              </span>
+            </button>
+            <!-- Oscuro -->
+            <button type="button" (click)="themeService.set(true)"
+              [class]="themeService.isDark
+                ? 'flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-primary transition'
+                : 'flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-primary/50 transition'">
+              <div class="w-full h-12 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center">
+                <svg class="w-5 h-5 text-indigo-400" viewBox="0 0 26 22" fill="currentColor"><path d="M21 12.8A9 9 0 0111.2 3 7 7 0 1021 12.8z"/></svg>
+              </div>
+              <span class="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                Oscuro
+                @if (themeService.isDark) {
+                  <svg class="w-3.5 h-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                }
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <hr class="border-slate-100 dark:border-slate-800" />
+
+        <!-- Info -->
+        <div class="flex items-start gap-3 bg-slate-50 dark:bg-slate-800 rounded-xl px-4 py-3">
+          <svg class="w-4 h-4 text-slate-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p class="text-xs text-slate-500 dark:text-slate-400">También puedes cambiar el tema desde el interruptor en la barra superior del panel.</p>
+        </div>
+      </div>
+      }
+
+    </div><!-- /content panel -->
+  </div><!-- /layout -->
+</div>

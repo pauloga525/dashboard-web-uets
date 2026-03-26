@@ -56,9 +56,7 @@ class="text-slate-800 dark:text-white font-medium">
     class="flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 rounded-lg text-xs font-bold tracking-tight border border-primary/20 hover:bg-primary/20 transition">
 
     <!-- avatar -->
-    <div class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">
-      A
-    </div>
+    <app-avatar [avatarId]="profile.avatar" size="xs"></app-avatar>
 
     Administrar
 
@@ -70,107 +68,40 @@ class="text-slate-800 dark:text-white font-medium">
       stroke="currentColor"
       stroke-width="2"
       viewBox="0 0 24 24">
-
-      <path stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M19 9l-7 7-7-7"/>
-
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
     </svg>
-
   </button>
-
 
   <!-- MENU -->
   @if(menuAbierto){
-
-  <div class="menu-admin absolute right-0 mt-2 w-40 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 origin-top-right animate-dropdown">
+  <div class="menu-admin absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 origin-top-right animate-dropdown">
     <!-- usuario -->
     <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-700">
-
-      <p class="text-sm font-semibold text-slate-900 dark:text-white">
-        Alex Rivera
-      </p>
-
-      <p class="text-xs text-slate-500">
-        administrador@uets.edu
-      </p>
-
+      <p class="text-sm font-semibold text-slate-900 dark:text-white truncate">{{[profile.nombre, profile.apellido].join(' ').trim() || 'Admin'}}</p>
+      <p class="text-xs text-slate-500 truncate">{{profile.email}}</p>
     </div>
 
-
     <!-- opciones -->
-
-    <button
-      (click)="cerrarMenu()"
+    <a routerLink="/configuracion" (click)="cerrarMenu()"
       class="w-full flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
-      <!-- icono perfil -->
-      <svg
-class="w-4 h-4 text-slate-500 dark:text-slate-300"
-fill="none"
-stroke="currentColor"
-stroke-width="2"
-viewBox="0 0 24 24">
-
-<path stroke-linecap="round"
-stroke-linejoin="round"
-d="M20 21a8 8 0 10-16 0"/>
-
-<circle
-cx="12"
-cy="7"
-r="4"
-stroke-linecap="round"
-stroke-linejoin="round"/>
-
-</svg>
-
+      <svg class="w-4 h-4 text-slate-500 dark:text-slate-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21c0-3-4-5-8-5s-8 2-8 5"/></svg>
       Perfil
+    </a>
 
-    </button>
-
-
-    <button
-      (click)="cerrarMenu()"
+    <a routerLink="/configuracion" (click)="cerrarMenu()"
       class="w-full flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
-      <!-- icono config -->
-<svg class="w-4 h-4 text-slate-500 dark:text-slate-300"
-     fill="none"
-     stroke="currentColor"
-     stroke-width="1.8"
-     viewBox="0 0 24 24">
-
-<circle cx="12" cy="12" r="3"></circle>
-
-<path stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M19.4 15a1.7 1.7 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-.4-1.1 1.7 1.7 0 0 0-1-.6 1.7 1.7 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H2.9a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.1-.4 1.7 1.7 0 0 0 .6-1 1.7 1.7 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.13 3.5l.06.06A1.7 1.7 0 0 0 9 4.6c.38 0 .74-.14 1-.4.27-.26.4-.62.4-1V3a2 2 0 1 1 4 0v.09c0 .38.14.74.4 1 .26.27.62.4 1 .4a1.7 1.7 0 0 0 1.82-.33l.06-.06A2 2 0 1 1 20.5 7.13l-.06.06A1.7 1.7 0 0 0 19.4 9c0 .38.14.74.4 1 .26.27.62.4 1 .4h.09a2 2 0 1 1 0 4h-.09c-.38 0-.74.14-1 .4-.27.26-.4.62-.4 1z"/>
-
-</svg>
-
+      <svg class="w-4 h-4 text-slate-500 dark:text-slate-300" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.7 1.7 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-.4-1.1 1.7 1.7 0 0 0-1-.6 1.7 1.7 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H2.9a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.1-.4 1.7 1.7 0 0 0 .6-1 1.7 1.7 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.13 3.5l.06.06A1.7 1.7 0 0 0 9 4.6c.38 0 .74-.14 1-.4.27-.26.4-.62.4-1V3a2 2 0 1 1 4 0v.09c0 .38.14.74.4 1 .26.27.62.4 1 .4a1.7 1.7 0 0 0 1.82-.33l.06-.06A2 2 0 1 1 20.5 7.13l-.06.06A1.7 1.7 0 0 0 19.4 9c0 .38.14.74.4 1 .26.27.62.4 1 .4h.09a2 2 0 1 1 0 4h-.09c-.38 0-.74.14-1 .4-.27.26-.4.62-.4 1z"/></svg>
       Configuración
-
-    </button>
-
+    </a>
 
     <div class="border-t border-slate-200 dark:border-slate-700"></div>
 
-
-    <button
-      (click)="cerrarMenu()"
+    <button type="button" (click)="authService.logout(); cerrarMenu()"
       class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition">
-
-      <!-- icono logout -->
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-        d="M17 16l4-4m0 0l-4-4m4 4H7"/>
-      </svg>
-
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
       Cerrar sesión
-
     </button>
-
   </div>
-
   }
 
 </div>

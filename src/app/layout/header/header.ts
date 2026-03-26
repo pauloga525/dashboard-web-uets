@@ -9,14 +9,19 @@ import { RouterModule, Router, ActivatedRoute, NavigationEnd } from '@angular/ro
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate, query, stagger, state } from '@angular/animations';
 import { NotificationService } from '../../services/notification';
+import { AuthService }         from '../../services/auth.service';
+import { UserService }         from '../../services/user.service';
+import { ThemeService }        from '../../services/theme.service';
+import { AvatarComponent }     from '../../components/avatar/avatar.component';
 import { Notificacion, BreadcrumbItem } from '../../models';
+import { UserProfile } from '../../services/user.service';
 import { interval, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, AvatarComponent],
   templateUrl: './header.html',
   styleUrl: './header.css',
   animations: [
@@ -55,16 +60,32 @@ export class Header implements OnInit, OnDestroy {
   notificacionesAbiertas = false;
   notificaciones: Notificacion[] = [];
   breadcrumbs: BreadcrumbItem[]  = [];
+  profile: UserProfile = { nombre: '', apellido: '', username: '', email: '', cargo: '', avatar: '', password: '' };
 
   private subs = new Subscription();
 
   constructor(
     private notificationService: NotificationService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public  authService: AuthService,
+    public  userService: UserService,
+    public  themeService: ThemeService,
   ) {}
 
   ngOnInit(): void {
+    // Sincroniza el estado visual del toggle con el tema actual
+    this.darkMode = this.themeService.isDark;
+
+    // Mantiene el toggle sincronizado si el tema cambia desde otra página
+    this.subs.add(
+      this.themeService.dark$.subscribe(d => this.darkMode = d)
+    );
+
+    // Suscripción reactiva al perfil del usuario
+    this.subs.add(
+      this.userService.profile$.subscribe(p => this.profile = p)
+    );
     // Refresca timestamps de notificaciones cada minuto
     this.subs.add(
       interval(60000).subscribe(() => {
@@ -142,8 +163,8 @@ export class Header implements OnInit, OnDestroy {
   // ─── Dark mode ──────────────────────────────────────────────────────────────
 
   toggleDarkMode(): void {
-    this.darkMode = !this.darkMode;
-    document.documentElement.classList.toggle('dark', this.darkMode);
+    this.themeService.toggle();
+    this.darkMode = this.themeService.isDark;
   }
 
   // ─── Notificaciones ─────────────────────────────────────────────────────────

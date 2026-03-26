@@ -1,11 +1,11 @@
 /**
  * @file app.routes.ts
  * @description Configuración de rutas de la aplicación.
- * Cada ruta incluye `breadcrumb` en data para el componente Header
- * y `animation` para las transiciones de página.
+ * Todas las rutas del panel están protegidas por authGuard.
  */
 import { Routes } from '@angular/router';
 
+import { Login }             from './pages/login/login';
 import { Dashboard }         from './pages/dashboard/dashboard';
 import { Analisis }          from './pages/analisis/analisis';
 import { Cursos }            from './pages/cursos/cursos';
@@ -17,21 +17,27 @@ import { Eventos }           from './pages/eventos/eventos';
 import { EventoEditor }      from './pages/eventos/evento-editor/evento-editor';
 import { Configuracion }     from './pages/configuracion/configuracion';
 import { Actividad }         from './pages/actividad/actividad';
+import { authGuard }         from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '',               component: Dashboard,        data: { animation: 'Dashboard',          breadcrumb: 'Panel Principal'    } },
-  { path: 'analisis',       component: Analisis,         data: { animation: 'Analisis',           breadcrumb: 'Análisis'           } },
-  { path: 'cursos',         component: Cursos,           data: { animation: 'Cursos',             breadcrumb: 'Cursos'             } },
-  { path: 'especialidades', component: Especialidades,   data: { animation: 'Especialidades',     breadcrumb: 'Especialidades'     } },
-  { path: 'especialidades/:id', component: EspecialidadEditor, data: { animation: 'EspecialidadEditor' } },
-  { path: 'recursos',       component: Recursos,         data: { animation: 'Recursos',           breadcrumb: 'Recursos'           } },
-  { path: 'estudiantes',    component: Estudiantes,      data: { animation: 'Estudiantes',        breadcrumb: 'Estudiantes'        } },
-  { path: 'eventos',        component: Eventos,          data: { animation: 'Eventos',            breadcrumb: 'Eventos'            } },
-  { path: 'eventos/:id',   component: EventoEditor,     data: { animation: 'EventoEditor'                                             } },
-  { path: 'configuracion',  component: Configuracion,    data: { animation: 'Configuracion',      breadcrumb: 'Configuración'      } },
-  { path: 'actividad',      component: Actividad,        data: { animation: 'Actividad',          breadcrumb: 'Actividad reciente' } },
+  // Ruta pública — login
+  { path: 'login', component: Login },
+
+  // Rutas protegidas
+  { path: '',               canActivate: [authGuard], component: Dashboard,         data: { animation: 'Dashboard',        breadcrumb: 'Panel Principal'    } },
+  { path: 'analisis',       canActivate: [authGuard], component: Analisis,          data: { animation: 'Analisis',         breadcrumb: 'Análisis'           } },
+  { path: 'cursos',         canActivate: [authGuard], component: Cursos,            data: { animation: 'Cursos',           breadcrumb: 'Cursos'             } },
+  { path: 'especialidades', canActivate: [authGuard], component: Especialidades,    data: { animation: 'Especialidades',   breadcrumb: 'Especialidades'     } },
+  { path: 'especialidades/:id', canActivate: [authGuard], component: EspecialidadEditor, data: { animation: 'EspecialidadEditor' } },
+  { path: 'recursos',       canActivate: [authGuard], component: Recursos,          data: { animation: 'Recursos',         breadcrumb: 'Recursos'           } },
+  { path: 'estudiantes',    canActivate: [authGuard], component: Estudiantes,       data: { animation: 'Estudiantes',      breadcrumb: 'Estudiantes'        } },
+  { path: 'eventos',        canActivate: [authGuard], component: Eventos,           data: { animation: 'Eventos',          breadcrumb: 'Eventos'            } },
+  { path: 'eventos/:id',    canActivate: [authGuard], component: EventoEditor,      data: { animation: 'EventoEditor'                                       } },
+  { path: 'configuracion',  canActivate: [authGuard], component: Configuracion,     data: { animation: 'Configuracion',    breadcrumb: 'Configuración'      } },
+  { path: 'actividad',      canActivate: [authGuard], component: Actividad,         data: { animation: 'Actividad',        breadcrumb: 'Actividad reciente' } },
   {
     path: 'notificaciones',
+    canActivate: [authGuard],
     loadComponent: () => import('./pages/notificaciones/notificaciones').then(m => m.Notificaciones),
     data: { breadcrumb: 'Notificaciones' }
   },

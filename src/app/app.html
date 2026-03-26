@@ -1,18 +1,18 @@
-<div style="display: flex; min-height: 100vh;">
-  
-  <app-sidebar></app-sidebar>
-
-  <div style="flex: 1; display: flex; flex-direction: column;">
-
-    <app-header></app-header>
-
-    <div
-      class="flex-1 relative overflow-hidden bg-white dark:bg-slate-800"
-      [@routeAnimations]="o?.activatedRouteData?.['animation']"
-    >
-      <router-outlet #o="outlet"></router-outlet>
+@if (isLoginPage) {
+  <!-- Login — sin sidebar ni header -->
+  <router-outlet />
+} @else {
+  <!-- Panel admin completo -->
+  <div style="display: flex; min-height: 100vh;">
+    <app-sidebar></app-sidebar>
+    <div style="flex: 1; display: flex; flex-direction: column;">
+      <app-header></app-header>
+      <div
+        class="flex-1 relative overflow-hidden bg-white dark:bg-slate-800"
+        [@routeAnimations]="o?.activatedRouteData?.['animation']"
+      >
+        <router-outlet #o="outlet"></router-outlet>
+      </div>
     </div>
-
   </div>
-
-</div>
+}

@@ -11,16 +11,10 @@
   <!-- LOGO + TITULO -->
   <div class="flex items-center gap-3 overflow-hidden">
 
-    <div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white shrink-0">
-
-      <!-- icono graduacion -->
-      <svg class="w-5 h-5"
-           fill="currentColor"
-           viewBox="0 0 24 24">
-        <path d="M12 3L1 9l11 6 11-6-11-6z"/>
-        <path d="M5 12v5c0 1.5 3 3 7 3s7-1.5 7-3v-5"/>
-      </svg>
-
+    <div class="size-8 bg-white rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+      <img src="logo.png" alt="Logo UETS"
+           class="w-full h-full object-cover"
+           style="mix-blend-mode: multiply;" />
     </div>
 
     <!-- TEXTO -->
@@ -335,14 +329,16 @@ JAN
 </div>
 </nav>
 <div class="p-4 mt-auto border-t border-slate-100 dark:border-slate-800">
-<div class="flex items-center gap-3 px-2">
-<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0">
-<img class="size-full object-cover" data-alt="Profile avatar of current admin" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKoE97qExPyXTegY03NYNRmGMAz1-2kLyoQZDSBMB2ETvLj-kbr6W_7CiSiZtuBqivzKhoel1QczxJ7fRptqjSDlVdRgrY1YCCdGnQwO8Dx_4ZDXYuTkBOW-tr7C9X9-Jk6KcKmTJwlnDtp9oBJQj4xFdhBkq0ZrctsXwgKQCJZkW9JrEfZJsdXvItWX8VurNPFAo_avNJ5Dd_Uyuhjxds_01ohxX5Y70QkzFzZrUOpFj7JU7R_qdblfKNevXbbv1CaNaK72z6a1s"/>
-</div>
-<div class="flex flex-col overflow-hidden">
-<span class="text-xs font-semibold truncate">Alex Rivera</span>
-<span class="text-[10px] text-slate-500 truncate">Admin</span>
-</div>
-</div>
+  <div class="flex items-center gap-3 px-2">
+    <div class="size-8 shrink-0">
+      <app-avatar [avatarId]="profile.avatar" size="sm"></app-avatar>
+    </div>
+    @if (!collapsed) {
+    <div class="flex flex-col overflow-hidden">
+      <span class="text-xs font-semibold truncate">{{[profile.nombre, profile.apellido].join(' ').trim() || 'Admin'}}</span>
+      <span class="text-[10px] text-slate-500 truncate">{{profile.cargo}}</span>
+    </div>
+    }
+  </div>
 </div>
 </aside>
