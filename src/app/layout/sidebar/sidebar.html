@@ -123,14 +123,25 @@
     @if(!collapsed){<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Contenido</p>}
     <div class="space-y-1">
 
-      <a routerLink="/recursos" routerLinkActive="sidebar-item-active [&>svg]:text-white"
-         class="sidebar-item group" data-tooltip="Recursos"
-         (mouseenter)="showTooltip($event, 'Recursos')" (mouseleave)="hideTooltip()">
+      <a routerLink="/admisiones" routerLinkActive="sidebar-item-active [&>svg]:text-white"
+         class="sidebar-item group" data-tooltip="Admisiones"
+         (mouseenter)="showTooltip($event, 'Admisiones')" (mouseleave)="hideTooltip()">
         <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M14 2v6h6"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+          <rect x="9" y="3" width="6" height="4" rx="1"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M9 16h4"/>
         </svg>
-        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Recursos</h1></div>}
+        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Admisiones</h1></div>}
+      </a>
+
+      <a routerLink="/noticias" routerLinkActive="sidebar-item-active [&>svg]:text-white"
+         class="sidebar-item group" data-tooltip="Noticias"
+         (mouseenter)="showTooltip($event, 'Noticias')" (mouseleave)="hideTooltip()">
+        <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v2H4zM4 9h10M4 14h8"/>
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+        </svg>
+        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Noticias</h1></div>}
       </a>
 
     </div>
@@ -140,18 +151,6 @@
   <div>
     @if(!collapsed){<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Comunidad</p>}
     <div class="space-y-1">
-
-      <a routerLink="/estudiantes" routerLinkActive="sidebar-item-active [&>svg]:text-white"
-         class="sidebar-item group" data-tooltip="Estudiantes"
-         (mouseenter)="showTooltip($event, 'Estudiantes')" (mouseleave)="hideTooltip()">
-        <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-          <circle cx="9" cy="8" r="3"/>
-          <circle cx="16" cy="10" r="2.5"/>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 20c1.5-3 4-5 6-5s4.5 2 6 5"/>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M14 20c1-2 2.5-3.5 4.5-4"/>
-        </svg>
-        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Estudiantes</h1></div>}
-      </a>
 
       <a routerLink="/nosotros" routerLinkActive="sidebar-item-active [&>svg]:text-white"
          class="sidebar-item group" data-tooltip="Nosotros"
@@ -177,12 +176,55 @@
       </a>
 
       <a routerLink="/eventos" routerLinkActive="sidebar-item-active [&>svg]:text-white"
-         class="sidebar-item group" data-tooltip="Eventos">
+         class="sidebar-item group" data-tooltip="Eventos"
+         (mouseenter)="showTooltip($event, 'Eventos')" (mouseleave)="hideTooltip()">
         <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
           <rect x="3" y="5" width="18" height="16" rx="2"/>
           <path stroke-linecap="round" stroke-linejoin="round" d="M8 3v4M16 3v4M3 10h18"/>
         </svg>
         @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Eventos</h1></div>}
+      </a>
+
+    </div>
+  </div>
+
+  <!-- VIDA ESTUDIANTIL -->
+  <div>
+    @if(!collapsed){<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Vida Estudiantil</p>}
+    <div class="space-y-1">
+
+      <a routerLink="/campus" routerLinkActive="sidebar-item-active [&>svg]:text-white"
+         class="sidebar-item group" data-tooltip="Campus"
+         (mouseenter)="showTooltip($event, 'Campus')" (mouseleave)="hideTooltip()">
+        <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 21v-6h6v6"/>
+        </svg>
+        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Campus</h1></div>}
+      </a>
+
+      <a routerLink="/alumnos" routerLinkActive="sidebar-item-active [&>svg]:text-white"
+         class="sidebar-item group" data-tooltip="Alumnos"
+         (mouseenter)="showTooltip($event, 'Alumnos')" (mouseleave)="hideTooltip()">
+        <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <circle cx="9" cy="8" r="3"/>
+          <circle cx="16" cy="10" r="2.5"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 20c1.5-3 4-5 6-5s4.5 2 6 5"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 20c1-2 2.5-3.5 4.5-4"/>
+        </svg>
+        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Alumnos</h1></div>}
+      </a>
+
+      <a routerLink="/consejo-estudiantil" routerLinkActive="sidebar-item-active [&>svg]:text-white"
+         class="sidebar-item group" data-tooltip="Consejo Estudiantil"
+         (mouseenter)="showTooltip($event, 'Consejo Estudiantil')" (mouseleave)="hideTooltip()">
+        <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Consejo Estudiantil</h1></div>}
       </a>
 
     </div>
