@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule, Location } from '@angular/common';
 import { EspecialidadService } from '../../../services/especialidad.service';
 import { ActivityService } from '../../../services/activity';
+import { IconService } from '../../../services/icon.service';
 import { SafeUrlPipe } from '../../../pipes/safe-url.pipe';
 import {
   Especialidad, Tab,
@@ -30,20 +31,12 @@ import {
 })
 export class EspecialidadEditor implements OnInit {
 
-  /** Especialidad en edición (copia de trabajo, desacoplada del servicio). */
   especialidad: Especialidad | undefined;
-
-  /** Nombre mostrado en el breadcrumb (pasado por navigation state). */
   breadcrumb = '';
-
-  /** Tab activa. */
   tabActiva = 'general';
-
-  /** false = Borrador, true = Listo. */
   guardado = false;
-
-  /** Modal de confirmación de eliminación. */
   confirmarEliminar = false;
+  mostrarSelectorIcono = false;
 
   /** Tabs del editor. */
   readonly tabs: Tab[] = [
@@ -68,6 +61,7 @@ export class EspecialidadEditor implements OnInit {
     private router:              Router,
     private especialidadService: EspecialidadService,
     private activityService:     ActivityService,
+    public  iconService:         IconService,
   ) {}
 
   ngOnInit(): void {

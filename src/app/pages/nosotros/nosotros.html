@@ -1,0 +1,216 @@
+<div class="p-8 max-w-4xl mx-auto w-full space-y-6">
+
+  <!-- PAGE HEADER -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-xl font-bold text-slate-800 dark:text-white">Nosotros</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Editor de contenido de la página pública "Nuestra Institución".</p>
+    </div>
+    <button type="button" (click)="guardar()"
+      [class]="guardado
+        ? 'flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold bg-green-500 text-white transition'
+        : 'flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-md shadow-primary/20'">
+      @if (guardado) {
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Guardado
+      } @else {
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Guardar cambios
+      }
+    </button>
+  </div>
+
+  <!-- CARD con tabs -->
+  <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+
+    <!-- TABS -->
+    <div class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
+      <div class="flex min-w-max">
+        @for (t of tabs; track t.id) {
+          <button type="button" (click)="tabActiva = t.id"
+            [class]="tabActiva === t.id
+              ? 'px-5 py-3 text-xs font-bold border-b-2 border-primary text-primary whitespace-nowrap'
+              : 'px-5 py-3 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition whitespace-nowrap'">
+            {{t.label}}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="p-6">
+
+      <!-- ══ HERO ══ -->
+      @if (tabActiva === 'hero') {
+      <div class="space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+        <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Hero de la página</h3>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Título principal</label>
+          <input [(ngModel)]="config.heroTitulo" (ngModelChange)="onChange()" class="input-field" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Descripción</label>
+          <textarea [(ngModel)]="config.heroDescripcion" (ngModelChange)="onChange()" rows="4" class="input-field resize-none"></textarea>
+        </div>
+      </div>
+      }
+
+      <!-- ══ MISIÓN / VISIÓN ══ -->
+      @if (tabActiva === 'misionVision') {
+      <div class="space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Misión y Visión</h3>
+          <button type="button" (click)="agregarMV()" class="text-xs text-primary hover:underline flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar
+          </button>
+        </div>
+        <div class="space-y-4">
+          @for (item of config.misionVision; track trackById($index, item)) {
+          <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-3">
+            <div class="flex items-center gap-2">
+              <input [(ngModel)]="item.icon" (ngModelChange)="onChange()" placeholder="Ícono (material)" class="w-36 input-field text-xs" />
+              <input [(ngModel)]="item.title" (ngModelChange)="onChange()" placeholder="Título (ej: Misión)" class="flex-1 input-field font-semibold" />
+              <button type="button" (click)="eliminarMV(item.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>
+            <textarea [(ngModel)]="item.description" (ngModelChange)="onChange()" rows="3" placeholder="Descripción..." class="w-full input-field resize-none"></textarea>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- ══ VALORES ══ -->
+      @if (tabActiva === 'valores') {
+      <div class="space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Subtítulo de sección</label>
+            <input [(ngModel)]="config.valoresSubtitulo" (ngModelChange)="onChange()" placeholder="Ej: Nuestra Esencia" class="input-field" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Título de sección</label>
+            <input [(ngModel)]="config.valoresTitulo" (ngModelChange)="onChange()" class="input-field" />
+          </div>
+        </div>
+        <hr class="border-slate-100 dark:border-slate-800" />
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Valores</h3>
+          <button type="button" (click)="agregarValor()" class="text-xs text-primary hover:underline flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar
+          </button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          @for (v of config.valores; track trackById($index, v)) {
+          <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-2">
+            <div class="flex items-center gap-2">
+              <input [(ngModel)]="v.icon" (ngModelChange)="onChange()" placeholder="Ícono" class="w-28 input-field text-xs" />
+              <input [(ngModel)]="v.title" (ngModelChange)="onChange()" placeholder="Título" class="flex-1 input-field font-semibold" />
+              <button type="button" (click)="eliminarValor(v.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <textarea [(ngModel)]="v.description" (ngModelChange)="onChange()" rows="2" placeholder="Descripción..." class="w-full input-field resize-none text-sm"></textarea>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- ══ HISTORIA ══ -->
+      @if (tabActiva === 'historia') {
+      <div class="space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Título de sección</label>
+            <input [(ngModel)]="config.historiaTitulo" (ngModelChange)="onChange()" class="input-field" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">URL botón "Ver Repositorio"</label>
+            <input [(ngModel)]="config.historiaUrlRepositorio" (ngModelChange)="onChange()" placeholder="https://..." class="input-field" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Descripción de sección</label>
+            <textarea [(ngModel)]="config.historiaDescripcion" (ngModelChange)="onChange()" rows="2" class="input-field resize-none"></textarea>
+          </div>
+        </div>
+        <hr class="border-slate-100 dark:border-slate-800" />
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Línea de tiempo</h3>
+          <button type="button" (click)="agregarEvento()" class="text-xs text-primary hover:underline flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Agregar evento
+          </button>
+        </div>
+        <div class="space-y-3">
+          @for (ev of config.timeline; track trackById($index, ev)) {
+          <div class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-3">
+            <div class="flex items-center gap-2">
+              <input [(ngModel)]="ev.year" (ngModelChange)="onChange()" placeholder="Año" class="w-20 input-field text-sm font-bold text-primary" />
+              <input [(ngModel)]="ev.title" (ngModelChange)="onChange()" placeholder="Título del evento" class="flex-1 input-field font-semibold" />
+              <button type="button" (click)="eliminarEvento(ev.id)" class="text-slate-300 dark:text-slate-600 hover:text-red-500 transition shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>
+            <textarea [(ngModel)]="ev.description" (ngModelChange)="onChange()" rows="2" placeholder="Descripción..." class="w-full input-field resize-none text-sm"></textarea>
+            <input [(ngModel)]="ev.image" (ngModelChange)="onChange()" placeholder="URL imagen (opcional)" class="input-field text-sm" />
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <!-- ══ AUTORIDADES ══ -->
+      @if (tabActiva === 'autoridades') {
+      <div class="space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+        <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Sección Autoridades</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Título de sección</label>
+            <input [(ngModel)]="config.autoridadesTitulo" (ngModelChange)="onChange()" class="input-field" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Subtítulo</label>
+            <input [(ngModel)]="config.autoridadesSubtitulo" (ngModelChange)="onChange()" class="input-field" />
+          </div>
+        </div>
+        <!-- Enlace al editor de autoridades -->
+        <div class="mt-4 flex items-center gap-4 bg-slate-50 dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-slate-700 dark:text-slate-200">Editor de Autoridades</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Gestiona los perfiles, fotos y cargos de las 5 autoridades académicas.</p>
+          </div>
+          <a routerLink="/autoridades"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-md shadow-primary/20 shrink-0">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21c0-3-4-5-8-5s-8 2-8 5"/></svg>
+            Ir al editor
+          </a>
+        </div>
+      </div>
+      }
+
+      <!-- ══ CTA ══ -->
+      @if (tabActiva === 'cta') {
+      <div class="space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+        <h3 class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Sección CTA final</h3>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Título</label>
+          <input [(ngModel)]="config.ctaTitulo" (ngModelChange)="onChange()" class="input-field" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Descripción</label>
+          <textarea [(ngModel)]="config.ctaDescripcion" (ngModelChange)="onChange()" rows="3" class="input-field resize-none"></textarea>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Texto botón primario</label>
+            <input [(ngModel)]="config.ctaBoton1Label" (ngModelChange)="onChange()" class="input-field" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Texto botón secundario</label>
+            <input [(ngModel)]="config.ctaBoton2Label" (ngModelChange)="onChange()" class="input-field" />
+          </div>
+        </div>
+      </div>
+      }
+
+    </div>
+  </div>
+</div>

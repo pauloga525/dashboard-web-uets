@@ -9,6 +9,8 @@ import { Login }             from './pages/login/login';
 import { Dashboard }         from './pages/dashboard/dashboard';
 import { HeaderEditor }      from './pages/header-editor/header-editor';
 import { FooterEditor }      from './pages/footer-editor/footer-editor';
+import { Nosotros }          from './pages/nosotros/nosotros';
+import { Autoridades }       from './pages/autoridades/autoridades';
 import { Preparatoria }      from './pages/preparatoria/preparatoria';
 import { BasicaElemental }   from './pages/basica-elemental/basica-elemental';
 import { BasicaMedia }       from './pages/basica-media/basica-media';
@@ -37,6 +39,8 @@ export const routes: Routes = [
   { path: 'especialidades/:id', canActivate: [authGuard], component: EspecialidadEditor, data: { animation: 'EspecialidadEditor' } },
   { path: 'recursos',           canActivate: [authGuard], component: Recursos,        data: { animation: 'Recursos',         breadcrumb: 'Recursos'           } },
   { path: 'estudiantes',        canActivate: [authGuard], component: Estudiantes,     data: { animation: 'Estudiantes',      breadcrumb: 'Estudiantes'        } },
+  { path: 'nosotros',           canActivate: [authGuard], component: Nosotros,        data: { animation: 'Nosotros',         breadcrumb: 'Nosotros'           } },
+  { path: 'autoridades',        canActivate: [authGuard], component: Autoridades,     data: { animation: 'Autoridades',      breadcrumb: 'Autoridades'        } },
   { path: 'eventos',            canActivate: [authGuard], component: Eventos,         data: { animation: 'Eventos',          breadcrumb: 'Eventos'            } },
   { path: 'eventos/:id',        canActivate: [authGuard], component: EventoEditor,    data: { animation: 'EventoEditor'                                       } },
   { path: 'configuracion',      canActivate: [authGuard], component: Configuracion,   data: { animation: 'Configuracion',    breadcrumb: 'Configuración'      } },

@@ -60,11 +60,9 @@ export class Especialidades implements OnInit {
   menuAbierto: number | null = null;
 
   /** Iconos disponibles para seleccionar al crear/editar. */
-  readonly iconosDisponibles = [
-    'ciencias', 'mecatronica', 'atom', 'microscope', 'computer', 'chip',
-    'terminal', 'robot', 'gear', 'wrench', 'factory', 'hammer',
-    'car', 'engine', 'bolt', 'plug', 'battery', 'users', 'book', 'clipboard',
-  ];
+  get iconosDisponibles(): string[] {
+    return this.iconService.getIconKeys();
+  }
 
   constructor(
     public  iconService: IconService,

@@ -314,14 +314,18 @@ Seleccionar icono
 
 @if(mostrarSelectorIconos){
 
-<div class="grid grid-cols-6 gap-2 mt-3">
+<div class="grid grid-cols-5 gap-2 mt-3 max-h-48 overflow-y-auto pr-1">
 
 @for(icono of iconosDisponibles; track icono){
 
 <div
 (click)="seleccionarIcono(icono); mostrarSelectorIconos=false"
-class="cursor-pointer size-10 rounded-lg flex items-center justify-center border transition hover:bg-slate-100 dark:hover:bg-slate-800"
-[innerHTML]="iconService.getIcon(icono)">
+[title]="icono"
+[ngClass]="iconoSeleccionado === icono
+  ? 'cursor-pointer flex flex-col items-center gap-1 p-2 rounded-lg border border-primary bg-primary/5'
+  : 'cursor-pointer flex flex-col items-center gap-1 p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-primary/10 hover:border-primary/30'">
+  <div class="w-6 h-6 flex items-center justify-center" [innerHTML]="iconService.getIconNormalized(icono)"></div>
+  <span class="text-[9px] text-slate-500 dark:text-slate-400 truncate w-full text-center">{{icono}}</span>
 </div>
 
 }
