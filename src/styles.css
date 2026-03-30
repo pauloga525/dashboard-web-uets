@@ -11,11 +11,11 @@ body {
   @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-colors;
 }
 
-/* Cuando el sidebar está comprimido (w-16), centra los items */
-aside.w-16 .sidebar-item {
-  @apply justify-center px-0;
+/* Cuando el sidebar está comprimido (w-14), centra los items */
+aside.w-14 .sidebar-item {
+  @apply justify-center px-0 gap-0;
 }
-aside.w-16 nav {
+aside.w-14 nav {
   @apply px-1;
 }
 
@@ -95,11 +95,11 @@ body.dark-mode .admin-menu {
 }
 
 /* ── Sidebar tooltip (solo visible cuando está comprimido) ─────────────────── */
-aside.w-16 [data-tooltip] {
+aside.w-14 [data-tooltip] {
   position: relative;
 }
 
-aside.w-16 [data-tooltip]::after {
+aside.w-14 [data-tooltip]::after {
   content: attr(data-tooltip);
   position: absolute;
   left: calc(100% + 12px);
@@ -119,8 +119,7 @@ aside.w-16 [data-tooltip]::after {
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-/* Flecha izquierda del tooltip */
-aside.w-16 [data-tooltip]::before {
+aside.w-14 [data-tooltip]::before {
   content: '';
   position: absolute;
   left: calc(100% + 8px);
@@ -134,18 +133,17 @@ aside.w-16 [data-tooltip]::before {
   z-index: 9999;
 }
 
-aside.w-16 [data-tooltip]:hover::after,
-aside.w-16 [data-tooltip]:hover::before {
+aside.w-14 [data-tooltip]:hover::after,
+aside.w-14 [data-tooltip]:hover::before {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
 }
 
-/* Dark mode */
-.dark aside.w-16 [data-tooltip]::after {
+.dark aside.w-14 [data-tooltip]::after {
   background: #e2e8f0;
   color: #0f172a;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
-.dark aside.w-16 [data-tooltip]::before {
+.dark aside.w-14 [data-tooltip]::before {
   border-right-color: #e2e8f0;
 }

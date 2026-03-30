@@ -1,22 +1,24 @@
 <aside
-  [class.w-64]="!collapsed"
-  [class.w-16]="collapsed"
-  class="transition-all duration-300 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark flex flex-col sticky top-0 h-screen shrink-0">
+  [class.w-56]="!collapsed"
+  [class.w-14]="collapsed"
+  class="transition-all duration-300 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark flex flex-col sticky top-0 h-screen shrink-0 overflow-hidden">
 
 <!-- LOGO — siempre visible -->
-<div class="flex items-center gap-3 px-3 py-4 overflow-hidden" [class.justify-center]="collapsed">
-  <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shrink-0 overflow-hidden border border-slate-100 dark:border-slate-800">
+<div class="h-14 flex items-center px-3 shrink-0 overflow-hidden"
+     [class.justify-center]="collapsed"
+     [class.gap-3]="!collapsed">
+  <div class="w-9 h-9 bg-white rounded-xl flex items-center justify-center shrink-0 overflow-hidden border border-slate-100 dark:border-slate-800">
     <img src="logo.png" alt="Logo UETS" class="w-full h-full object-cover" style="mix-blend-mode: multiply;" />
   </div>
   @if (!collapsed) {
-  <div class="flex flex-col whitespace-nowrap overflow-hidden">
-    <h1 class="font-bold text-slate-900 dark:text-white leading-tight text-sm">UETS</h1>
-    <p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">Administración</p>
+  <div class="flex flex-col min-w-0 overflow-hidden">
+    <h1 class="font-bold text-slate-900 dark:text-white leading-tight text-sm truncate">UETS</h1>
+    <p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold truncate">Administración</p>
   </div>
   }
 </div>
 
-<nav class="flex-1 px-2 space-y-6 overflow-y-auto overflow-x-visible min-h-0">
+<nav class="flex-1 px-2 space-y-5 overflow-y-auto overflow-x-hidden min-h-0 py-2">
 
   <!-- GENERAL -->
   <div>
@@ -253,7 +255,7 @@
 @if (tooltipVisible && collapsed) {
   <div class="fixed z-[9999] pointer-events-none"
        [style.top.px]="tooltipY"
-       style="left: 68px; transform: translateY(-50%);">
+       style="left: 62px; transform: translateY(-50%);">
     <div class="flex items-center gap-1.5">
       <!-- flecha -->
       <div class="w-0 h-0 border-t-[5px] border-b-[5px] border-r-[6px] border-t-transparent border-b-transparent border-r-slate-800 dark:border-r-slate-100"></div>
@@ -266,8 +268,11 @@
 }
 
 <!-- BOTTOM: user + collapse -->
-<div class="mt-auto border-t border-slate-100 dark:border-slate-800">  <div class="flex items-center gap-3 px-3 py-3" [class.justify-center]="collapsed">
-    <div class="size-8 shrink-0">
+<div class="mt-auto border-t border-slate-100 dark:border-slate-800 shrink-0">
+  <div class="h-12 flex items-center px-3 overflow-hidden"
+       [class.justify-center]="collapsed"
+       [class.gap-3]="!collapsed">
+    <div class="w-7 h-7 shrink-0">
       <app-avatar [avatarId]="profile.avatar" size="sm"></app-avatar>
     </div>
     @if (!collapsed) {
@@ -279,13 +284,14 @@
   </div>
   <div class="border-t border-slate-100 dark:border-slate-800">
     <button type="button" (click)="toggleSidebar()"
-      class="flex items-center gap-2 w-full px-3 py-2.5 text-xs text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-      [class.justify-center]="collapsed">
+      class="h-10 flex items-center w-full px-3 text-xs text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition overflow-hidden"
+      [class.justify-center]="collapsed"
+      [class.gap-2]="!collapsed">
       <svg class="w-4 h-4 shrink-0 transition-transform duration-300" [class.rotate-180]="collapsed"
            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
       </svg>
-      @if (!collapsed) {<span>Comprimir</span>}
+      @if (!collapsed) {<span class="truncate">Comprimir</span>}
     </button>
   </div>
 </div>

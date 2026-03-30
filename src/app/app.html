@@ -3,9 +3,9 @@
   <router-outlet />
 } @else {
   <!-- Panel admin completo -->
-  <div style="display: flex; min-height: 100vh;">
+  <div style="display: flex; min-height: 100vh; overflow: hidden;">
     <app-sidebar></app-sidebar>
-    <div style="flex: 1; display: flex; flex-direction: column;">
+    <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden;">
       <app-header></app-header>
       <div
         class="flex-1 relative overflow-hidden bg-white dark:bg-slate-800"
