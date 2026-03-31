@@ -232,6 +232,47 @@
     </div>
   </div>
 
+  <!-- SERVICIOS -->
+  <div>
+    @if(!collapsed){<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Servicios</p>}
+    <div class="space-y-1">
+
+      <a routerLink="/biblioteca" routerLinkActive="sidebar-item-active [&>svg]:text-white"
+         class="sidebar-item group" data-tooltip="Biblioteca"
+         (mouseenter)="showTooltip($event, 'Biblioteca')" (mouseleave)="hideTooltip()">
+        <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 19a2 2 0 0 1 2-2h14"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 17V3h14v18H6z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6M9 11h4"/>
+        </svg>
+        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Biblioteca</h1></div>}
+      </a>
+
+      <a routerLink="/instructivos" routerLinkActive="sidebar-item-active [&>svg]:text-white"
+         class="sidebar-item group" data-tooltip="Instructivos"
+         (mouseenter)="showTooltip($event, 'Instructivos')" (mouseleave)="hideTooltip()">
+        <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+          <rect x="9" y="3" width="6" height="4" rx="1"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M9 16h4"/>
+        </svg>
+        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Instructivos</h1></div>}
+      </a>
+
+      <a routerLink="/repositorios" routerLinkActive="sidebar-item-active [&>svg]:text-white"
+         class="sidebar-item group" data-tooltip="Repositorios"
+         (mouseenter)="showTooltip($event, 'Repositorios')" (mouseleave)="hideTooltip()">
+        <svg class="sidebar-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8M8 16h5"/>
+          <circle cx="6" cy="12" r="1" fill="currentColor"/>
+        </svg>
+        @if(!collapsed){<div class="flex flex-col whitespace-nowrap"><h1>Repositorios</h1></div>}
+      </a>
+
+    </div>
+  </div>
+
   <!-- ADMINISTRACIÓN -->
   <div>
     @if(!collapsed){<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Administración</p>}
