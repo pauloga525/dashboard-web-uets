@@ -11,6 +11,7 @@ import { HeaderEditor }        from './pages/header-editor/header-editor';
 import { FooterEditor }        from './pages/footer-editor/footer-editor';
 import { Admisiones }          from './pages/admisiones/admisiones';
 import { Noticias }            from './pages/noticias/noticias';
+import { Contacto }            from './pages/contacto/contacto';
 import { Preparatoria }        from './pages/preparatoria/preparatoria';
 import { BasicaElemental }     from './pages/basica-elemental/basica-elemental';
 import { BasicaMedia }         from './pages/basica-media/basica-media';
@@ -39,6 +40,7 @@ export const routes: Routes = [
   { path: 'footer',              canActivate: [authGuard], component: FooterEditor,       data: { animation: 'FooterEditor',        breadcrumb: 'Footer del sitio'      } },
   { path: 'admisiones',          canActivate: [authGuard], component: Admisiones,         data: { animation: 'Admisiones',          breadcrumb: 'Admisiones'            } },
   { path: 'noticias',            canActivate: [authGuard], component: Noticias,           data: { animation: 'Noticias',            breadcrumb: 'Noticias'              } },
+  { path: 'contacto',            canActivate: [authGuard], component: Contacto,           data: { animation: 'Contacto',            breadcrumb: 'Contacto'              } },
   { path: 'preparatoria',        canActivate: [authGuard], component: Preparatoria,       data: { animation: 'Preparatoria',        breadcrumb: 'Preparatoria'          } },
   { path: 'basica-elemental',    canActivate: [authGuard], component: BasicaElemental,    data: { animation: 'BasicaElemental',     breadcrumb: 'Básica Elemental'      } },
   { path: 'basica-media',        canActivate: [authGuard], component: BasicaMedia,        data: { animation: 'BasicaMedia',         breadcrumb: 'Básica Media'          } },
