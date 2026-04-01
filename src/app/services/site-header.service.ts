@@ -1,42 +1,46 @@
-/**
- * @file site-header.service.ts
- * @description Gestiona el contenido del header público del sitio.
- */
 import { Injectable } from '@angular/core';
 
-export interface NavLink {
-  id: number;
-  label: string;
-  url: string;
+export interface NavSubItem { label: string; routerLink: string; }
+export interface NavItem {
+  label:       string;
+  routerLink:  string;
+  hasDropdown: boolean;
+  submenu:     NavSubItem[];
 }
 
 export interface SiteHeaderConfig {
-  logoUrl:      string;   // URL imagen del logo
-  logoTexto:    string;   // Texto alternativo / nombre institución
-  tagline:      string;   // Texto pequeño bajo el logo
-  navLinks:     NavLink[];
-  ctaLabel:     string;   // Texto del botón principal
-  ctaUrl:       string;   // URL del botón principal
-  mostrarCta:   boolean;
+  logoUrl:        string;
+  logoAlt:        string;
+  aulaVirtualUrl: string;
+  aulaVirtualLabel: string;
+  navItems:       NavItem[];
 }
 
 const KEY = 'edu_site_header';
 
 const DEFAULT: SiteHeaderConfig = {
-  logoUrl:    '',
-  logoTexto:  'UETS',
-  tagline:    'Unidad Educativa Técnica Salesiana',
-  navLinks: [
-    { id: 1, label: 'Inicio',          url: '/'              },
-    { id: 2, label: 'Nosotros',        url: '/nosotros'      },
-    { id: 3, label: 'Académico',       url: '/academico'     },
-    { id: 4, label: 'Especialidades',  url: '/especialidades'},
-    { id: 5, label: 'Eventos',         url: '/eventos'       },
-    { id: 6, label: 'Contacto',        url: '/contacto'      },
+  logoUrl:          '/logo.png',
+  logoAlt:          'Logo Unidad Educativa Ecuador',
+  aulaVirtualUrl:   'https://edu.esemtia.com/LoginEsemtia.aspx',
+  aulaVirtualLabel: 'Aula Virtual',
+  navItems: [
+    { label: 'Inicio',       routerLink: '/',            hasDropdown: false, submenu: [] },
+    { label: 'Nosotros',     routerLink: '/nosotros',    hasDropdown: false, submenu: [] },
+    {
+      label: 'Académico', routerLink: '/academico', hasDropdown: true,
+      submenu: [
+        { label: 'Preparatoria',     routerLink: '/preparatoria'     },
+        { label: 'Básica Elemental', routerLink: '/basica-elemental' },
+        { label: 'Básica Media',     routerLink: '/basica-media'     },
+        { label: 'Básica Superior',  routerLink: '/basica-superior'  },
+        { label: 'Bachillerato',     routerLink: '/especialidades'   },
+      ],
+    },
+    { label: 'Campus',       routerLink: '/campus',      hasDropdown: false, submenu: [] },
+    { label: 'Eventos',      routerLink: '/eventos',     hasDropdown: false, submenu: [] },
+    { label: 'Noticias',     routerLink: '/noticias',    hasDropdown: false, submenu: [] },
+    { label: 'Contacto',     routerLink: '/contacto',    hasDropdown: false, submenu: [] },
   ],
-  ctaLabel:   'Admisiones',
-  ctaUrl:     '/admisiones',
-  mostrarCta: true,
 };
 
 @Injectable({ providedIn: 'root' })

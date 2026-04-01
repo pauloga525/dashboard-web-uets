@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { ActivityService } from '../../services/activity';
 import { HomeService }     from '../../services/home.service';
 import { EventoService }   from '../../services/evento.service';
+import { KpiService, KpiCard } from '../../services/kpi.service';
 
 import {
   Actividad, GrupoActividad,
@@ -30,14 +31,10 @@ interface SeccionNav { id: string; label: string; }
 export class Dashboard implements OnInit, OnDestroy {
 
   // ─── KPIs ──────────────────────────────────────────────────────────────────
-  stats = {
-    estudiantes: 1248,
-    estudiantesCambio: 12,
-    especialidades: 6,
-    eventos: 0,
-    usuarios: 24,
-    usuariosCambio: 8,
-  };
+  kpis: KpiCard[] = [];
+  editandoKpi: KpiCard | null = null;
+  guardadoKpis = false;
+  private kpiTimer: ReturnType<typeof setTimeout> | null = null;
 
   // ─── Actividad reciente ────────────────────────────────────────────────────
   actividades: Actividad[] = [];
@@ -64,15 +61,19 @@ export class Dashboard implements OnInit, OnDestroy {
     public activityService: ActivityService,
     private homeService: HomeService,
     private eventoService: EventoService,
+    private kpiService: KpiService,
   ) {}
 
   ngOnInit(): void {
+    this.kpis = this.kpiService.getCopia();
     this.home = this.homeService.getCopia();
     this.actividades = this.activityService.getActividadesRecientes();
 
     this.subs.add(
       this.eventoService.eventos$.subscribe(evs => {
-        this.stats.eventos = evs.filter(e => e.publicado).length;
+        const count = evs.filter(e => e.publicado).length;
+        const eventoKpi = this.kpis.find(k => k.id === 'eventos');
+        if (eventoKpi) eventoKpi.value = String(count);
       })
     );
   }
@@ -80,6 +81,16 @@ export class Dashboard implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subs.unsubscribe();
     if (this.guardadoTimer) clearTimeout(this.guardadoTimer);
+    if (this.kpiTimer) clearTimeout(this.kpiTimer);
+  }
+
+  // ─── KPIs ──────────────────────────────────────────────────────────────────
+  guardarKpis(): void {
+    this.kpiService.guardar(this.kpis);
+    this.editandoKpi = null;
+    this.guardadoKpis = true;
+    if (this.kpiTimer) clearTimeout(this.kpiTimer);
+    this.kpiTimer = setTimeout(() => this.guardadoKpis = false, 3000);
   }
 
   // ─── Actividad ─────────────────────────────────────────────────────────────
