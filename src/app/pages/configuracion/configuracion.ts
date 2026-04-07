@@ -11,8 +11,9 @@ import { UserService, UserProfile } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { ThemeService } from '../../services/theme.service';
 import { AvatarComponent, AVATARES } from '../../components/avatar/avatar.component';
+import { UsersService, AppUser, UserRole, ROLES } from '../../services/users.service';
 
-type Tab = 'perfil' | 'cuenta' | 'seguridad' | 'apariencia';
+type Tab = 'perfil' | 'cuenta' | 'seguridad' | 'apariencia' | 'usuarios';
 
 export interface Avatar {
   id: string;
@@ -38,6 +39,7 @@ export class Configuracion implements OnInit {
     { id: 'cuenta',     label: 'Cuenta',     icon: 'at'      },
     { id: 'seguridad',  label: 'Seguridad',  icon: 'lock'    },
     { id: 'apariencia', label: 'Apariencia', icon: 'palette' },
+    { id: 'usuarios',   label: 'Usuarios',   icon: 'users'   },
   ];
 
   // ─── Catálogo de avatares ──────────────────────────────────────────────────
@@ -82,16 +84,26 @@ export class Configuracion implements OnInit {
   guardadoPassword = false;
   errorPassword    = '';
 
+  // ─── Usuarios ──────────────────────────────────────────────────────────────
+  usuarios: AppUser[] = [];
+  usuarioSeleccionado: AppUser | null = null;
+  modalUsuario = false;
+  editandoUsuario: Partial<AppUser> & { id?: number } = {};
+  confirmarEliminarUsuario: AppUser | null = null;
+  readonly roles = ROLES;
+
   constructor(
     private userService: UserService,
     private sanitizer: DomSanitizer,
     public  authService: AuthService,
     public  themeService: ThemeService,
+    public  usersService: UsersService,
   ) {}
 
   ngOnInit(): void {
     this.perfil = this.userService.getCopia();
     this.avatarSeleccionado = this.perfil.avatar;
+    this.usuarios = this.usersService.getCopia();
   }
 
   getIniciales(): string { return this.userService.getIniciales(); }
@@ -152,4 +164,72 @@ export class Configuracion implements OnInit {
   get passwordStrengthLabel(): string  { return { weak: 'Débil', medium: 'Media', strong: 'Fuerte' }[this.passwordStrength]; }
   get passwordStrengthColor(): string  { return { weak: 'bg-red-500', medium: 'bg-yellow-400', strong: 'bg-green-500' }[this.passwordStrength]; }
   get passwordStrengthWidth(): string  { return { weak: 'w-1/3', medium: 'w-2/3', strong: 'w-full' }[this.passwordStrength]; }
+
+  // ─── Gestión de usuarios ───────────────────────────────────────────────────
+
+  readonly modulosPermiso = [
+    { id: 'dashboard',    label: 'Panel Principal',  minRol: 'viewer'      },
+    { id: 'noticias',     label: 'Noticias',         minRol: 'editor'      },
+    { id: 'eventos',      label: 'Eventos',          minRol: 'editor'      },
+    { id: 'especialidades',label: 'Especialidades',  minRol: 'editor'      },
+    { id: 'admisiones',   label: 'Admisiones',       minRol: 'editor'      },
+    { id: 'configuracion',label: 'Configuración',    minRol: 'admin'       },
+    { id: 'usuarios',     label: 'Gestión Usuarios', minRol: 'super_admin' },
+  ] as const;
+
+  private readonly rolOrder: UserRole[] = ['viewer', 'editor', 'admin', 'super_admin'];
+
+  tieneAcceso(rol: UserRole, minRol: string): boolean {
+    return this.rolOrder.indexOf(rol) >= this.rolOrder.indexOf(minRol as UserRole);
+  }
+
+  abrirNuevoUsuario(): void {
+    this.editandoUsuario = { nombre: '', apellido: '', email: '', rol: 'viewer', status: 'active' };
+    this.modalUsuario = true;
+  }
+
+  abrirEditarUsuario(u: AppUser): void {
+    this.editandoUsuario = { ...u };
+    this.modalUsuario = true;
+  }
+
+  guardarUsuario(): void {
+    const u = this.editandoUsuario;
+    if (!u.nombre || !u.email || !u.rol) return;
+    if (u.id) {
+      // editar
+      const idx = this.usuarios.findIndex(x => x.id === u.id);
+      if (idx !== -1) this.usuarios[idx] = { ...this.usuarios[idx], ...u } as AppUser;
+    } else {
+      // nuevo
+      const nuevo: AppUser = {
+        id:       this.usersService.nextId(),
+        nombre:   u.nombre!,
+        apellido: u.apellido ?? '',
+        email:    u.email!,
+        rol:      u.rol as UserRole,
+        status:   u.status as AppUser['status'] ?? 'active',
+        color:    this.usersService.nextColor(this.usuarios),
+      };
+      this.usuarios.push(nuevo);
+    }
+    this.usersService.guardar(this.usuarios);
+    this.modalUsuario = false;
+    this.editandoUsuario = {};
+  }
+
+  pedirEliminarUsuario(u: AppUser): void { this.confirmarEliminarUsuario = u; }
+
+  confirmarEliminar(): void {
+    if (!this.confirmarEliminarUsuario) return;
+    this.usuarios = this.usuarios.filter(u => u.id !== this.confirmarEliminarUsuario!.id);
+    if (this.usuarioSeleccionado?.id === this.confirmarEliminarUsuario.id) this.usuarioSeleccionado = null;
+    this.usersService.guardar(this.usuarios);
+    this.confirmarEliminarUsuario = null;
+  }
+
+  toggleStatus(u: AppUser): void {
+    u.status = u.status === 'active' ? 'inactive' : 'active';
+    this.usersService.guardar(this.usuarios);
+  }
 }

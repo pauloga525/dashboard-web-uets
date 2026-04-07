@@ -1,4 +1,4 @@
-<div class="p-8 max-w-5xl mx-auto w-full space-y-6">
+﻿<div class="p-8 max-w-5xl mx-auto w-full space-y-6">
 
   <!-- PAGE HEADER -->
   <div>
@@ -6,7 +6,8 @@
     <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Administra tu perfil, cuenta y preferencias del sistema.</p>
   </div>
 
-  <!-- LAYOUT: sidebar tabs + content -->
+  <!-- LAYOUT: sidebar tabs + content (solo para tabs que no son usuarios) -->
+  @if (tabActiva !== 'usuarios') {
   <div class="flex flex-col md:flex-row gap-6">
 
     <!-- TABS SIDEBAR -->
@@ -31,6 +32,9 @@
             }
             @if (t.icon === 'palette') {
               <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+            }
+            @if (t.icon === 'users') {
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><path d="M2 21c0-3 4-5 7-5"/><path d="M15 16c3 0 7 2 7 5"/></svg>
             }
             {{t.label}}
           </button>
@@ -354,6 +358,219 @@
       </div>
       }
 
+      <!-- ══ TAB: APARIENCIA ends above ══ -->
+
     </div><!-- /content panel -->
-  </div><!-- /layout -->
+  </div><!-- /layout flex -->
+  }<!-- /if tabActiva !== usuarios -->
+
+  <!-- ══ TAB: USUARIOS — full width, outside the two-column layout ══ -->
+  @if (tabActiva === 'usuarios') {
+
+  <!-- Nav tabs row (same style as sidebar but horizontal for this tab) -->
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+    <div class="flex gap-1 bg-slate-100 dark:bg-slate-800 rounded-xl p-1">
+      @for (t of tabs; track t.id) {
+        <button type="button" (click)="tabActiva = t.id"
+          [class]="tabActiva === t.id
+            ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-primary shadow-sm'
+            : 'px-3 py-1.5 rounded-lg text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition'">
+          {{t.label}}
+        </button>
+      }
+    </div>
+    <button type="button" (click)="abrirNuevoUsuario()"
+      class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-md shadow-primary/20 shrink-0">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21c0-3-4-5-8-5s-8 2-8 5"/><path d="M19 8h-2m-2 0h-2"/><path d="M17 6v4"/></svg>
+      Agregar usuario
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- TABLA -->
+    <div class="lg:col-span-2 bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+      <table class="w-full text-left">
+        <thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+          <tr>
+            <th class="px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Usuario</th>
+            <th class="px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Rol</th>
+            <th class="px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Estado</th>
+            <th class="px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+          @for (u of usuarios; track u.id) {
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer"
+              [class.bg-primary/5]="usuarioSeleccionado?.id === u.id"
+              (click)="usuarioSeleccionado = u">
+            <td class="px-5 py-3.5">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0" [class]="u.color">
+                  {{usersService.getIniciales(u)}}
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800 dark:text-white">{{u.nombre}} {{u.apellido}}</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">{{u.email}}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-5 py-3.5">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold"
+                [ngClass]="u.rol === 'super_admin' || u.rol === 'admin' ? 'bg-primary/10 text-primary' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'">
+                {{usersService.getRolLabel(u.rol)}}
+              </span>
+            </td>
+            <td class="px-5 py-3.5">
+              <button type="button" (click)="toggleStatus(u); $event.stopPropagation()" class="inline-flex items-center gap-1.5 text-sm font-medium transition">
+                @if (u.status === 'active') {
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span class="text-emerald-600 dark:text-emerald-400">Activo</span>
+                } @else {
+                  <span class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+                  <span class="text-slate-400">Inactivo</span>
+                }
+              </button>
+            </td>
+            <td class="px-5 py-3.5 text-right">
+              <div class="flex items-center justify-end gap-2">
+                <button type="button" (click)="abrirEditarUsuario(u); $event.stopPropagation()" class="text-xs text-primary font-semibold hover:underline">Editar</button>
+                <button type="button" (click)="pedirEliminarUsuario(u); $event.stopPropagation()" class="text-xs text-red-500 font-semibold hover:underline">Eliminar</button>
+              </div>
+            </td>
+          </tr>
+          }
+          @if (!usuarios.length) {
+          <tr><td colspan="4" class="px-5 py-10 text-center text-sm text-slate-400 italic">Sin usuarios — agrega uno arriba.</td></tr>
+          }
+        </tbody>
+      </table>
+      <div class="px-5 py-3 border-t border-slate-100 dark:border-slate-800">
+        <p class="text-xs text-slate-500">{{usuarios.length}} usuario{{usuarios.length !== 1 ? 's' : ''}} registrado{{usuarios.length !== 1 ? 's' : ''}}</p>
+      </div>
+    </div>
+
+    <!-- PANEL PERMISOS -->
+    <div class="lg:col-span-1">
+      @if (!usuarioSeleccionado) {
+        <div class="h-full flex flex-col items-center justify-center py-16 text-center bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-2xl">
+          <svg class="w-10 h-10 text-slate-300 dark:text-slate-600 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M20 21c0-3-4-5-8-5s-8 2-8 5"/></svg>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Selecciona un usuario para ver sus permisos.</p>
+        </div>
+      } @else {
+      <div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-5">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shrink-0" [class]="usuarioSeleccionado.color">
+            {{usersService.getIniciales(usuarioSeleccionado)}}
+          </div>
+          <div>
+            <p class="font-bold text-slate-800 dark:text-white">{{usuarioSeleccionado.nombre}} {{usuarioSeleccionado.apellido}}</p>
+            <p class="text-xs text-slate-500">{{usuarioSeleccionado.email}}</p>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold mt-1"
+              [ngClass]="usuarioSeleccionado.rol === 'super_admin' || usuarioSeleccionado.rol === 'admin' ? 'bg-primary/10 text-primary' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'">
+              {{usersService.getRolLabel(usuarioSeleccionado.rol)}}
+            </span>
+          </div>
+        </div>
+        <hr class="border-slate-100 dark:border-slate-800" />
+        <div>
+          <p class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-3">Permisos del rol</p>
+          <div class="space-y-2">
+            @for (modulo of modulosPermiso; track modulo.id) {
+            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+              <span class="text-xs font-medium text-slate-700 dark:text-slate-300">{{modulo.label}}</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                [ngClass]="tieneAcceso(usuarioSeleccionado.rol, modulo.minRol)
+                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                  : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'">
+                {{tieneAcceso(usuarioSeleccionado.rol, modulo.minRol) ? 'Permitido' : 'Sin acceso'}}
+              </span>
+            </div>
+            }
+          </div>
+        </div>
+        <p class="text-[10px] text-slate-400 dark:text-slate-500 text-center">Configuración detallada de permisos disponible próximamente.</p>
+      </div>
+      }
+    </div>
+
+  </div>
+  }<!-- /if usuarios -->
+
+<!-- MODAL: Crear / Editar usuario -->
+@if (modalUsuario) {
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" (click)="modalUsuario = false">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-4 animate-[fadeIn_.2s_ease_forwards]" (click)="$event.stopPropagation()">
+    <h2 class="text-base font-bold text-slate-800 dark:text-white">
+      {{editandoUsuario.id ? 'Editar usuario' : 'Nuevo usuario'}}
+    </h2>
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nombre</label>
+        <input [(ngModel)]="editandoUsuario.nombre" placeholder="Nombre" class="input-field" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Apellido</label>
+        <input [(ngModel)]="editandoUsuario.apellido" placeholder="Apellido" class="input-field" />
+      </div>
+      <div class="col-span-2">
+        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Email</label>
+        <input [(ngModel)]="editandoUsuario.email" type="email" placeholder="correo@uets.edu.ec" class="input-field" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Rol</label>
+        <select [(ngModel)]="editandoUsuario.rol"
+          class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-900 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30">
+          @for (r of roles; track r.value) { <option [value]="r.value">{{r.label}}</option> }
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Estado</label>
+        <select [(ngModel)]="editandoUsuario.status"
+          class="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-900 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30">
+          <option value="active">Activo</option>
+          <option value="inactive">Inactivo</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 pt-2">
+      <button type="button" (click)="modalUsuario = false"
+        class="px-4 py-2 text-sm rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+        Cancelar
+      </button>
+      <button type="button" (click)="guardarUsuario()"
+        [disabled]="!editandoUsuario.nombre || !editandoUsuario.email"
+        class="px-5 py-2 text-sm font-semibold rounded-xl bg-primary text-white hover:bg-primary/90 transition disabled:opacity-50">
+        {{editandoUsuario.id ? 'Guardar cambios' : 'Crear usuario'}}
+      </button>
+    </div>
+  </div>
 </div>
+}
+
+<!-- MODAL: Confirmar eliminar -->
+@if (confirmarEliminarUsuario) {
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+  <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-80 p-6 space-y-4 animate-[fadeIn_.2s_ease_forwards]">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0">
+        <svg class="w-5 h-5 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
+      </div>
+      <div>
+        <p class="text-sm font-bold text-slate-800 dark:text-white">Eliminar usuario</p>
+        <p class="text-xs text-slate-500">{{confirmarEliminarUsuario.nombre}} {{confirmarEliminarUsuario.apellido}}</p>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3">
+      <button type="button" (click)="confirmarEliminarUsuario = null"
+        class="px-4 py-2 text-sm rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+        Cancelar
+      </button>
+      <button type="button" (click)="confirmarEliminar()"
+        class="px-4 py-2 text-sm font-semibold rounded-xl bg-red-600 text-white hover:bg-red-700 transition">
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>
+}
