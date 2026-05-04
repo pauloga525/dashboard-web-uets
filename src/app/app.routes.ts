@@ -23,8 +23,9 @@ import { Autoridades }         from './pages/autoridades/autoridades';
 import { Eventos }             from './pages/eventos/eventos';
 import { EventoEditor }        from './pages/eventos/evento-editor/evento-editor';
 import { Campus }              from './pages/campus/campus';
-import { Estudiantes }         from './pages/estudiantes/estudiantes';   // editor completo de Alumnos
+import { Estudiantes }         from './pages/estudiantes/estudiantes';
 import { ConsejoEstudiantil }  from './pages/consejo-estudiantil/consejo-estudiantil';
+import { Uniformes }           from './pages/uniformes/uniformes';
 import { Biblioteca }          from './pages/biblioteca/biblioteca';
 import { Instructivos }        from './pages/instructivos/instructivos';
 import { Repositorios }        from './pages/repositorios/repositorios';
@@ -54,6 +55,7 @@ export const routes: Routes = [
   { path: 'campus',              canActivate: [authGuard], component: Campus,             data: { animation: 'Campus',              breadcrumb: 'Campus'                } },
   { path: 'alumnos',             canActivate: [authGuard], component: Estudiantes,        data: { animation: 'Alumnos',             breadcrumb: 'Alumnos'               } },
   { path: 'consejo-estudiantil', canActivate: [authGuard], component: ConsejoEstudiantil, data: { animation: 'ConsejoEstudiantil',  breadcrumb: 'Consejo Estudiantil'   } },
+  { path: 'uniformes',           canActivate: [authGuard], component: Uniformes,          data: { animation: 'Uniformes',           breadcrumb: 'Uniformes'             } },
   { path: 'biblioteca',          canActivate: [authGuard], component: Biblioteca,         data: { animation: 'Biblioteca',          breadcrumb: 'Biblioteca'            } },
   { path: 'instructivos',        canActivate: [authGuard], component: Instructivos,       data: { animation: 'Instructivos',        breadcrumb: 'Instructivos'          } },
   { path: 'repositorios',        canActivate: [authGuard], component: Repositorios,       data: { animation: 'Repositorios',        breadcrumb: 'Repositorios'          } },
